@@ -12,6 +12,7 @@ use App\Models\Poin;
 use App\Models\Mahasiswa;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Illuminate\Support\Facades\DB;
 
  
 class formControl extends Controller
@@ -113,7 +114,7 @@ class formControl extends Controller
         // Simpan data ke database
         Kegiatan::create([
             'Nim' => $request->Nim,
-            'Nama_kegiatan' => $request->Nama_kegiatan,
+            'nama_kegiatan' => $request->Nama_kegiatan,
             'tanggal_kegiatan' => $request->tanggal_kegiatan,
             'id_posisi' => $request->id_posisi,
             'idtingkat_kegiatan' => $request->idtingkat_kegiatan,
@@ -242,7 +243,17 @@ class formControl extends Controller
     public function edit($nim)
     {
         $mahasiswa = Mahasiswa::findOrFail($nim);
-        return view('mhs.profileMhs', compact('mahasiswa'));
+        $kegiatan = DB::table('kegiatan')
+        ->join('poin', 'kegiatan.id_poin', '=', 'poin.id_poin') 
+        ->where('kegiatan.nim', $nim)
+        ->select('kegiatan.*','poin.poin')
+        ->get();
+
+        // Kalkulasi total poin untuk kegiatan yang terverifikasi
+        $totalPoin = $kegiatan->filter(function ($item) {
+            return $item->verif === 'True'; // Or use true if the data type is boolean
+        })->sum('poin');
+        return view('mhs.profileMhs', compact('mahasiswa', 'totalPoin'));
     }
     
     public function update(Request $request, $nim)

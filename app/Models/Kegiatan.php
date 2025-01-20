@@ -13,7 +13,7 @@ class Kegiatan extends Model
     protected $primaryKey = 'id_kegiatan'; 
 
     protected $fillable = [
-        'Nim',
+        'Nim', 
         'nama_kegiatan',
         'tanggal_kegiatan',
         'id_poin',
@@ -23,7 +23,7 @@ class Kegiatan extends Model
         'sertifikat',
         'id_poin',
         'verifsertif',
-        'verif',
+        'verif', 
     ];
 
 
