@@ -98,7 +98,7 @@
                                         <div class="form-group">
                                             <label>Sertifikat</label>
                                             <div class="text-center mt-3">
-                                                <img src="{{ asset($data->sertifikat) }}" alt="Tidak Dapat Menampilkan Sertifikat" class="img-fluid rounded" style="max-width: 100%; height: auto;">
+                                                <img src="{{ 'storage/public/($data->sertifikat)' }}" alt="Tidak Dapat Menampilkan Sertifikat" class="img-fluid rounded" style="max-width: 100%; height: auto;">
                                             </div>
                                         </div>
                                     </div>

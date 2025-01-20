@@ -58,5 +58,8 @@ Route::resource('poin', poinController::class);
 
 Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
 Route::get('/mahasiswa/{id}/kegiatan', [MahasiswaController::class, 'kegiatan'])->name('mahasiswa.kegiatan');
+
+Route::get('/activities', [kegiatanController::class, 'tampilan'])->name('activities.tampilan');
+Route::post('/activities', [kegiatanController::class, 'store'])->name('activity.store');
 ?>
 
