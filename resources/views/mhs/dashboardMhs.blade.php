@@ -182,63 +182,10 @@
                                 
                               </td>
                               <td style="text-align: center; vertical-align: middle;">
-                                <button title="Lihat Detail" style="border:none; background-color:transparent; margin-right: 10px;" type="button" class="fas fa-eye" data-toggle="modal" data-target="#DetailKegiatan{{ $item->id_kegiatan }}">
                                 <button title="Edit Kegiatan" style="border:none; background-color:transparent;" type="button" class="fas fa-edit" data-toggle="modal" data-target="#formEditKegiatan{{ $item->id_kegiatan }}">
                               </td>
                             </tr>
-                            
 
-                            {{-- Modal Detail Kegiatan --}}
-                            <div class="modal fade" id="DetailKegiatan{{ $item->id_kegiatan }}" tabindex="-1" role="dialog">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Detail Kegiatan</h5>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label>Nama Kegiatan</label>
-                                                <input class="form-control" value="{{ $item->nama_kegiatan }}" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Tanggal Kegiatan</label>
-                                                <input class="form-control" value="{{ \Carbon\Carbon::parse($item->tanggal_kegiatan)->translatedFormat('d F Y') }}" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Posisi</label>
-                                                <input class="form-control" value="{{ $item->nama_posisi }}" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Tingkat Kegiatan</label>
-                                                <input class="form-control" value="{{ $item->tingkat_kegiatan }}" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Jenis Kegiatan</label>
-                                                <input class="form-control"  value="{{ $item->idjenis_kegiatan }}" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Poin</label>
-                                                <input class="form-control" value="{{ $item->poin }}" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Status Sertifikat</label>
-                                                <input class="form-control" value="{{ $item->verif === 'True' ? 'Terverifikasi' : 'Belum Terverifikasi' }}" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Sertifikat</label>
-                                                <div class="text-center mt-3">
-                                                    <img src="{{ asset($item->sertifikat) }}" alt="Tidak Dapat Menampilkan Sertifikat" class="img-fluid rounded" style="max-width: 100%; height: auto;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>   
-                            
                             <!-- Modal Edit Kegiatan -->
                             <div class="modal fade" id="formEditKegiatan{{ $item->id_kegiatan }}" tabindex="-1" aria-labelledby="formEditKegiatanLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
@@ -249,12 +196,12 @@
                                                 <h3 class="modal-title" id="formEditKegiatanLabel">Edit Sertifikat</h3>
                                             </div>
                                             <div class="modal-body">
-
+                        
                                                 <!-- Input Hidden: Nim -->
                                                 <input type="hidden" name="nim" value="{{ session('nim') }}">
                                                 <input type="hidden" name="verifsertif" value="{{ old('verifsertif', $item->verifsertif) }}">
-
-
+                        
+                        
                                                 <!-- Nama Kegiatan -->
                                                 <div class="mb-3">
                                                     <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
@@ -268,7 +215,7 @@
                                                     <input type="date" class="form-control" id="tanggal_kegiatan" name="tanggal_kegiatan" 
                                                         value="{{ old('tanggal_kegiatan', $item->tanggal_kegiatan) }}" required>
                                                 </div>
-
+                        
                                                 <!-- Posisi -->
                                                 <div class="mb-3">
                                                     <label for="id_posisi" class="form-label">Posisi</label>
@@ -282,7 +229,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-
+                        
                                                 <!-- Tingkat Kegiatan -->
                                                 <div class="mb-3">
                                                     <label for="idtingkat_kegiatan" class="form-label">Tingkat Kegiatan</label>
@@ -296,7 +243,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-
+                        
                                                 <!-- Jenis Kegiatan -->
                                                 <div class="mb-3">
                                                     <label for="idjenis_kegiatan" class="form-label">Jenis Kegiatan</label>
@@ -310,7 +257,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-
+                        
                                                 <!-- Sertifikat -->
                                                 <div class="mb-3">
                                                     <label for="sertifikat" class="form-label">Upload Sertifikat</label><br/>
@@ -326,7 +273,7 @@
                                                         <small class="text-danger">{{ $message }}</small>
                                                     @enderror
                                                 </div>
-
+                        
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -336,109 +283,107 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                        
-                            <!-- Modal Add Kegiatan -->
-                            <div class="modal fade" id="formKegiatanModal" tabindex="-1" role="dialog" aria-labelledby="formKegiatanLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="formKegiatanLabel">Form Kegiatan</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">                   
-                                            <!-- Form -->
-                                            <form action="{{ route('form.store') }}" method="POST" enctype="multipart/form-data" class="border p-4 bg-white shadow-sm">
-                                                @csrf
-                        
-                                                <!-- Nim -->
-                                                <div class="form-group">
-                                                    <input type="text" id="Nim" name="Nim" class="form-control" value="{{$nim}}" placeholder="Nim" required disabled hidden>
-                                                    <input type="hidden" name="Nim" value="{{$nim}}">
-                                                @error('Nim')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                    @enderror
-                                                </div>
-                                                <!-- Nama Kegiatan -->
-                                                <div class="form-group">
-                                                    <label for="Nama_kegiatan">Nama Kegiatan:</label>
-                                                    <input type="text" id="Nama_kegiatan" name="Nama_kegiatan" class="form-control" 
-                                                        value="{{ old('Nama_kegiatan') }}" placeholder="Masukkan nama kegiatan" required>
-                                                    @error('Nama_kegiatan')
-                                                        <small class="text-danger">{{ $message }}</small>
-                                                    @enderror
-                                                </div>
-                        
-                                                <!-- Tanggal Kegiatan -->
-                                                <div class="form-group">
-                                                    <label for="tanggal_kegiatan">Tanggal Kegiatan:</label>
-                                                    <input type="date" id="tanggal_kegiatan" name="tanggal_kegiatan" class="form-control" 
-                                                        value="{{ old('tanggal_kegiatan') }}" required>
-                                                    @error('tanggal_kegiatan')
-                                                        <small class="text-danger">{{ $message }}</small>
-                                                    @enderror
-                                                </div>
-                        
-                                                <!-- Dropdown Posisi -->
-                                                <div class="form-group">
-                                                    <label for="id_posisi">Posisi:</label>
-                                                    <select name="id_posisi" id="id_posisi" class="form-control" required>
-                                                        <option value="">Pilih Posisi</option>
-                                                        @foreach ($posisi as $item)
-                                                            <option value="{{ $item->id_posisi }}">{{ $item->nama_posisi }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                        
-                                                <!-- Dropdown Tingkat Kegiatan -->
-                                                <div class="form-group">
-                                                    <label for="idtingkat_kegiatan">Tingkat Kegiatan:</label>
-                                                    <select name="idtingkat_kegiatan" id="idtingkat_kegiatan" class="form-control" required>
-                                                        <option value="">Pilih Tingkat Kegiatan</option>
-                                                        @foreach ($tingkatKegiatan as $item)
-                                                            <option value="{{ $item->idtingkat_kegiatan }}">{{ $item->tingkat_kegiatan }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                        
-                                                <!-- Dropdown Jenis Kegiatan -->
-                                                <div class="form-group">
-                                                    <label for="idjenis_kegiatan">Jenis Kegiatan:</label>
-                                                    <select name="idjenis_kegiatan" id="idjenis_kegiatan" class="form-control" required>
-                                                        <option value="">Pilih Jenis Kegiatan</option>
-                                                        @foreach ($jenisKegiatan as $item)
-                                                            <option value="{{ $item->idjenis_kegiatan }}">{{ $item->jenis_kegiatan }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                        
-                                                <!-- Sertifikat -->
-                                                <div class="form-group">
-                                                    <label for="sertifikat">Upload Sertifikat:</label>
-                                                    <input type="file" id="sertifikat" name="sertifikat" class="form-control-file" 
-                                                        accept=".pdf,.jpg,.jpeg,.png" required>
-                                                    @error('sertifikat')
-                                                        <small class="text-danger">{{ $message }}</small>
-                                                    @enderror
-                                                </div>
-                        
-                                                <!-- Submit Button -->
-                                                <button type="submit" class="btn btn-primary btn-block">Simpan Kegiatan</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </tbody>
-                  </table>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-              </div>
+            </div>
         </div>
     </section>
+
+    <!-- Modal Add Kegiatan -->
+    <div class="modal fade" id="formKegiatanModal" tabindex="-1" role="dialog" aria-labelledby="formKegiatanLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formKegiatanLabel">Form Kegiatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">                   
+                    <!-- Form -->
+                    <form action="{{ route('form.store') }}" method="POST" enctype="multipart/form-data" class="border p-4 bg-white shadow-sm">
+                        @csrf
+
+                        <!-- Nim -->
+                        <div class="form-group">
+                            <input type="text" id="Nim" name="Nim" class="form-control" value="{{$nim}}" placeholder="Nim" required disabled hidden>
+                            <input type="hidden" name="Nim" value="{{$nim}}">
+                        @error('Nim')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <!-- Nama Kegiatan -->
+                        <div class="form-group">
+                            <label for="Nama_kegiatan">Nama Kegiatan:</label>
+                            <input type="text" id="Nama_kegiatan" name="Nama_kegiatan" class="form-control" 
+                                value="{{ old('Nama_kegiatan') }}" placeholder="Masukkan nama kegiatan" required>
+                            @error('Nama_kegiatan')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <!-- Tanggal Kegiatan -->
+                        <div class="form-group">
+                            <label for="tanggal_kegiatan">Tanggal Kegiatan:</label>
+                            <input type="date" id="tanggal_kegiatan" name="tanggal_kegiatan" class="form-control" 
+                                value="{{ old('tanggal_kegiatan') }}" required>
+                            @error('tanggal_kegiatan')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <!-- Dropdown Posisi -->
+                        <div class="form-group">
+                            <label for="id_posisi">Posisi:</label>
+                            <select name="id_posisi" id="id_posisi" class="form-control" required>
+                                <option value="">Pilih Posisi</option>
+                                @foreach ($posisi as $item)
+                                    <option value="{{ $item->id_posisi }}">{{ $item->nama_posisi }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Dropdown Tingkat Kegiatan -->
+                        <div class="form-group">
+                            <label for="idtingkat_kegiatan">Tingkat Kegiatan:</label>
+                            <select name="idtingkat_kegiatan" id="idtingkat_kegiatan" class="form-control" required>
+                                <option value="">Pilih Tingkat Kegiatan</option>
+                                @foreach ($tingkatKegiatan as $item)
+                                    <option value="{{ $item->idtingkat_kegiatan }}">{{ $item->tingkat_kegiatan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Dropdown Jenis Kegiatan -->
+                        <div class="form-group">
+                            <label for="idjenis_kegiatan">Jenis Kegiatan:</label>
+                            <select name="idjenis_kegiatan" id="idjenis_kegiatan" class="form-control" required>
+                                <option value="">Pilih Jenis Kegiatan</option>
+                                @foreach ($jenisKegiatan as $item)
+                                    <option value="{{ $item->idjenis_kegiatan }}">{{ $item->jenis_kegiatan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Sertifikat -->
+                        <div class="form-group">
+                            <label for="sertifikat">Upload Sertifikat:</label>
+                            <input type="file" id="sertifikat" name="sertifikat" class="form-control-file" 
+                                accept=".pdf,.jpg,.jpeg,.png" required>
+                            @error('sertifikat')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-block">Simpan Kegiatan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         document.getElementById('sertifikat').addEventListener('change', function(event) {
             const file = event.target.files[0];
