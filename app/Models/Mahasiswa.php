@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mahasiswa extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'nim';
+    protected $primaryKey = 'nim'; 
     protected $table = 'mahasiswa';
     public $timestamps = false;
     protected $fillable = [
@@ -23,10 +23,10 @@ class Mahasiswa extends Model
         'alamat',
         'email',
         'password',
-        'profile'
+        'foto_profil'
     ];
-
-
+ 
+ 
     public function prodi()
     {
         return $this->belongsTo(Prodi::class, 'kode_prodi');

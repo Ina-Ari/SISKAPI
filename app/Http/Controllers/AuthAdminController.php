@@ -52,12 +52,12 @@ class AuthAdminController extends Controller
             $totalMhs = DB::table('mahasiswa')->count();
 
             $totalVerifTrue = DB::table('kegiatan')
-            ->where('verifsertif', 'true')
+            ->where('verif', 'true')
             ->count();
 
             $totalVerifFalse = DB::table('kegiatan')
-            ->where('verifsertif', 'false')
-            ->count();
+            ->where('verif', 'false')
+            ->count();        
 
             $request->session()->regenerate();  // Regenerasi session untuk mencegah session fixation
             $request->session()->put('totalMhs', $totalMhs);

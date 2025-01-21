@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Mahasiswa;
 use App\Models\Jurusan;
+use App\Models\Prodi;
 use App\Models\Kegiatan;
 
 class MahasiswaController extends Controller
@@ -18,7 +19,7 @@ class MahasiswaController extends Controller
             "HashCode" => "857FA947BC447C037C3CA7796D80395104AF7D165E46EB4398A616362E8D6E30"
             ]
         );
-
+ 
         $dataMahasiswa = json_decode($mahasiswa, true)["daftar"];
         $arrayMahasiswa = [];
         $data = Mahasiswa::all();
@@ -52,7 +53,7 @@ class MahasiswaController extends Controller
                         'password' => $nim
                     ]);
                 }
-            }
+            } 
         }
         // // dd($arrayMahasiswa[334]);
         if(count($arrayMahasiswa)>0)Mahasiswa::insert($arrayMahasiswa);

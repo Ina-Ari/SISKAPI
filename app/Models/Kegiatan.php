@@ -9,15 +9,11 @@ class Kegiatan extends Model
 {
     use HasFactory;
 
-    protected $table = 'kegiatan'; // Nama tabel kegiatan
-    //tambah
-    protected $primaryKey = 'id_kegiatan'; // Menentukan kolom primary key
-
-    // Nonaktifkan timestamps
-    public $timestamps = false; // Tambahkan ini
+    protected $table = 'kegiatan';
+    protected $primaryKey = 'id_kegiatan'; 
 
     protected $fillable = [
-        'nim',
+        'Nim',
         'nama_kegiatan',
         'tanggal_kegiatan',
         'id_poin',
@@ -25,9 +21,15 @@ class Kegiatan extends Model
         'idtingkat_kegiatan',
         'idjenis_kegiatan',
         'sertifikat',
+        'id_poin',
         'verifsertif',
-        'verif'
+        'verif',
     ];
+
+
+    public $timestamps = false; // Menonaktifkan timestamps
+
+    // Relasi dengan model Posisi
 
     public function mahasiswa()
     {
@@ -39,11 +41,14 @@ class Kegiatan extends Model
         return $this->belongsTo(Posisi::class, 'id_posisi');
     }
 
+    // Relasi dengan model TingkatKegiatan
     public function tingkatKegiatan()
     {
         return $this->belongsTo(TingkatKegiatan::class, 'idtingkat_kegiatan');
     }
 
+
+    // Relasi dengan model JenisKegiatan
     public function jenisKegiatan()
     {
         return $this->belongsTo(JenisKegiatan::class, 'idjenis_kegiatan');
@@ -53,4 +58,5 @@ class Kegiatan extends Model
     {
         return $this->belongsTo(Poin::class, 'id_poin');
     }
+
 }

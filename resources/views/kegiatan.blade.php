@@ -11,8 +11,12 @@
                     <h3 class="m-0">Kegiatan Terverifikasi</h3>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <button id="btnCancelSelected" class="btn btn-danger btn-sm">Cancel</button>
-                    <button id="btnCancelAll" class="btn btn-warning btn-sm">Cancel All</button>
+                    <button id="btnCancelSelected" type="button" class="btn btn-sm btn-danger">
+                        <i class="fas fa-times-circle"></i> Cancel
+                    </button>
+                    <button id="btnCancelAll" type="button" class="btn btn-sm btn-warning">
+                        <i class="fas fa-ban"></i> Cancel All
+                    </button>
                 </div>
             </div>
             <div class="card-body">
@@ -36,11 +40,11 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $data->nim }}</td>
-                                <td>{{ $data->nama_kegiatan }}</td>
+                                <td>{{ $data->nama_kegiatan }}</td> 
                                 <td>{{ \Carbon\Carbon::parse($data->tanggal_kegiatan)->translatedFormat('d F Y') }}</td>
                                 <td>
-                                    @if ($data->verifsertif === 'True')
-                                        <span>Terverifikasi</span>
+                                    @if ($data->verif === 'True')
+                                    <span class="badge badge-success">Terverifikasi</span>
                                     @else
                                         <span>Belum Terverifikasi</span>
                                     @endif
@@ -113,5 +117,7 @@
                 </table>
             </div>
         </div>
-    </form>
+    </div>
+    </div>
+</form>
 @endsection
