@@ -89,7 +89,11 @@
                     </span>
                   </li>
                   <li class="nav-item nav-link">
-                    Status Poin <span class="float-right badge bg-primary">Memenuhi Syarat</span>
+                  @if ($totalPoin>=28)
+                  Status Poin <span class="float-right badge bg-primary">Memenuhi Syarat</span>
+                  @else
+                  Status Poin <span class="float-right badge bg-danger">Belum Memenuhi Syarat</span>
+                  @endif
                   </li>
                 </ul>
               </div>

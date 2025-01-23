@@ -86,20 +86,14 @@
                             @php
                                 $totalPoin = $totalPoin ?? 0; // Use the passed value or default to 0
                                  // Default color: red (low points)
-                                 if ($totalPoin >= 20) {
-                                    $textColor = '#28a745'; // Yellow (Med points)
+
+                                if ($totalPoin >= 20) {
+                                    $textColor = '#ffc107'; // Green (high points)
                                 } elseif ($totalPoin <= 10) {
-                                    $textColor = '#dc3545'; // Red (Low points)
+                                    $textColor = '#dc3545'; // Yellow (medium points)
                                 } elseif ($totalPoin >=28) {
-                                    $textColor = '#ffc107'; //Green (High/Passed min. points)
+                                    $textColor = '#28a745';
                                 }
-                                // if ($totalPoin >= 20) {
-                                //     $textColor = '#ffc107'; // Green (high points)
-                                // } elseif ($totalPoin <= 10) {
-                                //     $textColor = '#dc3545'; // Yellow (medium points)
-                                // } elseif ($totalPoin >=28) {
-                                //     $textColor = '#28a745';
-                                // }
                             @endphp
                               <span class="info-box-number" style="font-size: 1.3rem; font-weight: bold; color: {{ $textColor }};">
                                 {{ $totalPoin }} /
@@ -135,14 +129,26 @@
                   </div>
 
                   {{-- Table --}}
+                    @if (session('error'))
+                    <div class="alert alert-danger">
+                      {{ session('error') }}
+                    </div>
+                    @endif
+                    <!-- Success message -->
                     @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
                     @endif
-                    @if (session('error'))
+
+                    <!-- Error message -->
+                    @if($errors->any())
                         <div class="alert alert-danger">
-                            {{ session('error') }}
+                    <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                    </ul>
                         </div>
                     @endif
 
@@ -182,6 +188,7 @@
                               </td>
                             </tr>
 
+
                             {{-- Modal Detail Kegiatan --}}
                             <div class="modal fade" id="DetailKegiatan{{ $item->id_kegiatan }}" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
@@ -209,7 +216,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Jenis Kegiatan</label>
-                                                <input class="form-control" value="{{ $item->jenisKegiatan->jenis_kegiatan ?? '' }}" disabled>
+                                                <input class="form-control"  value="{{ $item->idjenis_kegiatan }}" disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label>Poin</label>
@@ -244,9 +251,9 @@
                                         </div>
                                         <div class="modal-body">
 
-                                            <!-- Input Hidden: Nim -->
-                                            <input type="hidden" name="nim" value="{{ session('nim') }}">
-                                            <input type="hidden" name="verifsertif" value="{{ old('verifsertif', $item->verifsertif) }}">
+                                                <!-- Input Hidden: Nim -->
+                                                <input type="hidden" name="nim" value="{{ session('nim') }}">
+                                                <input type="hidden" name="verifsertif" value="{{ old('verifsertif', $item->verifsertif) }}">
 
 
                                             <!-- Nama Kegiatan -->
@@ -319,15 +326,15 @@
                                                 @enderror
                                             </div>
 
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                                            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                        </div>
-                                    </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
 
 
@@ -449,5 +456,33 @@
               </div>
         </div>
     </section>
+    <script>
+        document.getElementById('sertifikat').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('preview-sertifikat');
+
+            if (file) {
+                const fileReader = new FileReader();
+
+                // Cek apakah file adalah gambar
+                if (file.type.match('image.*')) {
+                    fileReader.onload = function(e) {
+                        preview.src = e.target.result; // Set src dengan data URL dari FileReader
+                        preview.style.display = 'block'; // Tampilkan gambar pratinjau
+                    };
+                    fileReader.readAsDataURL(file);
+                }
+                else if (file.type === 'application/pdf') {
+                alert('File PDF diunggah. Pratinjau tidak tersedia.');
+                preview.style.display = 'none';
+                } else {
+                    preview.style.display = 'none'; // Sembunyikan pratinjau jika bukan gambar
+                    alert('Harap unggah file gambar (jpg, jpeg, png) untuk pratinjau.');
+                }
+            } else {
+                preview.style.display = 'none'; // Sembunyikan jika input kosong
+            }
+        });
+    </script>
 
 @endsection

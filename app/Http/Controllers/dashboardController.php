@@ -17,7 +17,7 @@ class dashboardController extends Controller
         $jumlahKegiatan = Kegiatan::count();
         $terverifikasi = Kegiatan::where('verif', 'true')->count();
         $belumterverifikasi = Kegiatan::where('verif', 'false')->count();
-        $jumlahMahasiswa = Mahasiswa::has('kegiatan')->count();
+        $jumlahMahasiswa = Mahasiswa::count();
 
         return view('dashboard', compact('jumlahKegiatan','terverifikasi','belumterverifikasi','jumlahMahasiswa'));
 

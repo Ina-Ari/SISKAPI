@@ -36,6 +36,17 @@ class AuthMhsController extends Controller
         $mahasiswa = Mahasiswa::where('nim', $nim)->first();
         $kode_prodi = Prodi::all();
         $jurusan = Jurusan::all();
+
+        $kegiatan = DB::table('kegiatan')
+        ->join('poin', 'kegiatan.id_poin', '=', 'poin.id_poin') 
+        ->where('kegiatan.nim', $nim)
+        ->select('kegiatan.*','poin.poin')
+        ->get();
+
+        // Kalkulasi total poin untuk kegiatan yang terverifikasi
+        $totalPoin = $kegiatan->filter(function ($item) {
+            return $item->verif === 'True'; // Or use true if the data type is boolean
+        })->sum('poin');
     
     
         if (!$mahasiswa) {
@@ -43,7 +54,7 @@ class AuthMhsController extends Controller
             return redirect()->route('loginmhs')->withErrors(['error' => 'Mahasiswa tidak ditemukan.']);
         }
         
-        return view('mhs.profileMhs', compact('mahasiswa', 'nim', 'kode_prodi', 'jurusan'));
+        return view('mhs.profileMhs', compact('mahasiswa', 'nim', 'kode_prodi', 'jurusan', 'kegiatan', 'totalPoin'));
     } 
 
     public function indexMhs()

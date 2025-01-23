@@ -53,7 +53,7 @@ class MailController extends Controller
         $subject = "Konfirmasi Perubahan Password";
     
         // Kirim email
-        Mail::to($to)->send(new ConfirmationMail($msg, $subject))->from('sipraja@pnb.ac.id', 'SIPRAJA PNB');
+        Mail::to($to)->send(new ConfirmationMail($msg, $subject));
         // Mail::to($to)->send(new ConfirmationMail($msg, $subject)->from('sipraja@pnb.ac.id', 'SIPRAJA'));
     
         // Beri feedback ke user
