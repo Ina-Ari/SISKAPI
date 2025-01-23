@@ -32,6 +32,7 @@
                             <th>Nama Kegiatan</th>
                             <th>Tanggal Kegiatan</th>
                             <th>Status Sertifikat</th>
+                            <th>Akurasi</th>
                             <th style="text-align: center;">Aksi</th>
                         </tr>
                     </thead>
@@ -40,15 +41,16 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $data->nim }}</td>
-                                <td>{{ $data->nama_kegiatan }}</td> 
+                                <td>{{ $data->nama_kegiatan }}</td>
                                 <td>{{ \Carbon\Carbon::parse($data->tanggal_kegiatan)->translatedFormat('d F Y') }}</td>
                                 <td>
-                                    @if ($data->verif === 'True')
-                                    <span class="badge badge-success">Terverifikasi</span>
+                                    @if ($data->verifsertif === 'True')
+                                        <span class="badge badge-success">Terverifikasi</span>
                                     @else
-                                        <span>Belum Terverifikasi</span>
+                                        <span class="badge badge-danger">Belum Terverifikasi</span>
                                     @endif
                                 </td>
+                                <td>{{ $data->akurasi.'%' }}</td>
                                 <td style="text-align: center; vertical-align: middle;">
                                     <input type="checkbox" name="selected_kegiatan[]" value="{{ $data->id_kegiatan }}">
                                     <button style="border:none; background-color:transparent;" type="button" class="fas fa-eye" data-toggle="modal" data-target="#editModal{{ $data->id_kegiatan }}">
@@ -65,43 +67,47 @@
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label>Nama Kegiatan</label>
-                                                <input class="form-control" value="{{ $data->nama_kegiatan }}" disabled>
+                                                <input class="form-control" value="{{ $data->nama_kegiatan }}" disabled style="background-color: white">
                                             </div>
                                             <div class="form-group">
                                                 <label>Tanggal Kegiatan</label>
                                                 <input class="form-control"
                                                     value="{{ \Carbon\Carbon::parse($data->tanggal_kegiatan)->translatedFormat('d F Y') }}"
-                                                    disabled>
+                                                    disabled style="background-color: white">
                                             </div>
                                             <div class="form-group">
                                                 <label>Posisi</label>
                                                 <input class="form-control" value="{{ $data->posisi->nama_posisi }}"
-                                                    disabled>
+                                                    disabled style="background-color: white">
                                             </div>
                                             <div class="form-group">
                                                 <label>Jenis Kegiatan</label>
                                                 <input class="form-control"
-                                                    value="{{ $data->jenisKegiatan->jenis_kegiatan }}" disabled>
+                                                    value="{{ $data->jenisKegiatan->jenis_kegiatan }}" disabled style="background-color: white">
                                             </div>
                                             <div class="form-group">
                                                 <label>Tingkat Kegiatan</label>
                                                 <input class="form-control"
-                                                    value="{{ $data->tingkatKegiatan->tingkat_kegiatan }}" disabled>
+                                                    value="{{ $data->tingkatKegiatan->tingkat_kegiatan }}" disabled style="background-color: white">
                                             </div>
                                             <div class="form-group">
                                                 <label>Poin</label>
-                                                <input class="form-control" value="{{ $data->poin->poin }}" disabled>
+                                                <input class="form-control" value="{{ $data->poin->poin }}" disabled style="background-color: white">
                                             </div>
                                             <div class="form-group">
                                                 <label>Status Sertifikat</label>
                                                 <input class="form-control"
                                                     value="{{ $data->verifsertif === 'True' ? 'Terverifikasi' : 'Belum Terverifikasi' }}"
-                                                    disabled>
+                                                    disabled style="background-color: white">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Akurasi</label>
+                                                <input class="form-control" value="{{ $data->akurasi.'%' }}" disabled style="background-color: white">
                                             </div>
                                             <div class="form-group">
                                                 <label>Sertifikat</label>
                                                 <div class="text-center mt-3">
-                                                    <img src="{{ asset($data->sertifikat) }}" alt="Tidak Dapat Menampilkan Sertifikat" class="img-fluid rounded" style="max-width: 100%; height: auto;">
+                                                    <img src="{{ '/storage/'.($data->sertifikat) }}" alt="Tidak Dapat Menampilkan Sertifikat" class="img-fluid rounded" style="max-width: 100%; height: auto;">
                                                 </div>
                                             </div>
                                         </div>

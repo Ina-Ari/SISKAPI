@@ -32,9 +32,11 @@ def verify_certificate(target_path):
                 good_matches.append([match1])
 
     min_features = min(len(kp1), len(kp2))
-    match_percentage = (len(good_matches) / min_features) * 100 if min_features > 0 else 0
+    match_percentage = (len(good_matches) / min_features) * 1000 if min_features > 0 else 0
 
-    return "Terverifikasi" if match_percentage > 20 else "Tidak Terverifikasi"
+    status = "Terverifikasi" if match_percentage > 80 else "Tidak Terverifikasi"
+    return f"{status}|{match_percentage:.2f}"
+
 
 if __name__ == "__main__":
     target_path = sys.argv[1]

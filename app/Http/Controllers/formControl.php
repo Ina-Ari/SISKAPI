@@ -78,15 +78,9 @@ class formControl extends Controller
         }
 
         // Ambil hasil dari output script Python (apakah sertifikat terverifikasi atau tidak)
-        $verificationResult = trim($process->getOutput());
-        $isVerified = $verificationResult === "Terverifikasi";
-
-        // Log hasil verifikasi
-        if ($isVerified) {
-            Log::info("Certificate verified successfully for Nim: {$request->Nim}");
-        } else {
-            Log::warning("Certificate verification failed for Nim: {$request->Nim}");
-        }
+        $verificationOutput = trim($process->getOutput());
+        [$verificationResult, $matchPercentage] = explode('|', $verificationOutput); // Misalnya output dipisahkan dengan "|"
+        $certificateStatus = $verificationResult === "Terverifikasi" ? 'True' : 'False';
 
         // Mencari id_poin berdasarkan kombinasi
         $poin = Poin::where('id_posisi', $request->id_posisi)
@@ -107,9 +101,10 @@ class formControl extends Controller
             'id_posisi' => $request->id_posisi,
             'idtingkat_kegiatan' => $request->idtingkat_kegiatan,
             'idjenis_kegiatan' => $request->idjenis_kegiatan,
-            'sertifikat' => 'storage/' . $certificatePath, // Simpan path relatif
-            'verifsertif' => $isVerified,
-            'verif' => false,
+            'sertifikat' => $certificatePath, // Simpan path relatif
+            'verifsertif' => $certificateStatus,
+            'akurasi' => $matchPercentage,
+            'verif' => 'False',
             'id_poin' => $poin->id_poin,
         ]);
 
@@ -135,55 +130,78 @@ class formControl extends Controller
 
         // Jika ada file sertifikat baru, lakukan pengunggahan dan penggantian
         if ($request->hasFile('sertifikat')) {
+
+            $certificate = $request->file('sertifikat');
+            $certificatePath = $certificate->store('sertifikat', 'public');  // 'public' berarti di direktori storage/app/public
+
+            // Path absolut untuk script Python dan file sertifikat
+            $pythonScriptPath = base_path('resources/python/verify_certificate.py');
+            $certificateAbsolutePath = public_path('storage/' . $certificatePath); // Pastikan path file sesuai
+
+            // Menjalankan script Python dengan menggunakan perintah py (atau python, tergantung sistem)
+            $process = new Process(['py', $pythonScriptPath, $certificateAbsolutePath]); // Ganti 'python' dengan 'py' jika itu yang berfungsi
+            $process->run();
+
+            // Tangani error jika script Python gagal
+            if (!$process->isSuccessful()) {
+                // Jika Python script gagal, tangani dengan exception
+                throw new ProcessFailedException($process);
+            }
+
+            // Ambil hasil dari output script Python (apakah sertifikat terverifikasi atau tidak)
+            $verificationOutput = trim($process->getOutput());
+            [$verificationResult, $matchPercentage] = explode('|', $verificationOutput); // Misalnya output dipisahkan dengan "|"
+            $certificateStatus = $verificationResult === "Terverifikasi" ? 'True' : 'False';
             // Direktori tujuan
-            $destinationPath = public_path('image/sertifikat');
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0755, true);
-            }
+            // $destinationPath = public_path('image/sertifikat');
+            // if (!file_exists($destinationPath)) {
+            //     mkdir($destinationPath, 0755, true);
+            // }
 
-            // File sertifikat
-            $file = $request->file('sertifikat');
-            $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $extension = $file->getClientOriginalExtension();
-            $fileName = $originalName . '.' . $extension;
+            // // File sertifikat
+            // $file = $request->file('sertifikat');
+            // $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            // $extension = $file->getClientOriginalExtension();
+            // $fileName = $originalName . '.' . $extension;
 
-            // Pastikan nama file unik
-            $counter = 1;
-            while (file_exists($destinationPath . '/' . $fileName)) {
-                $fileName = $originalName . '_' . $counter++ . '.' . $extension;
-            }
+            // // Pastikan nama file unik
+            // $counter = 1;
+            // while (file_exists($destinationPath . '/' . $fileName)) {
+            //     $fileName = $originalName . '_' . $counter++ . '.' . $extension;
+            // }
 
-            // Pindahkan file ke folder tujuan
-            $file->move($destinationPath, $fileName);
+            // // Pindahkan file ke folder tujuan
+            // $file->move($destinationPath, $fileName);
 
-            // Path lengkap sertifikat
-            $filePath = 'image/sertifikat/' . $fileName;
+            // // Path lengkap sertifikat
+            // $filePath = 'image/sertifikat/' . $fileName;
 
-            // Path ke logo
-            $logoPath = public_path('image/logo_pnb.jpg');
-            $certificatePath = public_path($filePath);
+            // // Path ke logo
+            // $logoPath = public_path('image/logo_pnb.jpg');
+            // $certificatePath = public_path($filePath);
 
-            // Jalankan skrip Python untuk verifikasi sertifikat
-            $output = shell_exec("python3 /path/to/your/detect_logo.py " . escapeshellarg($logoPath) . " " . escapeshellarg($certificatePath));
+            // // Jalankan skrip Python untuk verifikasi sertifikat
+            // $output = shell_exec("python3 /path/to/your/detect_logo.py " . escapeshellarg($logoPath) . " " . escapeshellarg($certificatePath));
 
-            // Cek hasil dari skrip Python
-            $isVerified = trim($output) === "True";
+            // // Cek hasil dari skrip Python
+            // $isVerified = trim($output) === "True";
 
-            // Log hasil verifikasi
-            if ($isVerified) {
-                Log::info("Certificate verified successfully for Nim: {$request->Nim}");
-            } else {
-                Log::warning("Certificate verification failed for Nim: {$request->Nim}");
-            }
+            // // Log hasil verifikasi
+            // if ($isVerified) {
+            //     Log::info("Certificate verified successfully for Nim: {$request->Nim}");
+            // } else {
+            //     Log::warning("Certificate verification failed for Nim: {$request->Nim}");
+            // }
 
-            // Hapus file sertifikat lama jika ada
-            if ($kegiatan->sertifikat && file_exists(public_path($kegiatan->sertifikat))) {
-                unlink(public_path($kegiatan->sertifikat));
-            }
+            // // Hapus file sertifikat lama jika ada
+            // if ($kegiatan->sertifikat && file_exists(public_path($kegiatan->sertifikat))) {
+            //     unlink(public_path($kegiatan->sertifikat));
+            // }
 
-            // Update path sertifikat dan status verifikasi
-            $kegiatan->sertifikat = $filePath;
-            $kegiatan->verifsertif = $isVerified;  // Menyimpan hasil verifikasi
+            // // Update path sertifikat dan status verifikasi
+            $kegiatan->sertifikat = $certificatePath;
+            $kegiatan->verifsertif = $certificateStatus;
+            $kegiatan->akurasi = $matchPercentage;  // Menyimpan hasil verifikasi
         }
 
         // Mencari id_poin berdasarkan kombinasi
@@ -205,6 +223,9 @@ class formControl extends Controller
             'id_posisi' => $request->id_posisi,
             'idtingkat_kegiatan' => $request->idtingkat_kegiatan,
             'idjenis_kegiatan' => $request->idjenis_kegiatan,
+            // 'sertifikat' => $certificatePath, // Simpan path relatif
+            // 'verifsertif' => $certificateStatus,
+            // 'akurasi' => $matchPercentage,
             'id_poin' => $poin->id_poin,
             'verif' => 'False', // Reset verifikasi manual jika ada update
         ]);
@@ -232,7 +253,7 @@ class formControl extends Controller
     {
         $mahasiswa = Mahasiswa::findOrFail($nim);
         $kegiatan = DB::table('kegiatan')
-        ->join('poin', 'kegiatan.id_poin', '=', 'poin.id_poin') 
+        ->join('poin', 'kegiatan.id_poin', '=', 'poin.id_poin')
         ->where('kegiatan.nim', $nim)
         ->select('kegiatan.*','poin.poin')
         ->get();

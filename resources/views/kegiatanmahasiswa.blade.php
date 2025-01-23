@@ -29,10 +29,9 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>NIM</th>
                         <th>Nama Kegiatan</th>
                         <th>Tanggal Kegiatan</th>
-                        <th>Status Sertifikat</th>
+                        <th>Status Verifikasi</th>
                         <th style="text-align: center;">Aksi</th>
                     </tr>
                 </thead>
@@ -40,14 +39,13 @@
                     @foreach ($query->kegiatan as $key => $data)
                         <tr>
                             <td>{{ (int)$key + 1 }}</td>
-                            <td>{{ $data->nim }}</td>
                             <td>{{ $data->nama_kegiatan }}</td>
                             <td>{{ \Carbon\Carbon::parse($data->tanggal_kegiatan)->translatedFormat('d F Y') }}</td>
                             <td>
-                                @if ($data->verifsertif === 'True')
-                                    <span>Terverifikasi</span>
+                                @if ($data->verif === 'True')
+                                    <span class="badge badge-success">Terverifikasi</span>
                                 @else
-                                    <span>Belum Terverifikasi</span>
+                                    <span class="badge badge-danger">Belum Terverifikasi</span>
                                 @endif
                             </td>
                             <td style="text-align: center; vertical-align: middle;">
@@ -98,8 +96,14 @@
                                         <div class="form-group">
                                             <label>Sertifikat</label>
                                             <div class="text-center mt-3">
-                                                <img src="{{ 'storage/public/($data->sertifikat)' }}" alt="Tidak Dapat Menampilkan Sertifikat" class="img-fluid rounded" style="max-width: 100%; height: auto;">
+                                                <img src="{{ '/storage/'.($data->sertifikat) }}" alt="Tidak Dapat Menampilkan Sertifikat" class="img-fluid rounded" style="max-width: 100%; height: auto;">
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Status Verifikasi</label>
+                                            <input class="form-control"
+                                                value="{{ $data->verif === 'True' ? 'Terverifikasi' : 'Belum Terverifikasi' }}"
+                                                disabled style="background-color: white;">
                                         </div>
                                     </div>
                                     <div class="modal-footer">

@@ -35,11 +35,11 @@
                     <td>{{ $item->jenisKegiatan->jenis_kegiatan}}</td>
                     <td>{{ $item->poin }}</td>
                     <td>
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#editModal{{ $item->id_poin }}">Edit</button>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#editModal{{ $item->id_poin }}"><i class="fa fa-pen"></i></button>
                         <form action="{{ route('poin.destroy', $item->id_poin) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>

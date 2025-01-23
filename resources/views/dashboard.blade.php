@@ -23,7 +23,7 @@
                             <p>Mahasiswa Terdaftar</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="nav-icon fas fa-users"></i>
                         </div>
                         <a href="{{ route('mahasiswa.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -35,7 +35,7 @@
                             <p>Kegiatan Diajukan</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
+                            <i class="ion ion-stats-bars"></i>
                         </div>
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -48,7 +48,7 @@
                             <p>Kegiatan Terverifikasi</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                            <i class="fas fa-check-circle"></i>
                         </div>
                         <a href="{{ route('kegiatan.index') }}" class="small-box-footer">More info <i
                                 class="fas fa-arrow-circle-right"></i></a>
@@ -57,15 +57,14 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3 style="margin-bottom: 0px;">{{ $belumterverifikasi }}</h3>
-                            <p style="margin: 0px; padding: 0px">Kegiatan Belum</p>
-                            <p style="margin: 0px; padding: 0px">Terverifikasi</p>
+                            <h3 style="color: white">{{ $belumterverifikasi }}<sup style="font-size: 20"></sup></h3>
+                            <p style="color: white">Kegiatan Belum Terverifikasi</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-person-add"></i>
+                            <i class="fas fa-exclamation-circle"></i>
                         </div>
-                        <a href="{{ route('kegiatan_not_verified') }}" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
+                        <a  href="{{ route('kegiatan_not_verified') }}" class="small-box-footer" style="color: white !important;">More info <i
+                                class="fas fa-arrow-circle-right" style="color: white"></i></a>
                     </div>
                 </div>
             </div>

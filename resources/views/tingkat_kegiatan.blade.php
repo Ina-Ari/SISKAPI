@@ -26,11 +26,11 @@
                     <td>{{ $key+1 }}</td>
                     <td>{{ $item->tingkat_kegiatan }}</td>
                     <td>
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#editModal{{ $item->idtingkat_kegiatan }}">Edit</button>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#editModal{{ $item->idtingkat_kegiatan }}"><i class="fa fa-pen"></i></button>
                         <form action="{{ route('tingkatKegiatan.destroy', $item->idtingkat_kegiatan) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>

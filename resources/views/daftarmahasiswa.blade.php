@@ -35,6 +35,7 @@
             <th>Kelas</th>
             <th>Prodi</th>
             <th>Jurusan</th>
+            {{-- <th>Total Poin</th> --}}
             <th>Keterangan</th>
         </tr>
         </thead>
@@ -47,7 +48,8 @@
                     <td>{{ $item->kelas }}</td>
                     <td>{{ $item->prodi->nama_prodi }}</td>
                     <td>{{ $item->jurusan->nama_jurusan }}</td>
-                    <td>{{ $status[$item->nim] }}</td>
+                    {{-- <td>{{ $status[$item->nim]['totalPoin'] }}</td> --}}
+                    <td>{{ $status[$item->nim]['keterangan'] }}</td>
                 </tr>
             @endforeach
         </tbody>

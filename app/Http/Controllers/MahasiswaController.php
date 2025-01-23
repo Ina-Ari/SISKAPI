@@ -88,7 +88,10 @@ class MahasiswaController extends Controller
 
             $keterangan = $totalPoin >= 28 ? 'Lulus' : 'Belum Lulus';
 
-            $status[$mahasiswa->nim] = $keterangan;
+            $status[$mahasiswa->nim] = [
+                'keterangan' => $keterangan,
+                // 'totalPoin' => $totalPoin
+            ];
         }
 
         return view('daftarmahasiswa', compact('data', 'status', 'jurusan'));
@@ -106,6 +109,8 @@ class MahasiswaController extends Controller
                 $q->where('verif', 'False');
             }
         }])->findOrFail($id);
+
+        // dd($query);
 
         return view('kegiatanmahasiswa', compact('query'))->with('filter', $filter);
 

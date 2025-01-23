@@ -11,11 +11,12 @@ class AuthAdmin extends Authenticatable
 
     // Tabel yang digunakan oleh model ini
     protected $table = 'admin';
+    public $timestamps = false;
 
     // Primary key untuk tabel ini 
     protected $primaryKey = 'id_admin';
 
-    // Kolom yang dapat diisi melalui mass assignment
+    // Kolom yang dapat diisi melalui mass assignment 
     protected $fillable = [
         'username',
         'password',

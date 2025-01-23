@@ -23,6 +23,7 @@ class Kegiatan extends Model
         'sertifikat',
         'id_poin',
         'verifsertif',
+        'akurasi',
         'verif',
     ];
 

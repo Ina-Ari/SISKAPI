@@ -13,7 +13,7 @@
           <img src="{{ $mahasiswa->foto_profil ? asset('storage/' . $mahasiswa->foto_profil) : asset('../../dist/img/user4-128x128.jpg') }}">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ session('nama') }}</a>
+          <a href="#" style="font-size: 85%" class="d-block">{{ session('nama') }}</a>
         </div>
       </div>
 
@@ -40,7 +40,7 @@
                     <p>Logout</p>
                 </a>
             </li>
-            
+
           {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
