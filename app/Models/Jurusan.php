@@ -13,7 +13,7 @@ class Jurusan extends Model
     public $timestamps = false;
     protected $fillable = [
         'kode_jurusan',
-        'nama_jurusan'
+        'nama_jurusan',
     ];
 
 

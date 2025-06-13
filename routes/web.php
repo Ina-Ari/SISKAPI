@@ -13,6 +13,7 @@ use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\formControl;
+use App\Http\Controllers\formKaprodiController;
 use Illuminate\Routing\Route as RoutingRoute;
 
 // Route::get('/', function () {
@@ -48,16 +49,10 @@ Route::post('/updatepassword', [AuthMhsController::class, 'updatePassword'])->na
 Route::get('/logoutmhs', [AuthMhsController::class, 'logoutmhs'])->name('logoutmhs');
 Route::get('/updateKegiatan', [AuthMhsController::class, 'updateKegiatan'])->name('updateKegiatan');
 
-
-
-
 //Routing Pages
 Route::get('/', [dashboardController::class, 'index'])->name('dashboard')->middleware('auth');
-Route::get('/apijurusan', [JurusanController::class, 'fetchJurusan']);
-Route::get('/apiprodi', [ProdiController::class, 'fetchProdi']);
-Route::get('/apimhs', [MahasiswaController::class, 'fetchMahasiswa']);
 Route::resource('jenisKegiatan', jenisKegiatanController::class);
-Route::resource('tingkatKegiatan', tingkatKegiatanController::class); 
+Route::resource('tingkatKegiatan', tingkatKegiatanController::class);
 Route::resource('posisi', posisiController::class);
 Route::resource('poin', poinController::class);
 
@@ -76,12 +71,12 @@ Route::post('/updateKegiatan/{id_kegiatan}', [formControl::class, 'updateKegiata
 Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
 Route::get('/mahasiswa/{id}/kegiatan', [MahasiswaController::class, 'kegiatan'])->name('mahasiswa.kegiatan');
 
-
-Route::get('/activities', [kegiatanController::class, 'tampilan'])->name('activities.tampilan');
-Route::post('/activities', [kegiatanController::class, 'store'])->name('activity.store');
+Route::delete('/deletekegiatan/{id}', [formControl::class, 'destroy'])->name('kegiatan.destroy');
 
 Route::get('/mahasiswa/{nim}/edit', [formControl::class, 'edit'])->name('form.edit');
 Route::post('/mahasiswa/{nim}/update', [formControl::class, 'update'])->name('form.update');
 
+
+Route::resource('formKaprodi', formKaprodiController::class);
 
 ?>

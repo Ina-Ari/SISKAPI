@@ -71,7 +71,7 @@ class poinController extends Controller{
         if ($poin) {
             // Menghapus data
             $poin->delete();
-            return redirect()->route('poin.index')->with('success', 'poin berhasil dihapus.');
+            return redirect()->route('poin.index')->with('success', 'Poin berhasil dihapus.');
         } else {
             return redirect()->route('poin.index')->with('error', 'Data tidak ditemukan.');
         }

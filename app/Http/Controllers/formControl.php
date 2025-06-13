@@ -152,51 +152,6 @@ class formControl extends Controller
             $verificationOutput = trim($process->getOutput());
             [$verificationResult, $matchPercentage] = explode('|', $verificationOutput); // Misalnya output dipisahkan dengan "|"
             $certificateStatus = $verificationResult === "Terverifikasi" ? 'True' : 'False';
-            // Direktori tujuan
-            // $destinationPath = public_path('image/sertifikat');
-            // if (!file_exists($destinationPath)) {
-            //     mkdir($destinationPath, 0755, true);
-            // }
-
-            // // File sertifikat
-            // $file = $request->file('sertifikat');
-            // $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            // $extension = $file->getClientOriginalExtension();
-            // $fileName = $originalName . '.' . $extension;
-
-            // // Pastikan nama file unik
-            // $counter = 1;
-            // while (file_exists($destinationPath . '/' . $fileName)) {
-            //     $fileName = $originalName . '_' . $counter++ . '.' . $extension;
-            // }
-
-            // // Pindahkan file ke folder tujuan
-            // $file->move($destinationPath, $fileName);
-
-            // // Path lengkap sertifikat
-            // $filePath = 'image/sertifikat/' . $fileName;
-
-            // // Path ke logo
-            // $logoPath = public_path('image/logo_pnb.jpg');
-            // $certificatePath = public_path($filePath);
-
-            // // Jalankan skrip Python untuk verifikasi sertifikat
-            // $output = shell_exec("python3 /path/to/your/detect_logo.py " . escapeshellarg($logoPath) . " " . escapeshellarg($certificatePath));
-
-            // // Cek hasil dari skrip Python
-            // $isVerified = trim($output) === "True";
-
-            // // Log hasil verifikasi
-            // if ($isVerified) {
-            //     Log::info("Certificate verified successfully for Nim: {$request->Nim}");
-            // } else {
-            //     Log::warning("Certificate verification failed for Nim: {$request->Nim}");
-            // }
-
-            // // Hapus file sertifikat lama jika ada
-            // if ($kegiatan->sertifikat && file_exists(public_path($kegiatan->sertifikat))) {
-            //     unlink(public_path($kegiatan->sertifikat));
-            // }
 
             // // Update path sertifikat dan status verifikasi
             $kegiatan->sertifikat = $certificatePath;
@@ -297,6 +252,13 @@ class formControl extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $kegiatan = kegiatan::find($id);
+        if ($kegiatan) {
+            // Menghapus data
+            $kegiatan->delete();
+            return redirect()->route('indexMhs')->with('success', 'Kegiatan berhasil dihapus.');
+        } else {
+            return redirect()->route('indexMhs')->with('error', 'Data tidak ditemukan.');
+        }
     }
 }

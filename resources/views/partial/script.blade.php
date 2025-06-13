@@ -92,3 +92,97 @@
   });
 </script>
 
+<script>
+function setActiveTab(event, formIdToShow) {
+    event.preventDefault();
+
+    // Reset semua tab
+    document.querySelectorAll('#customTabs .nav-link span').forEach(el => {
+    el.classList.remove('custom-tab-active');
+    });
+
+    // Tambah active pada yang diklik
+    event.currentTarget.querySelector('span').classList.add('custom-tab-active');
+
+    // Tampilkan form yang sesuai
+    document.querySelectorAll('#formContainer form').forEach(form => {
+    form.style.display = 'none';
+    });
+    document.getElementById(formIdToShow).style.display = 'block';
+}
+
+// Set tab pertama aktif saat awal load
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('#customTabs .nav-link')[0].click();
+});
+</script>
+
+<script>
+function tambahPernyataan1() {
+  const container = document.getElementById('statement-container1');
+
+  const row = document.createElement('div');
+  row.className = 'row mb-2';
+  row.innerHTML = `
+    <div class="col-md-6">
+      <input type="text" name="sikap[]" class="form-control">
+    </div>
+    <div class="col-md-6">
+      <input type="text" name="attitude[]" class="form-control">
+    </div>
+  `;
+
+  container.appendChild(row);
+}
+
+function tambahPernyataan2() {
+  const container = document.getElementById('statement-container2');
+
+  const row = document.createElement('div');
+  row.className = 'row mb-2';
+  row.innerHTML = `
+    <div class="col-md-6">
+      <input type="text" name="pengetahuan[]" class="form-control">
+    </div>
+    <div class="col-md-6">
+      <input type="text" name="knowledge[]" class="form-control">
+    </div>
+  `;
+
+  container.appendChild(row);
+}
+
+function tambahPernyataan3() {
+  const container = document.getElementById('statement-container3');
+
+  const row = document.createElement('div');
+  row.className = 'row mb-2';
+  row.innerHTML = `
+    <div class="col-md-6">
+      <input type="text" name="ketUmum[]" class="form-control">
+    </div>
+    <div class="col-md-6">
+      <input type="text" name="genSkills[]" class="form-control">
+    </div>
+  `;
+
+  container.appendChild(row);
+}
+
+function tambahPernyataan4() {
+  const container = document.getElementById('statement-container4');
+
+  const row = document.createElement('div');
+  row.className = 'row mb-2';
+  row.innerHTML = `
+    <div class="col-md-6">
+      <input type="text" name="ketKhusus[]" class="form-control">
+    </div>
+    <div class="col-md-6">
+      <input type="text" name="specSkills[]" class="form-control">
+    </div>
+  `;
+
+  container.appendChild(row);
+}
+</script>

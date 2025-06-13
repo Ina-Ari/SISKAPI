@@ -195,6 +195,11 @@
                               </td>
                               <td style="text-align: center; vertical-align: middle;">
                                 <button title="Edit Kegiatan" style="border:none; background-color:transparent;" type="button" class="fas fa-edit" data-toggle="modal" data-target="#formEditKegiatan{{ $item->id_kegiatan }}">
+                                <form action="{{ route('kegiatan.destroy', $item->id_kegiatan) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kegiatan ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" title="Hapus Kegiatan" style="border:none; background-color:transparent;" class="fas fa-trash"></button>
+                                </form>
                               </td>
                             </tr>
 

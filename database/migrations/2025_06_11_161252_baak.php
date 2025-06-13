@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tingkat_kegiatans', function (Blueprint $table) {
-            $table->id();
+        Schema::create('baak', function (Blueprint $table) {
+            $table->unsignedInteger('user_id')->primary();
+            $table->char('nip', 10);
+            $table->string('telepon', 20);
+            $table->tinyInteger('is_active');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tingkat_kegiatans');
+        Schema::dropIfExists('baak');
     }
 };

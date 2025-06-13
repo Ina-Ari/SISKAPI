@@ -78,7 +78,7 @@ class AuthAdminController extends Controller
 
             // Redirect ke halaman dashboard admin
             return redirect()->route('indexAdmin');
-            
+
         } else {
             // Jika login gagal, tambahkan hit ke RateLimiter
             RateLimiter::hit($key, 60); // Tambah percobaan, reset setelah 60 detik

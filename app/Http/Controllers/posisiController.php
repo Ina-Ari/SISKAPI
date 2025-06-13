@@ -33,7 +33,7 @@ class posisiController extends Controller
         ]);
 
         Posisi::create($request->all());
-        return redirect()->back()->with('success', 'posisi berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Posisi berhasil ditambahkan.');
     }
 
     /**
@@ -70,7 +70,7 @@ class posisiController extends Controller
         $posisi->update($request->all());
 
         // Kembali dengan pesan sukses
-        return redirect()->back()->with('success', 'Jenis kegiatan berhasil diubah.');
+        return redirect()->back()->with('success', 'Posisi berhasil diubah.');
 
     }
 
@@ -86,7 +86,7 @@ class posisiController extends Controller
         if ($posisi) {
             // Menghapus data
             $posisi->delete();
-            return redirect()->route('posisi.index')->with('success', 'JPosisi berhasil dihapus.');
+            return redirect()->route('posisi.index')->with('success', 'Posisi berhasil dihapus.');
         } else {
             return redirect()->route('posisi.index')->with('error', 'Data tidak ditemukan.');
         }
