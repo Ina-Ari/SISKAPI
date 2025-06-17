@@ -78,5 +78,6 @@ Route::post('/mahasiswa/{nim}/update', [formControl::class, 'update'])->name('fo
 
 
 Route::resource('formKaprodi', formKaprodiController::class);
-
+Route::post('/tambahDataSkpi1', [formKaprodiController::class, 'storeSkpi1'])->name('form.storeSkpi1');
+Route::post('/tambahDataSkpi2', [formKaprodiController::class, 'storeSkpi2'])->name('form.storeSkpi2');
 ?>
