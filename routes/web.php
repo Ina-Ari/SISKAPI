@@ -41,7 +41,7 @@ Route::middleware('guest')->group(function() {
         Route::get('/reset-password', 'showResetPasswordForm')->name('password.forgot.form');
         Route::post('/reset-password', 'resetPassword')->name('password.reset');
     });
-})->name('guest');
+});
 
 
 /**
@@ -66,11 +66,11 @@ Route::middleware('auth')->group(function() {
 
 
     // Mahasiswa
-    Route::middleware('role:mahasiswa')->group(function() {
+    Route::middleware('role:mahasiswa')->name('mahasiswa.')->group(function() {
         Route::controller(MahasiswaController::class)->group(function() {
-            Route::get('/mahasiswa/dashboard', 'index')->name('mahasiswa.dashboard');
+            Route::get('/mahasiswa/dashboard', 'index')->name('dashboard');
         });
-    })->name('mahasiswa');
+    });
 
 
     // Kepala Prodi
