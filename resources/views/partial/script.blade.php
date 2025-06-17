@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<script>
+{{-- <script>
 function tambahPernyataan1() {
   const container = document.getElementById('statement-container1');
 
@@ -185,4 +185,37 @@ function tambahPernyataan4() {
 
   container.appendChild(row);
 }
-</script>
+</script> --}}
+
+<script>
+        function tambahPernyataan(containerId, name1, name2) {
+            const container = document.getElementById(containerId);
+            const div = document.createElement('div');
+            div.className = 'row mb-2 mx-2 align-items-center';
+
+            div.innerHTML = `
+                <div class="" >
+                    <input type="checkbox" class="form-check-input mt-1">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="${name1}[]" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="${name2}[]" class="form-control">
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+         function hapus(containerId) {
+            const container = document.getElementById(containerId);
+            const children = container.querySelectorAll('.row.mb-2.mx-2');
+            children.forEach(row => {
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox.checked) {
+                    container.removeChild(row);
+                }
+            });
+        }
+    </script>
+

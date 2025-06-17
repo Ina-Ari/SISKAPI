@@ -14,7 +14,7 @@ use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\formControl;
-use App\Http\Controllers\formKaprodiController;
+use App\Http\Controllers\KaprodiController;
 use Illuminate\Routing\Route as RoutingRoute;
 
 
@@ -75,7 +75,6 @@ Route::middleware('auth')->group(function() {
 
     // Kepala Prodi
 
-
     // BAAK
 
 
@@ -117,7 +116,8 @@ Route::get('/mahasiswa/{nim}/edit', [formControl::class, 'edit'])->name('form.ed
 Route::post('/mahasiswa/{nim}/update', [formControl::class, 'update'])->name('form.update');
 
 
-Route::resource('formKaprodi', formKaprodiController::class);
-Route::post('/tambahDataSkpi1', [formKaprodiController::class, 'storeSkpi1'])->name('form.storeSkpi1');
-Route::post('/tambahDataSkpi2', [formKaprodiController::class, 'storeSkpi2'])->name('form.storeSkpi2');
+Route::resource('KaprodiController', KaprodiController::class);
+Route::get('/formKaprodi', [KaprodiController::class, 'formKaprodi'])->name('formKaprodi');
+Route::post('/tambahDataSkpi1', [KaprodiController::class, 'storeSkpi1'])->name('form.storeSkpi1');
+Route::post('/tambahDataSkpi2', [KaprodiController::class, 'storeSkpi2'])->name('form.storeSkpi2');
 ?>

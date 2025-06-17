@@ -22,5 +22,6 @@
 
 <!-- Script -->
     @include('./partial.script')
+    @stack('scripts')
 </body>
 </html>

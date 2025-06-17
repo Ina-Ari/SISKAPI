@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('mahasiswa_id');
+            $table->unsignedInteger('nim');
             $table->unsignedInteger('id_poin');
             $table->string('nama_kegiatan', 200);
             $table->date('tanggal_kegiatan');
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('status', 45);
             $table->timestamps();
 
-            $table->foreign('mahasiswa_id')->references('user_id')->on('mahasiswa')->onDelete('cascade');
+            $table->foreign('nim')->references('user_id')->on('mahasiswa')->onDelete('cascade');
             $table->foreign('id_poin')->references('id_poin')->on('poin')->onDelete('cascade');
         });
     }
