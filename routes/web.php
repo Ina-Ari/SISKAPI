@@ -15,6 +15,7 @@ use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\formControl;
 use App\Http\Controllers\KaprodiController;
+use App\Http\Controllers\BaakController;
 use Illuminate\Routing\Route as RoutingRoute;
 
 
@@ -41,7 +42,7 @@ Route::middleware('guest')->group(function() {
         Route::get('/reset-password', 'showResetPasswordForm')->name('password.forgot.form');
         Route::post('/reset-password', 'resetPassword')->name('password.reset');
     });
-})->name('guest');
+});
 
 
 /**
@@ -66,17 +67,28 @@ Route::middleware('auth')->group(function() {
 
 
     // Mahasiswa
-    Route::middleware('role:mahasiswa')->group(function() {
+    Route::middleware('role:mahasiswa')->name('mahasiswa.')->group(function() {
         Route::controller(MahasiswaController::class)->group(function() {
-            Route::get('/mahasiswa/dashboard', 'index')->name('mahasiswa.dashboard');
+            Route::get('/mahasiswa/dashboard', 'index')->name('dashboard');
         });
-    })->name('mahasiswa');
-
+    });
 
     // Kepala Prodi
+    Route::middleware('role:kaprodi')->name('kaprodi.')->group(function() {
+        Route::controller(KaprodiController::class)->group(function() {
+            Route::get('/kaprodi/dashboard', 'index')->name('dashboard');
+            Route::get('/kaprodi/form', 'formKaprodi')->name('form');
+            Route::post('/kaprodi/tambahDataSkpi1', 'storeSkpi1')->name('storeSkpi1');
+            Route::post('/kaprodi/tambahDataSkpi2', 'storeSkpi2')->name('storeSkpi2');
+        });
+    });
 
     // BAAK
-
+    Route::middleware('role:baak')->name('baak.')->group(function() {
+        Route::controller(BaakController::class)->group(function() {
+            Route::get('/baak/dashboard', 'index')->name('dashboard');
+        });
+    });
 
     // UPAPKK
 });
@@ -116,8 +128,8 @@ Route::get('/mahasiswa/{nim}/edit', [formControl::class, 'edit'])->name('form.ed
 Route::post('/mahasiswa/{nim}/update', [formControl::class, 'update'])->name('form.update');
 
 
-Route::resource('KaprodiController', KaprodiController::class);
-Route::get('/formKaprodi', [KaprodiController::class, 'formKaprodi'])->name('formKaprodi');
-Route::post('/tambahDataSkpi1', [KaprodiController::class, 'storeSkpi1'])->name('form.storeSkpi1');
-Route::post('/tambahDataSkpi2', [KaprodiController::class, 'storeSkpi2'])->name('form.storeSkpi2');
+// Route::resource('KaprodiController', KaprodiController::class);
+// Route::get('/formKaprodi', [KaprodiController::class, 'formKaprodi'])->name('formKaprodi');
+// Route::post('/tambahDataSkpi1', [KaprodiController::class, 'storeSkpi1'])->name('form.storeSkpi1');
+// Route::post('/tambahDataSkpi2', [KaprodiController::class, 'storeSkpi2'])->name('form.storeSkpi2');
 ?>

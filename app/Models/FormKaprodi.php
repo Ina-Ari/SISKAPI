@@ -38,9 +38,19 @@ class FormKaprodi extends Model
         'special_skills'
     ];
 
+    protected $casts = [
+        'sikap' => 'array',
+        'attitude' => 'array',
+        'penguasaan_pengetahuan' => 'array',
+        'knowledge' => 'array',
+        'keterampilan_umum' => 'array',
+        'general_skills' => 'array',
+        'keterampilan_khusus' => 'array',
+        'special_skills' => 'array',
+    ];
 
     public function prodi()
     {
-        return $this->belongsTo(Prodi::class, 'kode_prodi');
+        return $this->belongsTo(Prodi::class, 'kode_prodi', 'kode prodi');
     }
 }

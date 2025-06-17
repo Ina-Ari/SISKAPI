@@ -11,9 +11,9 @@
 
                 <!-- Dashboard -->
                 <li class="nav-item">
-                    <a href="{{ route('KaprodiController.index') }}"
-                       class="nav-link {{ Route::currentRouteName() == 'KaprodiController.index' ? 'active' : '' }}"
-                       style="{{ Route::currentRouteName() == 'KaprodiController.index' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
+                    <a href="{{ route('kaprodi.dashboard') }}"
+                       class="nav-link {{ Route::currentRouteName() == 'kaprodi.dashboard' ? 'active' : '' }}"
+                       style="{{ Route::currentRouteName() == 'kaprodi.dashboard' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
                         <i class="nav-icon fas fa-home"></i>
                         <p style="font-size: 18px;">Dashboard</p>
                     </a>
@@ -21,9 +21,9 @@
 
                 <!-- Formulir SKPI -->
                 <li class="nav-item">
-                    <a href="{{ route('formKaprodi') }}"
-                       class="nav-link {{ Route::currentRouteName() == 'formKaprodi' ? 'active' : '' }}"
-                       style="{{ Route::currentRouteName() == 'formKaprodi' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
+                    <a href="{{ route('kaprodi.form') }}"
+                       class="nav-link {{ Route::currentRouteName() == 'kaprodi.form' ? 'active' : '' }}"
+                       style="{{ Route::currentRouteName() == 'kaprodi.form' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
                         <i class="nav-icon fas fa-pen-square"></i>
                         <p style="font-size: 18px;">Formulir SKPI</p>
                     </a>

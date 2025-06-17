@@ -44,6 +44,9 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
     $(function () {
       $("#example1").DataTable({
@@ -117,76 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-{{-- <script>
-function tambahPernyataan1() {
-  const container = document.getElementById('statement-container1');
-
-  const row = document.createElement('div');
-  row.className = 'row mb-2';
-  row.innerHTML = `
-    <div class="col-md-6">
-      <input type="text" name="sikap[]" class="form-control">
-    </div>
-    <div class="col-md-6">
-      <input type="text" name="attitude[]" class="form-control">
-    </div>
-  `;
-
-  container.appendChild(row);
-}
-
-function tambahPernyataan2() {
-  const container = document.getElementById('statement-container2');
-
-  const row = document.createElement('div');
-  row.className = 'row mb-2';
-  row.innerHTML = `
-    <div class="col-md-6">
-      <input type="text" name="pengetahuan[]" class="form-control">
-    </div>
-    <div class="col-md-6">
-      <input type="text" name="knowledge[]" class="form-control">
-    </div>
-  `;
-
-  container.appendChild(row);
-}
-
-function tambahPernyataan3() {
-  const container = document.getElementById('statement-container3');
-
-  const row = document.createElement('div');
-  row.className = 'row mb-2';
-  row.innerHTML = `
-    <div class="col-md-6">
-      <input type="text" name="ketUmum[]" class="form-control">
-    </div>
-    <div class="col-md-6">
-      <input type="text" name="genSkills[]" class="form-control">
-    </div>
-  `;
-
-  container.appendChild(row);
-}
-
-function tambahPernyataan4() {
-  const container = document.getElementById('statement-container4');
-
-  const row = document.createElement('div');
-  row.className = 'row mb-2';
-  row.innerHTML = `
-    <div class="col-md-6">
-      <input type="text" name="ketKhusus[]" class="form-control">
-    </div>
-    <div class="col-md-6">
-      <input type="text" name="specSkills[]" class="form-control">
-    </div>
-  `;
-
-  container.appendChild(row);
-}
-</script> --}}
-
 <script>
         function tambahPernyataan(containerId, name1, name2) {
             const container = document.getElementById(containerId);
@@ -219,3 +152,109 @@ function tambahPernyataan4() {
         }
     </script>
 
+<script>
+    let formChanged = false;
+    const simpanButton = document.getElementById('btn-simpan');
+    const modal = new bootstrap.Modal(document.getElementById('unsavedModal'));
+
+    // Jika user mengubah isi form
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+        el.addEventListener('input', () => {
+            formChanged = true;
+        });
+    });
+
+    // Saat klik tombol simpan biasa
+    simpanButton?.addEventListener('click', () => {
+        formChanged = false;
+    });
+
+    // Saat user mau meninggalkan halaman
+    window.addEventListener('beforeunload', function (e) {
+        if (formChanged) {
+            e.preventDefault();
+            e.returnValue = '';
+        }
+    });
+
+    // Tangkap event link atau refresh
+    document.querySelectorAll('a, button').forEach(link => {
+        link.addEventListener('click', function (e) {
+            if (formChanged && this.id !== 'btn-simpan' && !this.closest('.modal')) {
+                e.preventDefault();
+                modal.show();
+            }
+        });
+    });
+
+    // Tombol "Simpan" di dalam modal
+    document.getElementById('confirmSave').addEventListener('click', () => {
+        modal.hide();
+        simpanButton.click();
+    });
+</script>
+
+SCRIPT.BLADE.PHP
+
+
+
+<script>
+   const skpi_chart_options = {
+    series: [
+       {
+        name: 'Total Pengajuan SKPI',
+        data: [28, 48, 40, 19, 86, 27, 90],
+      },
+      {
+        name: 'Proses Verifikasi',
+        data: [65, 59, 80, 81, 56, 55, 40],
+      },
+      {
+        name: 'Telah Diverifikasi',
+        data: [52, 30, 15, 45, 24, 60, 70],
+      },
+      {
+        name: 'Pengajuan Direvisi',
+        data: [5, 15, 10, 29, 24, 22, 23],
+      },
+    ],
+    chart: {
+      height: 300,
+      type: 'area',
+      toolbar: {
+        show: false,
+      },
+    },
+    legend: {
+      show: false,
+    },
+    colors: ['#3B82F6', '#EAB308', '#059669', '#BA2532'],
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: 'smooth',
+    },
+    xaxis: {
+      type: 'datetime',
+      categories: [
+
+        '2025-01-01',
+        '2025-02-01',
+        '2025-03-01',
+        '2025-04-01',
+        '2025-05-01',
+        '2025-06-01',
+        '2025-07-01',
+      ],
+    },
+    tooltip: {
+      x: {
+        format: 'MMMM yyyy',
+      },
+    },
+  };
+
+   const skpi_chart = new ApexCharts(document.querySelector("#skpi-chart"), skpi_chart_options);
+  skpi_chart.render();
+</script>

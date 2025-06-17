@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Prodi;
 use App\Models\FormKaprodi;
+use App\Models\KepalaProdi;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -67,26 +68,65 @@ class KaprodiController
      */
     public function formKaprodi()
     {
+        $user = auth()->user();
+
+        $kaprodi = KepalaProdi::where('user_id', $user->id)->firstOrFail();
+
+        $skpi = FormKaprodi::where('kode_prodi', $kaprodi->kode_prodi)->first();
+        $sikap = $skpi->sikap;
+        $attitude = $skpi->attitude;
+        $penguasaan_pengetahuan = $skpi->penguasaan_pengetahuan;
+        $knowledge = $skpi->knowledge;
+        $keterampilan_umum = $skpi->keterampilan_umum;
+        $general_skills = $skpi->general_skills;
+        $keterampilan_khusus = $skpi->keterampilan_khusus;
+        $special_skills = $skpi->special_skills;
+
+        // $prodiList = Prodi::where('kode_prodi', $kaprodi->kode_prodi)->get();
+
         $prodi = Prodi::where('kode_jurusan', 40)->get();
         // dd($prodi);
-        return view('kaprodi.formKaprodi', compact('prodi'));
+        return view('kaprodi.formKaprodi', compact('prodi', 'skpi', 'sikap', 'attitude', 'penguasaan_pengetahuan', 'knowledge','keterampilan_umum', 'general_skills', 'keterampilan_khusus', 'special_skills'));
     }
 
     public function storeSkpi1(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
+            'akreditasi_institusi' => 'required|in:unggul,baik sekali,baik',
+            'jenis_pendidikan' => 'required|in:vokasi & d2,vokasi & d3,vokasi & d4',
             'gelar'  => 'required',
+            'kualifikasi_kkni'  => 'required',
+            'persyaratan_penerimaan' => 'required',
+            'bahasa_pengantar'  => 'required',
+            'lama_studi'  => 'required',
+            'institution_acc' => 'required|in:superior,very good,good',
+            'study_program' => 'required',
+            'education_type' => 'required|in:vocation & d2,vocation & d3,vocation & d4',
+            'degree'  => 'required',
+            'kkni_level'  => 'required',
+            'adminission_requirement' => 'required',
+            'instruction_language'  => 'required',
+            'length_study'  => 'required',
         ]);
 
-        FormKaprodi::create($request->all());
+        // Ambil kode_prodi dari user yang login
+        $kodeProdi = auth()->user()->kepalaProdi->kode_prodi;
 
-        return redirect()->back()->with('success', 'Data form berhasil ditambahkan!');
+        // Simpan atau update data berdasarkan kode_prodi
+        $skpi = FormKaprodi::firstOrNew(['kode_prodi' => $kodeProdi]);
+
+        $skpi->fill($validated); // gunakan fill jika semua key-nya cocok
+        $skpi->kode_prodi = $kodeProdi;
+
+        $skpi->save();
+
+        return redirect()->route('kaprodi.form')->with('success', 'Data Berhasil Disimpan!');
     }
 
     public function storeSkpi2(Request $request)
     {
         // Validasi umum
-        $request->validate([
+        $validated = $request->validate([
             'sikap.*' => 'required|string',
             'attitude.*' => 'required|string',
             'penguasaan_pengetahuan.*' => 'required|string',
@@ -97,57 +137,16 @@ class KaprodiController
             'special_skills.*' => 'required|string',
         ]);
 
-        FormKaprodi::create([
-            'sikap' => implode('; ', $request->sikap),
-            'attitude' => implode('; ', $request->attitude),
-            'penguasaan_pengetahuan' => implode('; ', $request->penguasaan_pengetahuan),
-            'knowledge' => implode('; ', $request->knowledge),
-            'keterampilan_umum' => implode('; ', $request->keterampilan_umum),
-            'general_skills' => implode('; ', $request->general_skills),
-            'keterampilan_khusus' => implode('; ', $request->keterampilan_khusus),
-            'special_skills' => implode('; ', $request->special_skills),
-        ]);
+        $kodeProdi = auth()->user()->kepalaProdi->kode_prodi;
 
-        return redirect()->back()->with('success', 'Data berhasil disimpan ke satu baris!');
-    }
+        // Simpan atau update data berdasarkan kode_prodi
+        $skpi = FormKaprodi::firstOrNew(['kode_prodi' => $kodeProdi]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $skpi->fill($validated); // gunakan fill jika semua key-nya cocok
+        $skpi->kode_prodi = $kodeProdi;
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $skpi->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('kaprodi.form')->with('success', 'Data Berhasil Disimpan!');
     }
 }
