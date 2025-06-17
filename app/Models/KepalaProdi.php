@@ -4,22 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Mahasiswa extends Model
+class KepalaProdi extends Model
 {
-    protected $table = 'mahasiswa';
+    protected $table = 'kepala_prodi';
     protected $primaryKey = 'user_id';
     protected $keyType = 'string';
     public $incrementing = false;
-    public $timestamps = true;
 
     protected $fillable = [
-        'nim',
-        'telepon',
+        'user_id',
+        'nip',
+        'nidn',
         'angkatan',
-        'kode_prodi',
+        'telepon',
         'is_active',
+        'prodi_id',
     ];
 
     protected $attributes = [
@@ -35,10 +35,5 @@ class Mahasiswa extends Model
     public function prodi(): BelongsTo
     {
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
-    }
-
-    public function kegiatan(): HasMany
-    {
-        return $this->hasMany(Kegiatan::class, 'nim');
     }
 }

@@ -14,6 +14,16 @@ return [
     |
     */
 
+    'pnb_api' => [
+        'url' => env('PNB_API_URL'),
+        'key' => env('PNB_API_KEY'),
+        'academic_years' => [
+            'student' => ['20221', '20222'],
+            'lecturer' => ['20221', '20222'],
+            'employee' => ['20221', '20222'],
+        ]
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

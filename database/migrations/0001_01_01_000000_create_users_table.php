@@ -11,23 +11,39 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nama', 50)->unique();
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama', 100);
-            $table->string('picture', 200);
+            $table->string('picture', 200)->nullable();
             $table->string('email', 200)->unique();
-            $table->string('username', 18);
+            $table->string('username', 18)->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedInteger('role_id');
-            $table->timestamps();
             $table->softDeletes();
+            $table->rememberToken();
+            $table->timestamps();
 
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
+            $table->timestamp('created_at')->nullable();
+        });
+
+        Schema::create('registration_tokens', function (Blueprint $table) {
+            $table->string('username', 18)->primary();
+            $table->string('email')->nullable()->unique();
+            $table->string('type', 20);
+            $table->string('token', 64)->unique();
+            $table->timestamp('expires_at')->nullable();
             $table->timestamp('created_at')->nullable();
         });
 
@@ -47,6 +63,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('roles');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }

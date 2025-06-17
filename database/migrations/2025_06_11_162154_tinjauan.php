@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tinjauan', function (Blueprint $table) {
-            $table->unsignedInteger('baak_id')->primary();
-            $table->unsignedInteger('skpi_id')->primary();
+            $table->unsignedInteger('baak_id');
+            $table->unsignedInteger('skpi_id');
             $table->text('catatan');
             $table->timestamps();
 
+            $table->primary(['baak_id', 'skpi_id']);
             $table->foreign('baak_id')->references('user_id')->on('baak')->onDelete('cascade');
             $table->foreign('skpi_id')->references('id')->on('skpi')->onDelete('cascade');
         });
