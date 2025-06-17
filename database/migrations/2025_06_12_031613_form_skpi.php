@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('akreditasi_institusi', 100);
             $table->unsignedInteger('kode_prodi');
-            $table->string('jenid_pendidikan', 100);
+            $table->string('jenis_pendidikan', 100);
             $table->string('gelar', 100);
             $table->string('kualifikasi_kkni', 100);
             $table->string('persyaratan_penerimaan', 100);

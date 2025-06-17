@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\jenisKegiatanController;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +17,71 @@ use App\Http\Controllers\formControl;
 use App\Http\Controllers\formKaprodiController;
 use Illuminate\Routing\Route as RoutingRoute;
 
-// Route::get('/', function () {
-//     return view('master');
-// });
+
+/**
+ * * GUEST ROUTES
+ *
+ * Daftar routing khusus untuk pengguna yang belum terautententikasi
+ */
+Route::middleware('guest')->group(function() {
+    // Authentication
+    Route::controller(AuthController::class)->group(function() {
+        Route::get('/register', 'showRegistrationForm')->name('register.form');
+        Route::post('/register', 'register')->name('register');
+
+        Route::get('/account-setup', 'showAccountSetupForm')->name('account.setup.form');
+        Route::post('/account-setup', 'accountSetup')->name('account.setup');
+
+        Route::get('/login', 'showLoginForm')->name('login.form');
+        Route::post('/login', 'login')->name('login');
+
+        Route::get('/forgot-password', 'showForgotPasswordForm')->name('password.forgot.form');
+        Route::post('/forgot-password', 'forgotPassword')->name('password.forgot');
+
+        Route::get('/reset-password', 'showResetPasswordForm')->name('password.forgot.form');
+        Route::post('/reset-password', 'resetPassword')->name('password.reset');
+    });
+})->name('guest');
+
+
+/**
+ * * AUTH ROUTES
+ *
+ * Daftar routing untuk pengguna yang sudah terautentikasi
+ */
+Route::middleware('auth')->group(function() {
+    // Logout
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    /**
+     * ! Jika ingin memfilter berdasarkan rolenya, bisa gunakan middleware role
+     * * Role yang tersedia (mahasiswa, kaprodi, baak, upapkk)
+     *
+     * ? Contoh Penggunaan:
+     * Route::middleware(role:mahasiswa)
+     * Route::middleware(role:baak,upapkk)
+     *
+     * * Sangat direkomendasikan pakai group
+     */
+
+
+    // Mahasiswa
+    Route::middleware('role:mahasiswa')->group(function() {
+        Route::controller(MahasiswaController::class)->group(function() {
+            Route::get('/mahasiswa/dashboard', 'index')->name('mahasiswa.dashboard');
+        });
+    })->name('mahasiswa');
+
+
+    // Kepala Prodi
+
+
+    // BAAK
+
+
+    // UPAPKK
+});
+
 
 // Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
 Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
@@ -26,31 +89,8 @@ Route::get('kegiatan/not-verified', [KegiatanController::class, 'notVerified'])-
 Route::post('kegiatan/verify-selected', [KegiatanController::class, 'verifySelected'])->name('kegiatan.verify_selected');
 Route::post('kegiatan/cancel-selected', [KegiatanController::class, 'cancelSelected'])->name('kegiatan.cancel_selected');
 
-// Routing Admin
-Route::get('/login', [AuthAdminController::class, 'login'])->name('login');
-Route::post('/loggedin', [AuthAdminController::class, 'loggedin'])->name('loggedin')->middleware('throttle:5,1');
-Route::middleware('auth:admin')->group(function () {
-    // Dashboard admin
-    Route::get('/indexAdmin', [AuthAdminController::class, 'indexAdmin'])->name('indexAdmin')->middleware('auth');
-    Route::get('/daftarkegiatan', [AuthAdminController::class, 'daftarkegiatan'])->name('daftarkegiatan')->middleware('auth');
-});
-Route::get('/logout', [AuthAdminController::class, 'logout'])->name('logout');
-
-// Routing Mahasiswa
-Route::get('/loginmhs', [AuthMhsController::class, 'loginmhs'])->name('loginmhs');
-Route::post('/loggedinmhs', [AuthMhsController::class, 'loggedinmhs'])->name('loggedinmhs')->middleware('throttle:5,1');
-Route::get('/indexMahasiswa', [AuthMhsController::class, 'indexMhs'])->name('indexMhs');
-Route::get('/profilMhs', [AuthMhsController::class, 'profilMhs'])->name('profilMhs');
-Route::get('/emailSubmit', [AuthMhsController::class, 'emailSubmit'])->name('emailSubmit');
-Route::post('/sendEmail',[MailController::class, 'sendEmail'])->name('sendMail');
-Route::get('/emailConf', [AuthMhsController::class, 'emailConf'])->name('emailConf');
-Route::get('/changepassword', [AuthMhsController::class, 'changepassword'])->name('changepassword');
-Route::post('/updatepassword', [AuthMhsController::class, 'updatePassword'])->name('updatePassword');
-Route::get('/logoutmhs', [AuthMhsController::class, 'logoutmhs'])->name('logoutmhs');
-Route::get('/updateKegiatan', [AuthMhsController::class, 'updateKegiatan'])->name('updateKegiatan');
-
 //Routing Pages
-Route::get('/', [dashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+// Route::get('/', [dashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 Route::resource('jenisKegiatan', jenisKegiatanController::class);
 Route::resource('tingkatKegiatan', tingkatKegiatanController::class);
 Route::resource('posisi', posisiController::class);

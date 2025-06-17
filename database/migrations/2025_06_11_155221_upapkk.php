@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('upapkk', function (Blueprint $table) {
             $table->unsignedInteger('user_id')->primary();
-            $table->char('nip', 10);
-            $table->string('telepon', 20);
+            $table->char('nip', 18);
+            $table->string('telepon', 20)->nullable();
             $table->tinyInteger('is_active');
             $table->timestamps();
 

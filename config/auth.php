@@ -2,6 +2,11 @@
 
 return [
 
+    'registration_token' => [
+        'length' => (int) env('REGISTRATION_TOKEN_LENGTH', 32),
+        'expire' => (int) env('REGISTRATION_TOKEN_EXPIRE', 60),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
@@ -63,16 +68,21 @@ return [
     */
 
     'providers' => [
+        // 'users' => [
+        //     'driver'    => 'eloquent',
+        //     'model'     => env('AUTH_MODEL', App\Models\AuthMhs::class),
+        // ],
+        // 'admin' => [
+        //     'driver'    => 'eloquent',
+        //     'model'     => env('AUTH_MODEL', App\Models\AuthAdmin::class),
+        // ],
+
         'users' => [
-            'driver'    => 'eloquent',
-            'model'     => env('AUTH_MODEL', App\Models\AuthMhs::class),
-        ],
-        'admin' => [
-            'driver'    => 'eloquent',
-            'model'     => env('AUTH_MODEL', App\Models\AuthAdmin::class),
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords
