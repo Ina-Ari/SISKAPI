@@ -23,6 +23,9 @@ use Illuminate\Routing\Route as RoutingRoute;
  *
  * Daftar routing khusus untuk pengguna yang belum terautententikasi
  */
+Route::middleware('guest')->get('/login', [AuthController::class, 'showLoginForm']);
+Route::middleware('guest')->get('/forgot-password', [AuthController::class, 'showForgotPasswordForm']);
+
 Route::middleware('guest')->group(function() {
     // Authentication
     Route::controller(AuthController::class)->group(function() {

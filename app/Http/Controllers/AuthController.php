@@ -40,7 +40,7 @@ class AuthController extends Controller
             );
 
             return $success
-                ? redirect()->route('login')->with('status', __('auth.register.verification_required'))
+                ? redirect()->route('login.form')->with('status', __('auth.register.verification_required'))
                 : back()->withErrors(['status' => __('auth.register.verification_failed')]);
         } catch (UserException $e) {
             return back()->withErrors(['status' => $e->getMessage()]);
@@ -52,7 +52,7 @@ class AuthController extends Controller
         $data = $request->only('token', 'username');
         return $request->has(['token', 'username'])
             ? view('auth.account-setup', $data)
-            : redirect()->route('login')->withErrors(['status' => __('auth.register.registration_token_invalid')]);
+            : redirect()->route('login.form')->withErrors(['status' => __('auth.register.registration_token_invalid')]);
     }
 
     public function accountSetup(AccountSetupRequest $request)
@@ -66,7 +66,7 @@ class AuthController extends Controller
                 throw new UserException(__('auth.register.error'));
             }
 
-            return redirect()->route('login')->with('status', __('auth.register.verification_success'));
+            return redirect()->route('login.form')->with('status', __('auth.register.verification_success'));
         } catch (UserException $e) {
             return back()->withErrors(['status' => $e->getMessage()]);
         }
@@ -103,7 +103,7 @@ class AuthController extends Controller
     public function logout()
     {
         $this->authService->logout();
-        return redirect()->route('login');
+        return redirect()->route('login.form');
     }
 
     public function showForgotPasswordForm()
@@ -129,7 +129,7 @@ class AuthController extends Controller
 
         return $data
             ? view('auth.reset-password', $data)
-            : redirect()->route('login')->withErrors(['status' => __('passwords.token')]);
+            : redirect()->route('login.form')->withErrors(['status' => __('passwords.token')]);
     }
 
     public function resetPassword(ResetPasswordRequest $request)
@@ -138,7 +138,7 @@ class AuthController extends Controller
 
         try {
             $status = $this->authService->resetPassword($data);
-            return redirect()->route('login')->with('status', $status);
+            return redirect()->route('login.form')->with('status', $status);
         } catch (UserException $e) {
             return back()->withErrors(['status' => $e->getMessage()]);
         }

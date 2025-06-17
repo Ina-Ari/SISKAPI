@@ -17,6 +17,8 @@ class OnlyGuestMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $data = true;
+        $data ? 'Benar' :  'Salah';
         return Auth::check()
             ? match (Auth::user()->role->nama) {
                 Role::MAHASISWA => redirect()->intended(route('mahasiswa.dashboard')),
