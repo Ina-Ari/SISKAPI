@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'gu est' => OnlyGuestMiddleware::class,
+            'guest' => OnlyGuestMiddleware::class,
             'role' => UserRoleMiddleware::class,
         ]);
     })
