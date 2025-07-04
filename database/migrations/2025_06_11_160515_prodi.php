@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('kode_prodi');
             $table->unsignedInteger('kode_jurusan');
             $table->string('nama_prodi', 200);
+            $table->string('prodi_name', 200);
             $table->string('jenjang', 20);
             $table->timestamps();
 

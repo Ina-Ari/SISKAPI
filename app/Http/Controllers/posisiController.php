@@ -16,14 +16,6 @@ class posisiController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -34,22 +26,6 @@ class posisiController extends Controller
 
         Posisi::create($request->all());
         return redirect()->back()->with('success', 'Posisi berhasil ditambahkan.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -71,9 +47,7 @@ class posisiController extends Controller
 
         // Kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Posisi berhasil diubah.');
-
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -86,9 +60,7 @@ class posisiController extends Controller
         if ($posisi) {
             // Menghapus data
             $posisi->delete();
-            return redirect()->route('posisi.index')->with('success', 'Posisi berhasil dihapus.');
-        } else {
-            return redirect()->route('posisi.index')->with('error', 'Data tidak ditemukan.');
+            return redirect()->route('posisi.index');
         }
     }
 }

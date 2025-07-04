@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama_kegiatan', 200);
             $table->date('tanggal_kegiatan');
             $table->string('sertifikat');
-            $table->char('satatus_sertif');
+            $table->char('status_sertif');
             $table->float('akurasi');
             $table->string('status', 45);
             $table->timestamps();

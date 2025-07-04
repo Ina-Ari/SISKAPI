@@ -4,17 +4,14 @@
 
 @section('content')
     <div class="card mx-2 my-2">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
         <div class="card-body">
             <nav class="nav nav-pills nav-fill mb-4" id="customTabs">
-                <a class="nav-link text-center custom-tab" href="#" onclick="setActiveTab(event, 'form1')">
+                <a class="nav-link text-center custom-tab nav-pill-tab" href="#" onclick="setActiveTab(event, 'form1')">
                     <span class="px-4 py-2 d-inline-block rounded-pill">
                         Identitas Institusi & Prodi
                     </span>
                 </a>
-                <a class="nav-link text-center custom-tab" href="#" onclick="setActiveTab(event, 'form2')">
+                <a class="nav-link text-center custom-tab nav-pill-tab" href="#" onclick="setActiveTab(event, 'form2')">
                     <span class="px-4 py-2 d-inline-block rounded-pill">
                         Kualifikasi & Kompetensi Akademik Lulusan
                     </span>
@@ -36,12 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Program Studi <span style="font-weight: 200; font-style:italic;"> (Versi Bahasa Indonesia) </span>*</label>
-                                <select name="kode_prodi" class="form-control">
-                                    <option value="">-- Pilih Prodi --</option>
-                                    @foreach ($prodi as $item)
-                                        <option value="{{ $item->kode_prodi }}" {{ (old('kode_prodi', $skpi->kode_prodi ?? '') == $item->kode_prodi) ? 'selected' : '' }}>{{ $item->nama_prodi }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" name="kualifikasi_kkni" value="{{ $kaprodi->prodi->nama_prodi }}" disabled>
                             </div>
                             <div class="form-group">
                                 <label>Jenis & Program Pendidikan <span style="font-weight: 200; font-style:italic;"> (Versi Bahasa Indonesia) </span>*</label>
@@ -80,17 +72,13 @@
                                 <select name="institution_acc" class="form-control">
                                     <option selected="selected">-- Choose Accrediation --</option>
                                     <option value="superior" {{ old('institution_acc', $skpi->institution_acc ?? '') == 'superior' ? 'selected' : '' }}>Superior</option>
-                                    <option value="very good" {{ old('institution_acc', $skpi->institution_acc ?? '') == 'very_good' ? 'selected' : '' }}>Very Good</option>
+                                    <option value="very good" {{ old('institution_acc', $skpi->institution_acc ?? '') == 'very good' ? 'selected' : '' }}>Very Good</option>
                                     <option value="good" {{ old('institution_acc', $skpi->institution_acc ?? '') == 'good' ? 'selected' : '' }}>Good</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Study Program <span style="font-weight: 200; font-style:italic;"> (English Version) </span>*</label>
-                                <select name="study_program" class="form-control">
-                                    <option selected="selected">-- Choose Study Program --</option>
-                                    <option value="AJK" {{ old('study_program', $skpi->study_program ?? '') == 'AJK' ? 'selected' : '' }}>Computer Network Administration</option>
-                                    <option value="MI" {{ old('study_program', $skpi->study_program ?? '') == 'MI' ? 'selected' : '' }}>Informatics Management</option>
-                                    <option value="TRPL" {{ old('study_program', $skpi->study_program ?? '') == 'TRPL' ? 'selected' : '' }}>Software Engineering Technology</option>
+                                    <input type="text" class="form-control" name="study_program" value="{{ $kaprodi->prodi->prodi_name }}" disabled>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -126,11 +114,11 @@
                     </div>
 
                     <div class="d-flex justify-content-end mt-4">
-                        <button id="btn-simpan" type="submit" class="btn btn-primary px-4">Simpan</button>
+                        <button id="btn-simpan1" type="submit" class="btn btn-primary px-4">Simpan</button>
                     </div>
                 </form>
 
-                <form id="form2" method="POST" action="{{ route('kaprodi.storeSkpi2') }}">
+                <form id="form2" method="POST" action="{{ route('kaprodi.storeSkpi2') }}" style="display: none;">
                     @csrf
                     <div class="row mb-2 mx-2">
                         <div class="col-6 font-weight-bold">Sikap <span style="font-weight: 200; font-style:italic;"> (Versi Bahasa Indonesia) </span>*</div>
@@ -143,12 +131,10 @@
                                     <input type="checkbox" class="form-check-input mt-1">
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <input type="text" name="sikap[]" class="form-control"
-                                        value="{{ $sikapItem }}">
+                                    <textarea name="sikap[]" rows="2" class="form-control auto-resize">{{ $sikapItem ?? ''}}</textarea >
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <input type="text" name="attitude[]" class="form-control"
-                                        value="{{ $attitude[$index] ?? '' }}">
+                                    <textarea name="attitude[]" rows="2" class="form-control auto-resize">{{ $attitude[$index] ?? '' }}</textarea >
                                 </div>
                             </div>
                         @endforeach
@@ -171,12 +157,10 @@
                                     <input type="checkbox" class="form-check-input mt-1">
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <input type="text" name="penguasaan_pengetahuan[]" class="form-control"
-                                        value="{{ $penguasaan_pengetahuanItem }}">
+                                    <textarea name="penguasaan_pengetahuan[]" rows="2" class="form-control auto-resize">{{$penguasaan_pengetahuanItem ?? ''}}</textarea >
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <input type="text" name="knowledge[]" class="form-control"
-                                        value="{{ $knowledge[$index] ?? '' }}">
+                                    <textarea name="knowledge[]" rows="2" class="form-control auto-resize">{{ $knowledge[$index] ?? '' }}</textarea >
                                 </div>
                             </div>
                         @endforeach
@@ -198,12 +182,10 @@
                                     <input type="checkbox" class="form-check-input mt-1">
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <input type="text" name="keterampilan_umum[]" class="form-control"
-                                        value="{{ $keterampilan_umumItem }}">
+                                    <textarea name="keterampilan_umum[]" rows="2" class="form-control auto-resize">{{ $keterampilan_umumItem ?? ''}}</textarea >
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <input type="text" name="general_skills[]" class="form-control"
-                                        value="{{ $general_skills[$index] ?? '' }}">
+                                    <textarea name="general_skills[]" rows="2" class="form-control auto-resize">{{ $general_skills[$index] ?? '' }}</textarea >
                                 </div>
                             </div>
                         @endforeach
@@ -225,12 +207,10 @@
                                     <input type="checkbox" class="form-check-input mt-1">
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <input type="text" name="keterampilan_khusus[]" class="form-control"
-                                        value="{{ $keterampilan_khususItem }}">
+                                    <textarea name="keterampilan_khusus[]" rows="2" class="form-control auto-resize">{{ $keterampilan_khususItem ?? ''}}</textarea >
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <input type="text" name="special_skills[]" class="form-control"
-                                        value="{{ $special_skills[$index] ?? '' }}">
+                                    <textarea name="special_skills[]" rows="2" class="form-control auto-resize">{{ $special_skills[$index] ?? '' }}</textarea >
                                 </div>
                             </div>
                         @endforeach
@@ -243,7 +223,7 @@
 
                     <!-- Tombol Simpan -->
                     <div class="d-flex justify-content-end mt-4">
-                        <button id="btn-simpan" type="submit" class="btn btn-primary px-4">Simpan</button>
+                        <button id="btn-simpan2" type="submit" class="btn btn-primary px-4">Simpan</button>
                     </div>
                 </form>
 

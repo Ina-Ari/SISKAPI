@@ -11,9 +11,6 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
         <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addModal">+ New</button>
       <table id="example1" class="table table-bordered table-striped">
         <thead>
@@ -36,10 +33,10 @@
                     <td>{{ $item->poin }}</td>
                     <td>
                         <button class="btn btn-warning" data-toggle="modal" data-target="#editModal{{ $item->id_poin }}"><i class="fa fa-pen"></i></button>
-                        <form action="{{ route('poin.destroy', $item->id_poin) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('upapkk.destroyPoin', $item->id_poin) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></button>
+                            <button type="submit" class="btn btn-danger btn-delete"><i class="fa fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -47,7 +44,7 @@
                 <div class="modal fade" id="editModal{{ $item->id_poin }}" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form action="{{ route('poin.update', $item->id_poin) }}" method="POST">
+                            <form action="{{ route('upapkk.updatePoin', $item->id_poin) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="modal-header">
@@ -99,7 +96,7 @@
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form action="{{ route('poin.store') }}" method="POST">
+                    <form action="{{ route('upapkk.storePoin') }}" method="POST">
                         @csrf
                         <div class="modal-header">
                             <h5 class="modal-title">Tambah Poin Kegiatan</h5>

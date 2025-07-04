@@ -30,27 +30,25 @@
                 </li>
 
                 <!-- SKPI Mahasiswa -->
-                {{-- <li class="nav-item">
-                    <a href="{{ route('skpiMahasiswa.index') }}"
-                       class="nav-link {{ Route::currentRouteName() == 'skpiMahasiswa.index' ? 'active' : '' }}"
-                       style="{{ Route::currentRouteName() == 'skpiMahasiswa.index' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
+                <li class="nav-item">
+                    <a href="#"
+                       class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         <p style="font-size: 18px;">SKPI  Mahasiswa</p>
                     </a>
-                </li> --}}
+                </li>
 
                 <!-- Notifikasi -->
-                {{-- <li class="nav-item">
-                    <a href="{{ route('notifikasi.index') }}"
-                       class="nav-link {{ Route::currentRouteName() == 'notifikasi.index' ? 'active' : '' }}"
-                       style="{{ Route::currentRouteName() == 'notifikasi.index' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
+                <li class="nav-item">
+                    <a href="#"
+                       class="nav-link">
                         <i class="nav-icon fas fa-comment-dots"></i>
                         <p style="font-size: 18px;">
                             Notifikasi
                             <span class="badge badge-info right" style="color: #4A505C">2</span>
                         </p>
                     </a>
-                </li> --}}
+                </li>
 
             </ul>
         </nav>

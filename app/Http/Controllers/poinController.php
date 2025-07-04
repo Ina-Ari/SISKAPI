@@ -32,18 +32,6 @@ class poinController extends Controller{
 
         return redirect()->back()->with('success', 'Data poin berhasil ditambahkan!');
     }
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     public function update(Request $request, string $id)
     {
@@ -71,9 +59,7 @@ class poinController extends Controller{
         if ($poin) {
             // Menghapus data
             $poin->delete();
-            return redirect()->route('poin.index')->with('success', 'Poin berhasil dihapus.');
-        } else {
-            return redirect()->route('poin.index')->with('error', 'Data tidak ditemukan.');
+            return redirect()->route('poin.index');
         }
     }
 }

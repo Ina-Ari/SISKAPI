@@ -1,6 +1,6 @@
 @extends('kaprodi.masterKaprodi')
 
-@section('title', 'Dashboardkp')
+@section('title', 'Dashboard')
 
 @section('content')
 <!-- Content Header -->
@@ -17,13 +17,6 @@
 <!-- Main content -->
 <section class="content pt-2">
     <div class="container-fluid">
-
-        <!-- Search bar -->
-        {{-- <div class="row mb-3">
-            <div class="col-md-12">
-                <input type="text" class="form-control" placeholder="cari disini">
-            </div>
-        </div> --}}
 
         <div class="row">
             <!-- Status Boxes + Grafik -->
@@ -84,9 +77,9 @@
             <div class="col-md-3">
                 <div class="card bg-primary text-white mb-3">
                     <div class="card-body text-center">
-                        <img src="https://via.placeholder.com/80" class="rounded-circle mb-2" alt="Kaprodi" width="80" height="80">
-                        <h4>Nama kaprodi</h4>
-                        <p>123456789000</p>
+                        <img src="{{ '../storage/'. Auth::user()->picture }}" class="rounded-circle mb-2" alt="Kaprodi" width="80" height="80">
+                        <h4>{{ Auth::user()->nama }}</h4>
+                        <p>{{ Auth::user()->kepalaProdi->nip }}</p>
                     </div>
                 </div>
                 <div class="card md-3">

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('id_posisi');
             $table->unsignedInteger('idjenis_kegiatan');
             $table->unsignedInteger('idtingkat_kegiatan');
+            $table->integer('poin');
 
             $table->foreign('id_posisi')->references('id_posisi')->on('posisi')->onDelete('cascade');
             $table->foreign('idjenis_kegiatan')->references('idjenis_kegiatan')->on('jenis_kegiatan')->onDelete('cascade');
