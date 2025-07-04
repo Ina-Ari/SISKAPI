@@ -67,31 +67,81 @@
 
 <script>
     document.getElementById('btnCancelSelected').addEventListener('click', function() {
-        if (confirm('Apakah Anda yakin ingin membatalkan kegiatan yang dipilih?')) {
-            document.getElementById('formCancel').submit();
-        }
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah Anda yakin ingin membatalkan kegiatan yang dipilih?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#E02D3C',
+            cancelButtonColor: '#3B82F6',
+            confirmButtonText: 'Ya, batalkan',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('formCancel').submit();
+            }
+        });
     });
+
     document.getElementById('btnCancelAll').addEventListener('click', function() {
-        if (confirm('Apakah Anda yakin ingin membatalkan semua kegiatan?')) {
-            document.querySelectorAll('input[name="selected_kegiatan[]"]').forEach(checkbox => checkbox.checked = true);
-            document.getElementById('formCancel').submit();
-        }
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah Anda yakin ingin membatalkan semua kegiatan?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#E02D3C',
+            cancelButtonColor: '#3B82F6',
+            confirmButtonText: 'Ya, Batalkan Semua',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.querySelectorAll('input[name="selected_kegiatan[]"]').forEach(checkbox => checkbox.checked = true);
+                document.getElementById('formCancel').submit();
+            }
+        });
     });
 </script>
 
 <script>
-    document.getElementById('btnVerifSelected').addEventListener('click', function() {
-        if (confirm('Apakah Anda yakin ingin memverifikasi kegiatan yang dipilih?')) {
-            document.getElementById('formVerify').submit();
-        }
+    document.getElementById('btnVerifSelected').addEventListener('click', function(event) {
+        event.preventDefault(); // cegah submit default jika button di dalam form
+
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah Anda yakin ingin memverifikasi kegiatan yang dipilih?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3B82F6', // biru
+            cancelButtonColor: '#E02D3C',  // merah
+            confirmButtonText: 'Ya, Verifikasi',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('formVerify').submit();
+            }
+        });
     });
 
-    document.getElementById('btnVerifAll').addEventListener('click', function() {
-        if (confirm('Apakah Anda yakin ingin memverifikasi semua kegiatan?')) {
-            document.querySelectorAll('input[name="selected_kegiatan[]"]').forEach(checkbox => checkbox.checked = true);
-            document.getElementById('formVerify').submit();
-        }
+    document.getElementById('btnVerifAll').addEventListener('click', function(event) {
+        event.preventDefault(); // cegah submit default jika button di dalam form
+
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah Anda yakin ingin memverifikasi semua kegiatan?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3B82F6',
+            cancelButtonColor: '#E02D3C',
+            confirmButtonText: 'Ya, Verifikasi Semua',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.querySelectorAll('input[name="selected_kegiatan[]"]').forEach(checkbox => checkbox.checked = true);
+                document.getElementById('formVerify').submit();
+            }
+        });
     });
+
 </script>
 
 <script>
