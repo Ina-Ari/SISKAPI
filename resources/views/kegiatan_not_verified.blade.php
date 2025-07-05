@@ -3,7 +3,7 @@
 @section('title', 'Kegiatan Belum Terverifikasi')
 
 @section('content')
-    <form id="formVerify" method="POST" action="{{ route('kegiatan.verify_selected') }}">
+    <form id="formVerify" method="POST" action="{{ route('upapkk.verifSelected') }}">
         @csrf
         <div class="card">
             <div class="card-header d-flex justify-content-between">
@@ -16,9 +16,6 @@
                 </div>
             </div>
             <div class="card-body">
-                @if (session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -35,11 +32,11 @@
                         @foreach ($kegiatan as $key => $data)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $data->nim }}</td>
+                                <td>{{ $data->mahasiswa->nim }}</td>
                                 <td>{{ $data->nama_kegiatan }}</td>
                                 <td>{{ \Carbon\Carbon::parse($data->tanggal_kegiatan)->translatedFormat('d F Y') }}</td>
                                 <td>
-                                    @if ($data->verifsertif === 'True')
+                                    @if ($data->status_sertif === 'true')
                                         <span class="badge badge-success">Terverifikasi</span>
                                     @else
                                         <span class="badge badge-danger">Belum Terverifikasi</span>
@@ -47,13 +44,13 @@
                                 </td>
                                 <td>{{ $data->akurasi.'%' }}</td>
                                 <td style="text-align: center;">
-                                    <input type="checkbox" name="selected_kegiatan[]" value="{{ $data->id_kegiatan }}">
-                                    <button style="border:none; background-color:transparent;" type="button" class="fas fa-eye" data-toggle="modal" data-target="#editModal{{ $data->id_kegiatan }}">
+                                    <input type="checkbox" name="selected_kegiatan[]" value="{{ $data->id }}">
+                                    <button style="border:none; background-color:transparent;" type="button" class="fas fa-eye" data-toggle="modal" data-target="#editModal{{ $data->id }}">
                                     </button>
                                 </td>
                             </tr>
 
-                            <div class="modal fade" id="editModal{{ $data->id_kegiatan }}" tabindex="-1" role="dialog">
+                            <div class="modal fade" id="editModal{{ $data->id }}" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -73,18 +70,18 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Posisi</label>
-                                                <input class="form-control" value="{{ $data->posisi->nama_posisi }}"
+                                                <input class="form-control" value="{{ $data->poin->posisi->nama_posisi }}"
                                                     disabled style="background-color: white;">
                                             </div>
                                             <div class="form-group">
                                                 <label>Jenis Kegiatan</label>
                                                 <input class="form-control"
-                                                    value="{{ $data->jenisKegiatan->jenis_kegiatan }}" disabled style="background-color: white;">
+                                                    value="{{ $data->poin->jenisKegiatan->jenis_kegiatan }}" disabled style="background-color: white;">
                                             </div>
                                             <div class="form-group">
                                                 <label>Tingkat Kegiatan</label>
                                                 <input class="form-control"
-                                                    value="{{ $data->tingkatKegiatan->tingkat_kegiatan }}" disabled style="background-color: white;">
+                                                    value="{{ $data->poin->tingkatKegiatan->tingkat_kegiatan }}" disabled style="background-color: white;">
                                             </div>
                                             <div class="form-group">
                                                 <label>Poin</label>

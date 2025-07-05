@@ -25,7 +25,7 @@
                         <div class="icon">
                             <i class="nav-icon fas fa-users"></i>
                         </div>
-                        <a href="{{ route('mahasiswa.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('upapkk.daftarMhs') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
@@ -50,7 +50,7 @@
                         <div class="icon">
                             <i class="fas fa-check-circle"></i>
                         </div>
-                        <a href="{{ route('kegiatan.index') }}" class="small-box-footer">More info <i
+                        <a href="{{ route('upapkk.verifKegiatan') }}" class="small-box-footer">More info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                         <div class="icon">
                             <i class="fas fa-exclamation-circle"></i>
                         </div>
-                        <a  href="{{ route('kegiatan_not_verified') }}" class="small-box-footer" style="color: white !important;">More info <i
+                        <a  href="{{ route('upapkk.unverifKegiatan') }}" class="small-box-footer" style="color: white !important;">More info <i
                                 class="fas fa-arrow-circle-right" style="color: white"></i></a>
                     </div>
                 </div>

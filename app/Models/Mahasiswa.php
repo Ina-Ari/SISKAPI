@@ -34,11 +34,11 @@ class Mahasiswa extends Model
 
     public function prodi(): BelongsTo
     {
-        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
+        return $this->belongsTo(Prodi::class, 'kode_prodi', 'kode_prodi');
     }
 
     public function kegiatan(): HasMany
     {
-        return $this->hasMany(Kegiatan::class, 'nim');
+        return $this->hasMany(Kegiatan::class, 'nim', 'user_id');
     }
 }

@@ -14,16 +14,17 @@ class Prodi extends Model
     protected $fillable = [
         'kode_prodi',
         'nama_prodi',
+        'prodi_name',
         'kode_jurusan'
     ];
 
     public function jurusan()
     {
-        return $this->belongsTo(Jurusan::class, 'kode_jurusan');
+        return $this->belongsTo(Jurusan::class, 'kode_jurusan', 'kode_jurusan');
     }
 
-    public function mahasiswa()
+    public function formSkpi()
     {
-        return $this->belongsTo(Mahasiswa::class, 'kode_jurusan');
+        return $this->hasOne(formSkpi::class, 'kode_prodi', 'kode_prodi');
     }
 }

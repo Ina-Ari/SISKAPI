@@ -17,14 +17,6 @@ class tingkatKegiatanController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -35,22 +27,6 @@ class tingkatKegiatanController extends Controller
 
         TingkatKegiatan::create($request->all());
         return redirect()->back()->with('success', 'Tingkat kegiatan berhasil ditambahkan.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -75,7 +51,6 @@ class tingkatKegiatanController extends Controller
 
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
@@ -87,9 +62,7 @@ class tingkatKegiatanController extends Controller
         if ($tingkatKegiatan) {
             // Menghapus data
             $tingkatKegiatan->delete();
-            return redirect()->route('tingkatKegiatan.index')->with('success', 'tingkat kegiatan berhasil dihapus.');
-        } else {
-            return redirect()->route('tingkatKegiatan.index')->with('error', 'Data tidak ditemukan.');
-        }
+            return redirect()->route('upapkk.tingkatKegiatan');
+        } 
     }
 }

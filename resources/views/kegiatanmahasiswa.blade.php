@@ -14,13 +14,13 @@
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
             <div style="max-width: 30%;">
-                <form method="GET" action="{{ route('mahasiswa.kegiatan', $query->nim) }}">
+                <form method="GET" action="{{ route('upapkk.daftarKegiatan', $query->user_id) }}">
                     <div class="form-group">
                         <label for="filter">Filter Kegiatan:</label>
                         <select name="filter" id="jurusan" class="form-control" onchange="this.form.submit()">
                             <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>Semua Kegiatan</option>
-                            <option value="True" {{ request('filter') == 'True' ? 'selected' : '' }}>Terverifikasi</option>
-                            <option value="False" {{ request('filter') == 'False' ? 'selected' : '' }}>Belum Terverifikasi</option>
+                            <option value="true" {{ request('filter') == 'true' ? 'selected' : '' }}>Terverifikasi</option>
+                            <option value="false" {{ request('filter') == 'false' ? 'selected' : '' }}>Belum Terverifikasi</option>
                         </select>
                     </div>
                 </form>
@@ -42,7 +42,7 @@
                             <td>{{ $data->nama_kegiatan }}</td>
                             <td>{{ \Carbon\Carbon::parse($data->tanggal_kegiatan)->translatedFormat('d F Y') }}</td>
                             <td>
-                                @if ($data->verif === 'True')
+                                @if ($data->status === 'true')
                                     <span class="badge badge-success">Terverifikasi</span>
                                 @else
                                     <span class="badge badge-danger">Belum Terverifikasi</span>
@@ -71,17 +71,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Posisi</label>
-                                            <input class="form-control" value="{{ $data->posisi->nama_posisi }}" disabled style="background-color: white;">
+                                            <input class="form-control" value="{{ $data->poin->posisi->nama_posisi }}" disabled style="background-color: white;">
                                         </div>
                                         <div class="form-group">
                                             <label>Jenis Kegiatan</label>
                                             <input class="form-control"
-                                                value="{{ $data->jenisKegiatan->jenis_kegiatan }}" disabled style="background-color: white;">
+                                                value="{{ $data->poin->jenisKegiatan->jenis_kegiatan }}" disabled style="background-color: white;">
                                         </div>
                                         <div class="form-group">
                                             <label>Tingkat Kegiatan</label>
                                             <input class="form-control"
-                                                value="{{ $data->tingkatKegiatan->tingkat_kegiatan }}" disabled style="background-color: white;">
+                                                value="{{ $data->poin->tingkatKegiatan->tingkat_kegiatan }}" disabled style="background-color: white;">
                                         </div>
                                         <div class="form-group">
                                             <label>Poin</label>

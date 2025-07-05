@@ -11,9 +11,6 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
         <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addModal">+ New</button>
       <table id="example1" class="table table-bordered table-striped">
         <thead>
@@ -30,10 +27,10 @@
                     <td>{{ $item->jenis_kegiatan }}</td>
                     <td>
                         <button class="btn btn-warning" data-toggle="modal" data-target="#editModal{{ $item->idjenis_kegiatan }}"><i class="fa fa-pen"></i></button>
-                        <form action="{{ route('jenisKegiatan.destroy', $item->idjenis_kegiatan) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('upapkk.destroyJenisKegiatan', $item->idjenis_kegiatan) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></button>
+                            <button type="submit" class="btn btn-danger btn-delete"><i class="fa fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -41,7 +38,7 @@
                 <div class="modal fade" id="editModal{{ $item->idjenis_kegiatan }}" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form action="{{ route('jenisKegiatan.update', $item->idjenis_kegiatan) }}" method="POST">
+                            <form action="{{ route('upapkk.updateJenisKegiatan', $item->idjenis_kegiatan) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="modal-header">
@@ -69,7 +66,7 @@
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form action="{{ route('jenisKegiatan.store') }}" method="POST">
+                    <form action="{{ route('upapkk.storeJenisKegiatan') }}" method="POST">
                         @csrf
                         <div class="modal-header">
                             <h5 class="modal-title">Tambah Jenis Kegiatan</h5>

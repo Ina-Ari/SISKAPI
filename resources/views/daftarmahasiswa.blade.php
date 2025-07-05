@@ -12,7 +12,7 @@
 
     <div class="card-body">
         <div style="max-width: 30%">
-            <form method="GET" action="{{ route('mahasiswa.index') }}" class="mb-4">
+            <form method="GET" action="{{ route('upapkk.daftarMhs') }}" class="mb-4">
                 <div class="form-group">
                     <label for="jurusan">Filter Jurusan:</label>
                     <select name="jurusan" id="jurusan" class="form-control" onchange="this.form.submit()">
@@ -26,34 +26,33 @@
                 </div>
             </form>
         </div>
-      <table id="example1" class="table table-bordered table-striped">
-        <thead>
-        <tr>
-            <th>No.</th>
-            <th>NIM</th>
-            <th>Nama</th>
-            <th>Kelas</th>
-            <th>Prodi</th>
-            <th>Jurusan</th>
-            {{-- <th>Total Poin</th> --}}
-            <th>Keterangan</th>
-        </tr>
-        </thead>
-        <tbody>
-            @foreach ($data as $key=>$item)
-                <tr>
-                    <td>{{ $key+1 }}</td>
-                    <td><a href="{{ route('mahasiswa.kegiatan', $item->nim) }}">{{ $item->nim }}</a></td>
-                    <td>{{ $item->nama }}</td>
-                    <td>{{ $item->kelas }}</td>
-                    <td>{{ $item->prodi->nama_prodi }}</td>
-                    <td>{{ $item->jurusan->nama_jurusan }}</td>
-                    {{-- <td>{{ $status[$item->nim]['totalPoin'] }}</td> --}}
-                    <td>{{ $status[$item->nim]['keterangan'] }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-      </table>
+
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>NIM</th>
+                <th>Nama</th>
+                <th>Prodi</th>
+                <th>Jurusan</th>
+                <th>Total Poin</th>
+                <th>Keterangan</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach ($data as $key=>$item)
+                    <tr>
+                        <td>{{ $key+1 }}</td>
+                        <td><a href="{{ route('upapkk.daftarKegiatan', $item->user_id) }}">{{ $item->nim }}</a></td>
+                        <td>{{ $item->user->nama }}</td>
+                        <td>{{ $item->prodi->nama_prodi ?? '-' }}</td>
+                        <td>{{ $item->prodi->jurusan->nama_jurusan ?? '-' }}</td>
+                        <td>{{ $status[$item->nim]['totalPoin'] }}</td>
+                        <td>{{ $status[$item->nim]['keterangan'] }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-  </div>
+</div>
 @endsection
