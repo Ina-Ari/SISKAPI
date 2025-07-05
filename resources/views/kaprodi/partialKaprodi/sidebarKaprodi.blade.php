@@ -30,14 +30,14 @@
                 </li>
 
                 <!-- SKPI Mahasiswa -->
-                {{-- <li class="nav-item">
-                    <a href="{{ route('skpiMahasiswa.index') }}"
-                       class="nav-link {{ Route::currentRouteName() == 'skpiMahasiswa.index' ? 'active' : '' }}"
-                       style="{{ Route::currentRouteName() == 'skpiMahasiswa.index' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
+                <li class="nav-item">
+                    <a href="{{ route('kaprodi.skpi.mahasiswa') }}"
+                       class="nav-link {{ Route::currentRouteName() == 'kaprodi.skpi.mahasiswa' ? 'active' : '' }}"
+                       style="{{ Route::currentRouteName() == 'kaprodi.skpi.mahasiswa' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
                         <p style="font-size: 18px;">SKPI  Mahasiswa</p>
                     </a>
-                </li> --}}
+                </li>
 
                 <!-- Notifikasi -->
                 {{-- <li class="nav-item">

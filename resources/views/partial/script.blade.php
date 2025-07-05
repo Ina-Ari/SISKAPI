@@ -63,8 +63,7 @@
         "responsive": true,
       });
     });
-
-  </script>
+</script>
 
 <script>
   document.getElementById('btnCancelSelected').addEventListener('click', function() {
@@ -193,10 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
         simpanButton.click();
     });
 </script>
-
-SCRIPT.BLADE.PHP
-
-
 
 <script>
    const skpi_chart_options = {

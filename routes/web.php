@@ -51,6 +51,8 @@ Route::middleware('guest')->group(function() {
  * Daftar routing untuk pengguna yang sudah terautentikasi
  */
 Route::middleware('auth')->group(function() {
+    Route::redirect('/', '/login');
+
     // Logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -80,6 +82,7 @@ Route::middleware('auth')->group(function() {
             Route::get('/kaprodi/form', 'formKaprodi')->name('form');
             Route::post('/kaprodi/tambahDataSkpi1', 'storeSkpi1')->name('storeSkpi1');
             Route::post('/kaprodi/tambahDataSkpi2', 'storeSkpi2')->name('storeSkpi2');
+            Route::get('/kaprodi/skpi-mahasiswa', 'showSkpiMahasiswaView')->name('skpi.mahasiswa');
         });
     });
 
