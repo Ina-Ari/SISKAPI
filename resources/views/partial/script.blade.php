@@ -321,6 +321,27 @@
     });
 
     document.getElementById('btn-simpan2').addEventListener('click', () => {
+        // isFormChangedTab2 = false;
+        const containers = [
+            { id: 'statement-container1', field: 'clear_sikap' },
+            { id: 'statement-container2', field: 'clear_penguasaan_pengetahuan' },
+            { id: 'statement-container3', field: 'clear_keterampilan_umum' },
+            { id: 'statement-container4', field: 'clear_keterampilan_khusus' },
+        ];
+
+        containers.forEach(containerInfo => {
+            const container = document.getElementById(containerInfo.id);
+            const textareas = container.querySelectorAll('textarea');
+
+            if (textareas.length === 0) {
+                const hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.name = containerInfo.field;
+                hidden.value = '1';
+                container.appendChild(hidden);
+            }
+        });
+
         isFormChangedTab2 = false;
     });
 
