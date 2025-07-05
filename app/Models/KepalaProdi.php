@@ -19,7 +19,7 @@ class KepalaProdi extends Model
         'angkatan',
         'telepon',
         'is_active',
-        'prodi_id',
+        'kode_prodi',
     ];
 
     protected $attributes = [
@@ -34,6 +34,6 @@ class KepalaProdi extends Model
 
     public function prodi(): BelongsTo
     {
-        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
+        return $this->belongsTo(Prodi::class, 'kode_prodi', 'kode_prodi');
     }
 }

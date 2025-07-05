@@ -10,49 +10,24 @@ class Kegiatan extends Model
     use HasFactory;
 
     protected $table = 'kegiatan';
-    protected $primaryKey = 'id_kegiatan';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'Nim',
+        'nim',
+        'id_poin',
         'nama_kegiatan',
         'tanggal_kegiatan',
-        'id_poin',
-        'id_posisi',
-        'idtingkat_kegiatan',
-        'idjenis_kegiatan',
         'sertifikat',
-        'id_poin',
-        'verifsertif',
+        'status_sertif',
         'akurasi',
-        'verif',
+        'status',
     ];
-
-
-    public $timestamps = false; // Menonaktifkan timestamps
 
     // Relasi dengan model Posisi
 
     public function mahasiswa()
     {
-        return $this->belongsTo(Mahasiswa::class, 'nim');
-    }
-
-    public function posisi()
-    {
-        return $this->belongsTo(Posisi::class, 'id_posisi');
-    }
-
-    // Relasi dengan model TingkatKegiatan
-    public function tingkatKegiatan()
-    {
-        return $this->belongsTo(TingkatKegiatan::class, 'idtingkat_kegiatan');
-    }
-
-
-    // Relasi dengan model JenisKegiatan
-    public function jenisKegiatan()
-    {
-        return $this->belongsTo(JenisKegiatan::class, 'idjenis_kegiatan');
+        return $this->belongsTo(Mahasiswa::class, 'nim', 'user_id');
     }
 
     public function poin()
