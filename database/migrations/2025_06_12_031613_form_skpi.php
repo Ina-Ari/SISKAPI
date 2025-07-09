@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('adminission_requirement', 100);
             $table->string('instruction_language', 100);
             $table->string('length_study', 100);
-            $table->longText('attitudr');
+            $table->longText('attitude');
             $table->longText('knowledge');
             $table->longText('general_skills');
             $table->longText('special_skills');

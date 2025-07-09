@@ -10,7 +10,6 @@ class Prodi extends Model
     use HasFactory;
     protected $primaryKey = 'kode_prodi';
     protected $table = 'prodi';
-    public $timestamps = false;
     protected $fillable = [
         'kode_prodi',
         'nama_prodi',
@@ -25,6 +24,6 @@ class Prodi extends Model
 
     public function formSkpi()
     {
-        return $this->hasOne(formSkpi::class, 'kode_prodi', 'kode_prodi');
+        return $this->hasOne(FormKaprodi::class, 'kode_prodi', 'kode_prodi');
     }
 }

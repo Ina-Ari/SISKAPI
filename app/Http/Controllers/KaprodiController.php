@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Skpi\SkpiDocumentServiceInterface;
 use Illuminate\Http\Request;
 use App\Models\Prodi;
 use App\Models\FormKaprodi;
 use App\Models\KepalaProdi;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use PhpOffice\PhpWord\Settings;
+use PhpOffice\PhpWord\TemplateProcessor;
 
 class KaprodiController
 {
+    public function __construct(
+        SkpiDocumentServiceInterface $skpiDocumentService
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -181,4 +188,11 @@ class KaprodiController
     {
         return view('kaprodi.SkpiMahasiswaKaprodi');
     }
+
+    public function uploadTemplate(Request $request)
+    {
+        
+    }
+
+
 }

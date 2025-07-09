@@ -81,6 +81,7 @@ Route::middleware('auth')->group(function() {
             Route::post('/kaprodi/tambahDataSkpi1', 'storeSkpi1')->name('storeSkpi1');
             Route::post('/kaprodi/tambahDataSkpi2', 'storeSkpi2')->name('storeSkpi2');
             Route::get('/kaprodi/skpi-mahasiswa', 'showSkpiMahasiswaView')->name('skpi.mahasiswa');
+            Route::post('/kaprodi/form', 'createWordTemplate')->name('skpi.create.template');
         });
     });
 

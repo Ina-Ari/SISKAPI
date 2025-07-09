@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('mahasiswa', function (Blueprint $table) {
             $table->unsignedInteger('user_id')->primary();
             $table->char('nim', 10);
+            $table->date('tanggal_lahir');
+            $table->string('tempat_lahir', 100);
             $table->string('angkatan', 45);
             $table->string('telepon', 20);
             $table->unsignedInteger('kode_prodi');

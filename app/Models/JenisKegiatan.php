@@ -11,9 +11,9 @@ class JenisKegiatan extends Model
     protected $primaryKey = 'idjenis_kegiatan';
     protected $table = 'jenis_kegiatan';
     public $timestamps = false;
-    protected $fillable = [ 
+    protected $fillable = [
         'jenis_kegiatan',
-    ];  
+    ];
 
     public function poin()
     {

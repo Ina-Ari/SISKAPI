@@ -10,10 +10,10 @@ class Jurusan extends Model
     use HasFactory;
     protected $primaryKey = 'kode_jurusan';
     protected $table = 'jurusan';
-    public $timestamps = false;
     protected $fillable = [
         'kode_jurusan',
         'nama_jurusan',
+        'jurusan_name',
     ];
 
 

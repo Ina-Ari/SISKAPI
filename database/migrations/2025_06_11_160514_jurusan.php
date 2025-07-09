@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('jurusan', function (Blueprint $table) {
             $table->increments('kode_jurusan');
             $table->string('nama_jurusan', 200);
+            $table->string('jurusan_name', 200)->nullable();
             $table->timestamps();
         });
     }

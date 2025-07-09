@@ -83,14 +83,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-
+                <div class="modal-body p-0 vh-100 overflow-hidden">
+                    <embed id="pdfViewer" src="{{ asset('storage/pdf/skpi.pdf') . '?t=' . now() }}" width="100%" height="100%"></embed>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
-@push('scripts')
-
-@endpush

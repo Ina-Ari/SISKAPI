@@ -16,6 +16,8 @@ class Mahasiswa extends Model
 
     protected $fillable = [
         'nim',
+        'tanggal_lahir',
+        'tempat_lahir',
         'telepon',
         'angkatan',
         'kode_prodi',
@@ -25,6 +27,10 @@ class Mahasiswa extends Model
     protected $attributes = [
         'telepon' => null,
         'is_active' => 0
+    ];
+
+    protected $casts = [
+        'tanggal_lahir' => 'date',
     ];
 
     public function user(): BelongsTo
