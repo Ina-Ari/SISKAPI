@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthMhsController;
 use App\Http\Controllers\jenisKegiatanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tingkatKegiatanController;
@@ -8,7 +9,9 @@ use App\Http\Controllers\poinController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\BaakController;
+use App\Http\Controllers\NotificationMhs;
 use App\Http\Controllers\UpapkkController;
+use Illuminate\Notifications\Notification;
 use Illuminate\Routing\Route as RoutingRoute;
 
 
@@ -70,6 +73,9 @@ Route::middleware('auth')->group(function() {
             Route::delete('/mahasisw/{id}/hapusKegiatan', 'destroy')->name('destroyKegiatan');
             Route::get('/mahasiswa/profile', 'profile')->name('profile');
             Route::post('/mahasiswa/{id}/editProfile', 'updateProfile')->name('updateProfile');
+            // Notifikasi 
+            Route::get('/notifikasiMhs', [AuthMhsController::class, 'notifikasiMhs'])->name('notifikasiMhs');
+            Route::get('/mahasiswa/notifikasi', [NotificationMhs::class, 'lihatMahasiswa'])->name('pagenotif');
         });
     });
 
@@ -102,6 +108,7 @@ Route::middleware('auth')->group(function() {
             Route::get('/upapkk/unverifKegiatan', 'notVerified')->name('unverifKegiatan');
             Route::post('/upapkk/verifSelected', 'verifySelected')->name('verifSelected');
             Route::post('/upapkk/unverifSelected', 'cancelSelected')->name('unverifSelected');
+            Route::post('/upapkk/notifikasi/kirim', [NotificationMhs::class, 'sendComment'])->name('kirimnotif');
         });
         Route::controller(jenisKegiatanController::class)->group(function() {
             Route::get('/upapkk/jenisKegiatan', 'index')->name('jenisKegiatan');
@@ -129,4 +136,5 @@ Route::middleware('auth')->group(function() {
         });
     });
 });
+
 ?>

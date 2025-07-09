@@ -75,7 +75,7 @@ class User extends Authenticatable implements CanResetPassword
     public function mahasiswa(): HasOne
     {
         return $this->hasOne(Mahasiswa::class, 'user_id', 'id');
-    }
+    } 
 
     public function kepalaProdi(): HasOne
     {
