@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class KepalaProdi extends Model
 {
@@ -35,5 +36,10 @@ class KepalaProdi extends Model
     public function prodi(): BelongsTo
     {
         return $this->belongsTo(Prodi::class, 'kode_prodi', 'kode_prodi');
+    }
+
+    public function skpis(): HasMany
+    {
+        return $this->hasMany(Skpi::class, 'kepala_prodi_id', 'user_id');
     }
 }

@@ -3,15 +3,17 @@
 return [
     'prefix' => 'skpi_',
     'save_path' => 'skpi/',
+    'final_path' => 'skpi/final/',
     'temp_path' => storage_path('app/temp/'),
     'template' => [
+        'prefix' => 'skpi_template_',
         'generate' => [
-            'filename' => 'skpi_template.docx',
             'path' => 'docs/',
+            'extension' => '.docx'
         ],
         'preview' => [
-            'filename' => 'skpi_template.pdf',
             'path' => 'pdf/',
-        ]
+            'extension' => '.pdf',
+        ],
     ]
 ];

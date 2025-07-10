@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 
 interface SkpiDocumentServiceInterface
 {
-    public function uploadTemplate(UploadedFile $file): string;
-    public function fillTemplate(string $nim, array $singleData, array $numberingData = []): string;
-    public function convertToPDF(string $docxPath, string $templatePath, string $filename = null): string;
+    public function uploadTemplate(UploadedFile $file, array $data): string;
+    public function fillTemplate(string $templateFullPath, string $savePath, string $nim, array $singleData, array $numberingData = []): string;
+    public function convertToPDF(string $docxPath, string $savePath, string $filename = null): string;
 }

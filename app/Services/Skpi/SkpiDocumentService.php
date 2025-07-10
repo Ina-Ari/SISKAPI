@@ -9,34 +9,38 @@ use PhpOffice\PhpWord\TemplateProcessor;
 
 class SkpiDocumentService implements SkpiDocumentServiceInterface
 {
-    public function uploadTemplate(UploadedFile $file): string
+    public function uploadTemplate(UploadedFile $file, array $data): string
     {
+        $filename = config('skpi.template.prefix') . $data['kode_prodi'] . config('skpi.template.generate.extension');
         $path = $file->storeAs(
-            config('skpi.template.generate.path'),
-            config('skpi.template.generate.filename'),
-            'local');
+            trim(config('skpi.template.generate.path'), '/\\'),
+            $filename,
+            'local'
+        );
 
-        $templatePath = storage_path("app/$path");
+        $templatePath = Storage::disk('local')->path($path);
+
+        Settings::setTempDir(config('skpi.temp_path'));
+
+        $templateProcessor = new TemplateProcessor($templatePath);
+        $templateProcessor->setValues($data);
+        $templateProcessor->saveAs($templatePath);
+
         $previewTemplatePath = Storage::disk('public')->path(config('skpi.template.preview.path'));
 
-        $this->convertToPDF($templatePath, $previewTemplatePath, config('skpi.template.preview.filename'));
+        $this->convertToPDF($templatePath, $previewTemplatePath, str_replace('.docx', '.pdf', $filename));
 
         return $templatePath;
     }
 
-    public function fillTemplate(string $nim, array $singleData, array $numberingData = []): string
+    public function fillTemplate(string $templateFullPath, string $savePath, string $nim, array $singleData, array $numberingData = []): string
     {
-        $templatePath = Storage::disk('local')->path(
-            config('skpi.template.generate.path') . config('skpi.template.generate.filename')
-        );
-
-        $savePath = Storage::disk('public')->path(config('skpi.save_path'));
         $saveFilename = config('skpi.prefix') . $nim . '.docx';
         $saveFullPath = $savePath . $saveFilename;
 
         Settings::setTempDir(config('skpi.temp_path'));
 
-        $templateProcessor = new TemplateProcessor($templatePath);
+        $templateProcessor = new TemplateProcessor($templateFullPath);
 
         if ($numberingData) {
             foreach ($numberingData as $blockName => $data) {
@@ -44,19 +48,25 @@ class SkpiDocumentService implements SkpiDocumentServiceInterface
             }
         }
 
-        $templateProcessor->setValues($singleData);
+        foreach ($singleData as $key => $value) {
+            $this->injectSingleData($templateProcessor, $key, $value);
+        }
 
         $templateProcessor->saveAs($saveFullPath);
 
         return $saveFullPath;
     }
 
+    private function injectSingleData(TemplateProcessor $templateProcessor, string $key, string $value): void
+    {
+        $templateProcessor->setValue($key, htmlspecialchars(ucwords($value)));
+    }
+
     private function injectNumberingData(TemplateProcessor $templateProcessor, string $blockName, array $items): void
     {
-        $data = collect($items)->map(function ($item, $index) {
+        $data = collect($items)->map(function ($item) {
             return [
-                'i' => $index + 1,
-                'data' => ucfirst($item)
+                'data' => htmlspecialchars(ucfirst($item))
             ];
         })->toArray();
 
@@ -65,8 +75,8 @@ class SkpiDocumentService implements SkpiDocumentServiceInterface
 
     public function convertToPDF(string $docxPath, string $savePath, string $filename = null): string
     {
-        $command = 'soffice --headless --convert-to pdf --outdir ' . escapeshellarg($savePath) . escapeshellarg($docxPath);
-        exec($command, $output, $result);
+        $command = 'soffice --headless --convert-to pdf --outdir ' . escapeshellarg($savePath) . ' ' . escapeshellarg($docxPath);
+        exec($command);
 
         return $savePath . $filename;
     }

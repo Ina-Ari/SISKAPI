@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\User;
 use App\Services\Skpi\SkpiDocumentServiceInterface;
+use App\Support\Resolvers\UserRelationResolver;
 use Illuminate\Http\Request;
 use App\Models\Prodi;
 use App\Models\FormKaprodi;
 use App\Models\KepalaProdi;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Validation\Rules\File;
 use PhpOffice\PhpWord\Settings;
 use PhpOffice\PhpWord\TemplateProcessor;
+use SebastianBergmann\Type\TrueType;
 
 class KaprodiController
 {
-    public function __construct(
-        SkpiDocumentServiceInterface $skpiDocumentService
-    ) {}
-
     /**
      * Display a listing of the resource.
      */
@@ -70,6 +72,10 @@ class KaprodiController
     {
         $user = auth()->user();
 
+        $kode_prodi = UserRelationResolver::getRelationData($user)->prodi->kode_prodi;
+        $templateFilename = config('skpi.template.prefix') . $kode_prodi . config('skpi.template.preview.extension');
+        $templateFullPath = config('skpi.template.preview.path') . $templateFilename;
+
         $kaprodi = KepalaProdi::where('user_id', $user->id)->firstOrFail();
 
         $skpi = FormKaprodi::where('kode_prodi', $kaprodi->kode_prodi)->first();
@@ -88,7 +94,7 @@ class KaprodiController
 
         // dd($skpi);
         // dd($Prodi);
-        return view('kaprodi.formKaprodi', compact('kaprodi', 'prodi', 'skpi', 'sikap', 'attitude', 'penguasaan_pengetahuan', 'knowledge', 'keterampilan_umum', 'general_skills', 'keterampilan_khusus', 'special_skills'));
+        return view('kaprodi.formKaprodi', compact('templateFullPath', 'kaprodi', 'prodi', 'skpi', 'sikap', 'attitude', 'penguasaan_pengetahuan', 'knowledge', 'keterampilan_umum', 'general_skills', 'keterampilan_khusus', 'special_skills'));
     }
 
     public function storeSkpi1(Request $request)
@@ -182,16 +188,6 @@ class KaprodiController
         $skpi->save();
 
         return redirect()->route('kaprodi.form')->with('success', 'Data Berhasil Disimpan!');
-    }
-
-    public function showSkpiMahasiswaView()
-    {
-        return view('kaprodi.SkpiMahasiswaKaprodi');
-    }
-
-    public function uploadTemplate(Request $request)
-    {
-        
     }
 
 

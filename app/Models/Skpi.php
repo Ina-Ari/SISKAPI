@@ -12,6 +12,8 @@ class Skpi extends Model
     protected $fillable = [
         'mahasiswa_id',
         'kepala_prodi_id',
+        'nomor_skpi',
+        'nomor_ijazah',
         'link',
         'status'
     ];

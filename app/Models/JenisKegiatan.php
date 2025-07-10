@@ -13,6 +13,7 @@ class JenisKegiatan extends Model
     public $timestamps = false;
     protected $fillable = [
         'jenis_kegiatan',
+        'kategori_skpi',
     ];
 
     public function poin()

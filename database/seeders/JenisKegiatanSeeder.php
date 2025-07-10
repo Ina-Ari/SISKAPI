@@ -14,21 +14,29 @@ class JenisKegiatanSeeder extends Seeder
     public function run(): void
     {
         $jenisKegiatanList = [
-            'Kegiatan Wajib',
-            'Penelitian',
-            'Seminar',
-            'Pelatihan/Workshop',
-            'Pengurus Organisasi Mahasiswa',
-            'Kepanitiaan',
-            'Prestasi Akademik/Non Akademik',
-            'Pengabdian Masyarakat',
-            'Pendukung Lainnya',
+            'organisasi' => ['Pengurus Organisasi Mahasiswa'],
+            'aktivitas' => [
+                'Kegiatan Wajib',
+                'Penelitian',
+                'Prestasi Akademik/Non Akademik',
+                'Kepanitiaan',
+                'Pengabdian Masyarakat',
+                'Pendukung Lainnya'
+            ],
+            'pelatihan' => [
+                'Pelatihan/Workshop',
+                'Seminar'
+            ],
+            'kerja' => ['Pengalaman Kerja'],
         ];
 
-        foreach ($jenisKegiatanList as $nama) {
-            JenisKegiatan::updateOrCreate(
-                ['jenis_kegiatan' => $nama]
-            );
+        foreach ($jenisKegiatanList as $kategori => $jenisList) {
+            foreach ($jenisList as $jenis) {
+                JenisKegiatan::updateOrCreate([
+                    'jenis_kegiatan' => $jenis,
+                    'kategori_skpi' => $kategori,
+                ]);
+            }
         }
     }
 }
