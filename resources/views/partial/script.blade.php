@@ -321,27 +321,6 @@
     });
 
     document.getElementById('btn-simpan2').addEventListener('click', () => {
-        // isFormChangedTab2 = false;
-        const containers = [
-            { id: 'statement-container1', field: 'clear_sikap' },
-            { id: 'statement-container2', field: 'clear_penguasaan_pengetahuan' },
-            { id: 'statement-container3', field: 'clear_keterampilan_umum' },
-            { id: 'statement-container4', field: 'clear_keterampilan_khusus' },
-        ];
-
-        containers.forEach(containerInfo => {
-            const container = document.getElementById(containerInfo.id);
-            const textareas = container.querySelectorAll('textarea');
-
-            if (textareas.length === 0) {
-                const hidden = document.createElement('input');
-                hidden.type = 'hidden';
-                hidden.name = containerInfo.field;
-                hidden.value = '1';
-                container.appendChild(hidden);
-            }
-        });
-
         isFormChangedTab2 = false;
     });
 
@@ -406,63 +385,3 @@
     });
 </script>
 
-<script>
-    const skpi_chart_options = {
-        series: [
-        {
-            name: 'Total Pengajuan SKPI',
-            data: [28, 48, 40, 19, 86, 27, 90],
-        },
-        {
-            name: 'Proses Verifikasi',
-            data: [65, 59, 80, 81, 56, 55, 40],
-        },
-        {
-            name: 'Telah Diverifikasi',
-            data: [52, 30, 15, 45, 24, 60, 70],
-        },
-        {
-            name: 'Pengajuan Direvisi',
-            data: [5, 15, 10, 29, 24, 22, 23],
-        },
-        ],
-        chart: {
-        height: 300,
-        type: 'area',
-        toolbar: {
-            show: false,
-        },
-        },
-        legend: {
-        show: false,
-        },
-        colors: ['#3B82F6', '#EAB308', '#059669', '#BA2532'],
-        dataLabels: {
-        enabled: false,
-        },
-        stroke: {
-        curve: 'smooth',
-        },
-        xaxis: {
-        type: 'datetime',
-        categories: [
-
-            '2025-01-01',
-            '2025-02-01',
-            '2025-03-01',
-            '2025-04-01',
-            '2025-05-01',
-            '2025-06-01',
-            '2025-07-01',
-        ],
-        },
-        tooltip: {
-        x: {
-            format: 'MMMM yyyy',
-        },
-        },
-    };
-
-    const skpi_chart = new ApexCharts(document.querySelector("#skpi-chart"), skpi_chart_options);
-    skpi_chart.render();
-</script>
