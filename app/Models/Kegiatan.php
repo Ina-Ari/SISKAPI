@@ -16,6 +16,7 @@ class Kegiatan extends Model
         'nim',
         'id_poin',
         'nama_kegiatan',
+        'kegiatan_name',
         'tanggal_kegiatan',
         'sertifikat',
         'status_sertif',

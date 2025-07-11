@@ -224,11 +224,18 @@
                                             <div class="modal-body">
                                                 <input type="hidden" name="status_sertif"
                                                     value="{{ old('status_sertif', $item->status_sertif) }}">
-                                                <!-- Nama Kegiatan -->
+                                                <!-- Nama Kegiatan ID -->
                                                 <div class="mb-3">
-                                                    <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
+                                                    <label for="nama_kegiatan" class="form-label">Nama Kegiatan <i>(Versi Indonesia)</i></label>
                                                     <input type="text" class="form-control" id="nama_kegiatan"
                                                         name="nama_kegiatan" value="{{ $item->nama_kegiatan }}" required>
+                                                </div>
+
+                                                <!-- Nama Kegiatan EN -->
+                                                <div class="mb-3">
+                                                    <label for="kegiatan_name" class="form-label">Activity Name <i>(English Version)</i></label>
+                                                    <input type="text" class="form-control" id="kegiatan_name"
+                                                        name="kegiatan_name" value="{{ $item->kegiatan_name }}" required>
                                                 </div>
 
                                                 <!-- Tanggal Kegiatan -->
@@ -337,12 +344,21 @@
                     <form action="{{ route('mahasiswa.storeKegiatan') }}" method="POST" enctype="multipart/form-data"
                         class="border p-4 bg-white shadow-sm">
                         @csrf
-                        <!-- Nama Kegiatan -->
+                        <!-- Nama Kegiatan ID -->
                         <div class="form-group">
-                            <label for="Nama_kegiatan">Nama Kegiatan:</label>
+                            <label for="nama_kegiatan">Nama Kegiatan <i>(Versi Indonesia)</i>:</label>
                             <input type="text" id="Nama_kegiatan" name="nama_kegiatan" class="form-control"
-                                value="{{ old('nama_kegiatan') }}" placeholder="Masukkan nama kegiatan" required>
+                                value="{{ old('nama_kegiatan') }}" placeholder="Masukkan nama kegiatan versi bahasa indonesia" required>
                             @error('nama_kegiatan')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <!-- Nama Kegiatan EN -->
+                        <div class="form-group">
+                            <label for="kegiatan_name">Activity Name <i>(English Version)</i>:</label>
+                            <input type="text" id="kegiatan_name" name="kegiatan_name" class="form-control"
+                                value="{{ old('kegiatan_name') }}" placeholder="Masukkan nama kegiatan versi bahasa inggris" required>
+                            @error('kegiatan_name')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>

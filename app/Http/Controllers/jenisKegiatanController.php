@@ -22,6 +22,7 @@ class jenisKegiatanController extends Controller
     {
         $request->validate([
             'jenis_kegiatan' => 'required|string|max:45',
+            'kategori_skpi' => 'required|in:organisasi,aktivitas,pelatihan,kerja',
         ]);
 
         JenisKegiatan::create($request->all());
@@ -37,6 +38,7 @@ class jenisKegiatanController extends Controller
         // Validasi input
         $request->validate([
             'jenis_kegiatan' => 'required|string|max:45',
+            'kategori_skpi' => 'required|in:organisasi,aktivitas,pelatihan,kerja',
         ]);
 
         // Mencari jenis kegiatan berdasarkan ID

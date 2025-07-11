@@ -7,8 +7,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "blaspsoft/doxswap": "^0.1.0@beta",
+        "convertapi/convertapi-php": "^3.0",
         "laravel/framework": "^11.31",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "phpoffice/phpword": "^1.4",
+        "symfony/translation": "^7.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -66,6 +70,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

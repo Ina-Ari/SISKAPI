@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('jenis_kegiatan', function (Blueprint $table) {
             $table->increments('idjenis_kegiatan');
             $table->string('jenis_kegiatan', 100);
+            $table->string('kategori_skpi', 100);
         });
     }
 

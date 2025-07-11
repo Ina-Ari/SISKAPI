@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
             KepalaProdiSeeder::class,
             BaakSeeder::class,
             UpapkkSeeder::class,
+            JenisKegiatanSeeder::class,
+            TingkatKegiatanSeeder::class,
+            PosisiSeeder::class,
+            PoinSeeder::class,
         ]);
     }
 }

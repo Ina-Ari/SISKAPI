@@ -18,9 +18,9 @@ return [
         'url' => env('PNB_API_URL'),
         'key' => env('PNB_API_KEY'),
         'academic_years' => [
-            'student' => ['20221', '20222'],
-            'lecturer' => ['20221', '20222'],
-            'employee' => ['20221', '20222'],
+            'student' => ['20221', '20222', '20223'],
+            'lecturer' => ['20221', '20222', '20223'],
+            'employee' => ['20221', '20222', '20223'],
         ]
     ],
 
