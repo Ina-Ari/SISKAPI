@@ -28,7 +28,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="/test" class="nav-link">
                         <i class="nav-icon fas fa-pen-square" ></i>
                         <p style="font-size: 18px; font-color: #4A505C;">
                             Formulir SKPI

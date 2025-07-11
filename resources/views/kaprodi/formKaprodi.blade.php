@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Program Studi <span style="font-weight: 200; font-style:italic;"> (Versi Bahasa Indonesia) </span>*</label>
-                                <input type="text" class="form-control" name="kualifikasi_kkni" value="{{ $kaprodi->prodi->nama_prodi }}" disabled>
+                                {{-- <input type="text" class="form-control" name="kualifikasi_kkni" value="{{ $kaprodi->prodi->nama_prodi }}" disabled> --}}
                             </div>
                             <div class="form-group">
                                 <label>Jenis & Program Pendidikan <span style="font-weight: 200; font-style:italic;"> (Versi Bahasa Indonesia) </span>*</label>
@@ -78,7 +78,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Study Program <span style="font-weight: 200; font-style:italic;"> (English Version) </span>*</label>
-                                    <input type="text" class="form-control" name="study_program" value="{{ $kaprodi->prodi->prodi_name }}" disabled>
+                                    {{-- <input type="text" class="form-control" name="study_program" value="{{ $kaprodi->prodi->prodi_name }}" disabled> --}}
                                 </select>
                             </div>
                             <div class="form-group">

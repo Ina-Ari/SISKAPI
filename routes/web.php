@@ -89,40 +89,45 @@ Route::middleware('auth')->group(function() {
     });
 
     // UPAPKK
-    Route::middleware('role:upapkk')->name('upapkk.')->group(function() {
-        Route::controller(UpapkkController::class)->group(function() {
-            Route::get('/upapkk/dashboard', 'index')->name('dashboard');
-            Route::get('/upapkk/daftarMahasiswa', 'daftarMhs')->name('daftarMhs');
-            Route::get('/upapkk/{id}/daftarKegiatan', 'kegiatanMhs')->name('daftarKegiatan');
-            Route::get('/upapkk/verifKegiatan', 'kegiatanVerif')->name('verifKegiatan');
-            Route::get('/upapkk/unverifKegiatan', 'notVerified')->name('unverifKegiatan');
-            Route::post('/upapkk/verifSelected', 'verifySelected')->name('verifSelected');
-            Route::post('/upapkk/unverifSelected', 'cancelSelected')->name('unverifSelected');
-        });
-        Route::controller(jenisKegiatanController::class)->group(function() {
-            Route::get('/upapkk/jenisKegiatan', 'index')->name('jenisKegiatan');
-            Route::post('/upapkk/tambahJenisKegiatan', 'store')->name('storeJenisKegiatan');
-            Route::put('/upapkk/{id}/editJenisKegiatan', 'update')->name('updateJenisKegiatan');
-            Route::delete('/upapkk/{id}/hapusJenisKegiatan', 'destroy')->name('destroyJenisKegiatan');
-        });
-        Route::controller(tingkatKegiatanController::class)->group(function() {
-            Route::get('/upapkk/tingkatKegiatan', 'index')->name('tingkatKegiatan');
-            Route::post('/upapkk/tambahTingkatKegiatan', 'store')->name('storeTingkatKegiatan');
-            Route::put('/upapkk/{id}/editTingkatKegiatan', 'update')->name('updateTingkatKegiatan');
-            Route::delete('/upapkk/{id}/hapusTingkatKegiatan', 'destroy')->name('destroyTingkatKegiatan');
-        });
-        Route::controller(posisiController::class)->group(function() {
-            Route::get('/upapkk/posisi', 'index')->name('posisi');
-            Route::post('/upapkk/tambahPosisi', 'store')->name('storePosisi');
-            Route::put('/upapkk/{id}/editPosisi', 'update')->name('updatePosisi');
-            Route::delete('/upapkk/{id}/hapusPosisi', 'destroy')->name('destroyPosisi');
-        });
-        Route::controller(poinController::class)->group(function() {
-            Route::get('/upapkk/poin', 'index')->name('poin');
-            Route::post('/upapkk/tambahPoin', 'store')->name('storePoin');
-            Route::put('/upapkk/{id}/editPoin', 'update')->name('updatePoin');
-            Route::delete('/upapkk/{id}/hapusPoin', 'destroy')->name('destroyPoin');
-        });
-    });
 });
+
+
+// Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
+Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
+Route::get('kegiatan/not-verified', [KegiatanController::class, 'notVerified'])->name('kegiatan_not_verified');
+Route::post('kegiatan/verify-selected', [KegiatanController::class, 'verifySelected'])->name('kegiatan.verify_selected');
+Route::post('kegiatan/cancel-selected', [KegiatanController::class, 'cancelSelected'])->name('kegiatan.cancel_selected');
+
+//Routing Pages
+// Route::get('/', [dashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::resource('jenisKegiatan', jenisKegiatanController::class);
+Route::resource('tingkatKegiatan', tingkatKegiatanController::class);
+Route::resource('posisi', posisiController::class);
+Route::resource('poin', poinController::class);
+
+//routing kegiatan
+Route::resource('jenisKegiatan', jenisKegiatanController::class);
+Route::resource('tingkatKegiatan', tingkatKegiatanController::class);
+Route::resource('posisi', posisiController::class);
+Route::resource('poin', poinController::class);
+Route::resource('form', formControl::class);
+Route::get('/dashboardMhs', [formControl::class,'indexMahasiswa'])->name('dashboardMhs');
+Route::get('/form', function () {
+    return view('form');
+});
+Route::post('/tambahKegiatan', [formControl::class, 'store'])->name('form.store');
+Route::post('/updateKegiatan/{id_kegiatan}', [formControl::class, 'updateKegiatan'])->name('form.updateKegiatan');
+Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
+Route::get('/mahasiswa/{id}/kegiatan', [MahasiswaController::class, 'kegiatan'])->name('mahasiswa.kegiatan');
+
+Route::delete('/deletekegiatan/{id}', [formControl::class, 'destroy'])->name('kegiatan.destroy');
+
+Route::get('/mahasiswa/{nim}/edit', [formControl::class, 'edit'])->name('form.edit');
+Route::post('/mahasiswa/{nim}/update', [formControl::class, 'update'])->name('form.update');
+
+
+// Route::resource('KaprodiController', KaprodiController::class);
+Route::get('/formKaprodi', [KaprodiController::class, 'formKaprodi'])->name('formKaprodi');
+// Route::post('/tambahDataSkpi1', [KaprodiController::class, 'storeSkpi1'])->name('form.storeSkpi1');
+// Route::post('/tambahDataSkpi2', [KaprodiController::class, 'storeSkpi2'])->name('form.storeSkpi2');
 ?>

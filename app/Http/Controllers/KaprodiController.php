@@ -66,22 +66,20 @@ class KaprodiController
         $kaprodi = KepalaProdi::where('user_id', $user->id)->firstOrFail();
 
         $skpi = FormKaprodi::where('kode_prodi', $kaprodi->kode_prodi)->first();
-        $sikap = optional($skpi)->sikap ?? [];
-        $attitude = optional($skpi)->attitude ?? [];
-        $penguasaan_pengetahuan = optional($skpi)->penguasaan_pengetahuan ?? [];
-        $knowledge = optional($skpi)->knowledge ?? [];
-        $keterampilan_umum = optional($skpi)->keterampilan_umum ?? [];
-        $general_skills = optional($skpi)->general_skills ?? [];
-        $keterampilan_khusus = optional($skpi)->keterampilan_khusus ?? [];
-        $special_skills = optional($skpi)->special_skills ?? [];
+        // $sikap = $skpi->sikap;
+        // $attitude = $skpi->attitude;
+        // $penguasaan_pengetahuan = $skpi->penguasaan_pengetahuan;
+        // $knowledge = $skpi->knowledge;
+        // $keterampilan_umum = $skpi->keterampilan_umum;
+        // $general_skills = $skpi->general_skills;
+        // $keterampilan_khusus = $skpi->keterampilan_khusus;
+        // $special_skills = $skpi->special_skills;
 
         // $prodiList = Prodi::where('kode_prodi', $kaprodi->kode_prodi)->get();
 
         $prodi = Prodi::where('kode_jurusan', 40)->get();
-
-        // dd($skpi);
-        // dd($Prodi);
-        return view('kaprodi.formKaprodi', compact('kaprodi', 'prodi', 'skpi', 'sikap', 'attitude', 'penguasaan_pengetahuan', 'knowledge', 'keterampilan_umum', 'general_skills', 'keterampilan_khusus', 'special_skills'));
+        // dd($prodi);
+        return view('kaprodi.formKaprodi', compact('prodi', 'skpi'));
     }
 
     public function storeSkpi1(Request $request)

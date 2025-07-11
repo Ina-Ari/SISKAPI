@@ -406,6 +406,8 @@
     });
 </script>
 
+
+
 <script>
     const skpi_chart_options = {
         series: [
