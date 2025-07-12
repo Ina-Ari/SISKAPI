@@ -73,7 +73,7 @@ class SkpiDocumentService implements SkpiDocumentServiceInterface
         $templateProcessor->cloneBlock($blockName, 0, true, false, $data);
     }
 
-    public function convertToPDF(string $docxPath, string $savePath, string $filename = null): string
+    public function convertToPDF(string $docxPath, string $savePath, ?string $filename = null): string
     {
         $command = 'soffice --headless --convert-to pdf --outdir ' . escapeshellarg($savePath) . ' ' . escapeshellarg($docxPath);
         exec($command);
