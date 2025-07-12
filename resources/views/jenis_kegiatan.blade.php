@@ -48,7 +48,7 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label>Jenis Kegiatan</label>
-                                        <input type="text" name="jenis_kegiatan" class="form-control" value="{{ $item->jenis_kegiatan }}" required>
+                                        <input type="text" name="jenis_kegiatan" class="form-control" value="{{ $item->jenis_kegiatan }}" >
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -75,7 +75,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Jenis Kegiatan</label>
-                                <input type="text" name="jenis_kegiatan" class="form-control" required>
+                                <input type="text" name="jenis_kegiatan" class="form-control">
                             </div>
                         </div>
                         <div class="modal-footer">
