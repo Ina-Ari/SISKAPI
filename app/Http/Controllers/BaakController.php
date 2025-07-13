@@ -80,6 +80,11 @@ class BaakController extends Controller
             $datasets['selesai'][] = $dataByBulan[$label]['Selesai'];
         }
 
+        $baak = Auth::user();
+
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $baak->unreadNotifications->count();
+
         return view('baak.dashboardBAAK', [
             'total_pengajuan' => $total_pengajuan,
             'diajukan' => $diajukan,
@@ -87,6 +92,29 @@ class BaakController extends Controller
             'selesai' => $selesai,
             'tanggalLabels' => $tanggalLabels,
             'datasets' => $datasets,
+            'jumlahNotif' => $jumlahNotif,
         ]);
+    }
+
+    public function comments()
+    {
+        $baak = Auth::user();
+
+        if (!$baak) {
+            abort(403, 'Anda tidak terautentikasi');
+        }
+
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $baak->unreadNotifications->count();
+
+        // Ambil notifikasi yang dikirim ke kaprodi oleh BAAK ini
+        $notifikasi = DB::table('notifications')
+            ->where('type', 'App\Notifications\NotifikasiKaprodi')
+            ->whereJsonContains('data->admin_id', $baak->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $baak->unreadNotifications->markAsRead();
+        return view('baak.notifikasiBaak', compact('notifikasi', 'jumlahNotif'));
     }
 }
