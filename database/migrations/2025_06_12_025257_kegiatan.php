@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('nim');
             $table->unsignedInteger('id_poin');
             $table->string('nama_kegiatan', 200);
+            $table->string('kegiatan_name', 200);
             $table->date('tanggal_kegiatan');
             $table->string('sertifikat');
             $table->char('status_sertif');

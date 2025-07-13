@@ -51,6 +51,7 @@ class MahasiswaController extends Controller
         // Validasi data
         $request->validate([
             'nama_kegiatan' => 'required|string|max:255',
+            'kegiatan_name' => 'required|string|max:255',
             'tanggal_kegiatan' => 'required|date',
             'id_posisi' => 'required|exists:posisi,id_posisi',
             'idtingkat_kegiatan' => 'required|exists:tingkat_kegiatan,idtingkat_kegiatan',
@@ -95,6 +96,7 @@ class MahasiswaController extends Controller
         Kegiatan::create([
             'nim' => $nim,
             'nama_kegiatan' => $request->nama_kegiatan,
+            'kegiatan_name' => $request->kegiatan_name,
             'tanggal_kegiatan' => $request->tanggal_kegiatan,
             'sertifikat' => $certificatePath, // Simpan path relatif
             'status_sertif' => $certificateStatus,
@@ -115,6 +117,7 @@ class MahasiswaController extends Controller
         // Validasi data
         $request->validate([
             'nama_kegiatan' => 'required|string|max:255',
+            'kegiatan_name' => 'required|string|max:255',
             'tanggal_kegiatan' => 'required|date',
             'id_posisi' => 'required|exists:posisi,id_posisi',
             'idtingkat_kegiatan' => 'required|exists:tingkat_kegiatan,idtingkat_kegiatan',
@@ -178,6 +181,7 @@ class MahasiswaController extends Controller
         $dataUpdate = [
             'nim' => $nim,
             'nama_kegiatan' => $request->nama_kegiatan,
+            'kegiatan_name' => $request->kegiatan_name,
             'tanggal_kegiatan' => $request->tanggal_kegiatan, // Simpan path relatif
             'id_poin' => $poin->id_poin,
             'status' => 'false',
@@ -221,7 +225,7 @@ class MahasiswaController extends Controller
         $mahasiswa = $user->mahasiswa;
 
         $request->validate([
-            'picture' => 'nullable|image|max:2048',
+            'picture' => 'nullable|image',
             'nama' => 'required|string|max:100',
             'telepon' => 'required|string|max:30',
             'email' => 'required|email',

@@ -17,6 +17,7 @@
         <tr>
             <th>No.</th>
             <th>Jenis Kegiatan</th>
+            <th>Kategori SKPI</th>
             <th>Aksi</th>
         </tr>
         </thead>
@@ -25,6 +26,13 @@
                 <tr>
                     <td>{{ $key+1 }}</td>
                     <td>{{ $item->jenis_kegiatan }}</td>
+                    @php
+                        $kategori_skpi = match($item->kategori_skpi) {
+                            'kerja' => 'Pengalaman Kerja',
+                            default => ucfirst($item->kategori_skpi ?? 'Tidak diketahui'),
+                        }
+                    @endphp
+                    <td>{{ $kategori_skpi }}</td>
                     <td>
                         <button class="btn btn-warning" data-toggle="modal" data-target="#editModal{{ $item->idjenis_kegiatan }}"><i class="fa fa-pen"></i></button>
                         <form action="{{ route('upapkk.destroyJenisKegiatan', $item->idjenis_kegiatan) }}" method="POST" style="display:inline;">
@@ -46,9 +54,26 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="form-group">
+                                    <div class="form-group mb-3">
                                         <label>Jenis Kegiatan</label>
                                         <input type="text" name="jenis_kegiatan" class="form-control" value="{{ $item->jenis_kegiatan }}" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="kategori_skpi" class="form-label">Kategori SKPI</label>
+                                        <select name="kategori_skpi" id="kategori_skpi" class="form-control" required>
+                                            <option value="organisasi" @selected($item->kategori_skpi == 'organisasi')>
+                                                Organisasi
+                                            </option>
+                                            <option value="aktivitas" @selected($item->kategori_skpi == 'aktivitas')>
+                                                Aktivitas
+                                            </option>
+                                            <option value="pelatihan" @selected($item->kategori_skpi == 'pelatihan')>
+                                                Pelatihan
+                                            </option>
+                                            <option value="kerja" @selected($item->kategori_skpi == 'kerja')>
+                                                Pengalaman Kerja
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -73,9 +98,19 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label>Jenis Kegiatan</label>
                                 <input type="text" name="jenis_kegiatan" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="kategori_skpi" class="form-label">Kategori SKPI</label>
+                                <select name="kategori_skpi" id="kategori_skpi" class="form-control" required>
+                                    <option value="">-- Pilih Kategori --</option>
+                                    <option value="organisasi">Organisasi</option>
+                                    <option value="aktivitas">Aktivitas</option>
+                                    <option value="pelatihan">Pelatihan</option>
+                                    <option value="kerja">Pengalaman Kerja</option>
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">

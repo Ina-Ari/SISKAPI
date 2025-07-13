@@ -2,4 +2,6 @@
 !private/
 !public/
 !public/**
+!temp/
+!temp/.gitignore
 !.gitignore

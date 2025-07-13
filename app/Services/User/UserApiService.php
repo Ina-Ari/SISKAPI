@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Models\Role;
 use App\Services\User\UserApiServiceInterface;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
@@ -21,6 +22,7 @@ class UserApiService implements UserApiServiceInterface
             });
 
             if ($data) {
+                $data = $this->requestDetailMahasiswaData($data['nim'])->toArray();
                 break;
             }
         }
@@ -35,6 +37,14 @@ class UserApiService implements UserApiServiceInterface
             'tahunAkademik' => $year,
             'HashCode' => $hashCode
         ])->collect('daftar');
+
+        return $response;
+    }
+
+    private function requestDetailMahasiswaData(string $nim): Collection
+    {
+        $hashCode = strtoupper(hash('sha256', $nim . config('services.pnb_api.key')));
+        $response = Http::get(config('services.pnb_api.url') . "/mahasiswa/$nim&$hashCode")->collect('profile');
 
         return $response;
     }
@@ -108,9 +118,12 @@ class UserApiService implements UserApiServiceInterface
         $user += match ($role) {
             Role::MAHASISWA => [
                 'nim' => $data['nim'] ?? null,
+                'tanggal_lahir' => Carbon::createFromFormat('m/d/Y h:i:s A', $data['tglLahir'])->translatedFormat('Y-m-d') ?? null,
+                'tempat_lahir' => $data['tmpLahir'] ?? null,
+                'telepon' => $data['telepon'] ?? null,
                 'kode_prodi' => $data['kodeProdi'] ?? null,
                 'kode_jurusan' => $data['kodeJurusan'] ?? null,
-                'angkatan' => $data['tahunAkademik'] ?? null,
+                'angkatan' => $data['smtAwal'] ?? null,
             ],
             Role::KEPALA_PRODI => [
                 'nip' => $data['nip'] ?? null,

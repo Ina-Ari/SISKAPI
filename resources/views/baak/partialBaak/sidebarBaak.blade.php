@@ -18,30 +18,32 @@
         <nav class="mt-4">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
+
+                <!-- Dashboard -->
                 <li class="nav-item">
-                    <a href="" class="nav-link active" style="background-color: #E9F5FE; color: #5B91EF">
-                        <i class="nav-icon fas fa-home" ></i>
-                        <p style="font-size: 18px; font-color: #4A505C;">
-                            Dashboard
-                        </p>
+                    <a href="{{ route('baak.dashboard') }}"
+                       class="nav-link {{ Route::currentRouteName() == 'baak.dashboard' ? 'active' : '' }}"
+                       style="{{ Route::currentRouteName() == 'baak.dashboard' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p style="font-size: 18px;">Dashboard</p>
                     </a>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="" class="nav-link">
                         <i class="nav-icon fas fa-pen-square" ></i>
                         <p style="font-size: 18px; font-color: #4A505C;">
                             Formulir SKPI
                         </p>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
-                        <i class="nav-icon fas fa-users" ></i>
-                        <p style="font-size: 18px; font-color: #4A505C;">
-                            SKPI Mahasiswa
-                        </p>
+                    <a href="{{ route('baak.skpi.mahasiswa') }}"
+                       class="nav-link {{ Route::currentRouteName() == 'baak.skpi.mahasiswa' ? 'active' : '' }}"
+                       style="{{ Route::currentRouteName() == 'baak.skpi.mahasiswa' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p style="font-size: 18px;">SKPI  Mahasiswa</p>
                     </a>
                 </li>
 

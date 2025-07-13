@@ -18,7 +18,7 @@
   <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown">
       <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#" role="button">
-         <img src="{{ '../storage/'. Auth::user()->picture }}" alt="User Image" class="img-circle elevation-2" width="30" height="30">
+         <img src="{{  Auth::user()->picture ? '../storage/'. Auth::user()->picture : asset('../storage/fotoprofil/user.jpeg') }}" alt="User Image" class="img-circle elevation-2" width="30" height="30">
         <i class="fas fa-angle-down ml-2"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-right">

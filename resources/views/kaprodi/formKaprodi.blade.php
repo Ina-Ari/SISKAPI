@@ -3,7 +3,22 @@
 @section('title', 'Formulir SKPI')
 
 @section('content')
-    <div class="card mx-2 my-2">
+    {{-- Header --}}
+    <section class="m-4 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+        <h1 class="text-bold text-primary drop">Formulir SKPI</h1>
+        <div class="d-flex items-center" style="gap: 1rem">
+            <button type="button" class="btn btn-primary py-2 px-4" data-toggle="modal" data-target="#templatePreview">
+                <i class="fa fa-eye mr-2"></i>
+                Lihat Template SKPI
+            </button>
+            <button type="button" class="btn btn-success py-2 px-4" data-toggle="modal" data-target="#templateUpload">
+                <i class="fa fa-upload mr-2"></i>
+                Upload Template SKPI
+            </button>
+        </div>
+    </section>
+
+    <div class="card m-4">
         <div class="card-body">
             <nav class="nav nav-pills nav-fill mb-4" id="customTabs">
                 <a class="nav-link text-center custom-tab nav-pill-tab" href="#" onclick="setActiveTab(event, 'form1')">
@@ -231,22 +246,77 @@
         </div>
     </div>
 
-        <!-- Modal Peringatan -->
+    {{-- Modal Peringatan --}}
     <div class="modal fade" id="unsavedModal" tabindex="-1" aria-labelledby="unsavedModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> {{-- Tengah layar --}}
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="unsavedModalLabel">Peringatan</h5>
-        </div>
-        <div class="modal-body">
-            Anda memiliki perubahan yang belum disimpan. Apakah Anda ingin menyimpan sebelum meninggalkan halaman?
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary" id="confirmSave">Simpan</button>
-        </div>
+        <div class="modal-dialog modal-dialog-centered"> {{-- Tengah layar --}}
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="unsavedModalLabel">Peringatan</h5>
+            </div>
+            <div class="modal-body">
+                Anda memiliki perubahan yang belum disimpan. Apakah Anda ingin menyimpan sebelum meninggalkan halaman?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary" id="confirmSave">Simpan</button>
+            </div>
+            </div>
         </div>
     </div>
+
+    {{-- Modal Preview Template --}}
+    <div class="modal fade" id="templatePreview" tabindex="-1" aria-labelledby="templatePreviewLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header align-items-center py-2">
+                    <h3 class="modal-title font-weight-bold text-primary" id="templatePreviewLabel">Template SKPI</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0 vh-100 overflow-hidden">
+                    <a class="btn btn-danger d-inline d-md-none"
+                        href="{{ asset("storage/$templateFullPath") . '?t=' . now() }}" target="_blank">
+                        See PDF
+                    </a>
+                    <embed id="pdfViewer" src="{{ asset("storage/$templateFullPath") . '?t=' . now() }}#toolbar=0" width="100%" height="100%"></embed>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal Upload Template --}}
+    <div class="modal fade" id="templateUpload" tabindex="-1" aria-labelledby="templateUploadLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header align-items-center py-2">
+                    <h3 class="modal-title font-weight-bold text-success" id="templateUploadLabel">UploadTemplate SKPI</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <form action="{{ route('kaprodi.skpi.create.template') }}" method="POST" enctype="multipart/form-data" class="d-flex flex-column" style="gap: 1rem;">
+                        @csrf
+                        <label for="template" class="block">
+                            Upload Template (.docx)
+                            <input type="file" accept=".docx" name="template" id="template" class="form-control">
+                        </label>
+                        <label for="namaKajur" class="block">
+                            Nama Ketua Jurusan
+                            <input type="text" name="nama_kajur" id="namaKajur" class="form-control">
+                        </label>
+                        <label for="nipKajur" class="block">
+                            NIP Ketua Jurusan
+                            <input type="text" name="nip_kajur" id="nipKajur" class="form-control">
+                        </label>
+                        <button type="submit" class="btn btn-success">
+                            Upload
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection

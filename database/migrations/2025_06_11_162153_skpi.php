@@ -15,7 +15,8 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('mahasiswa_id');
             $table->unsignedInteger('kepala_prodi_id');
-            $table->string('nomor', 45);
+            $table->string('nomor_skpi', 45)->nullable()->unique();
+            $table->string('nomor_ijazah', 45)->nullable();
             $table->string('link', 200);
             $table->string('status', 45);
             $table->timestamps();

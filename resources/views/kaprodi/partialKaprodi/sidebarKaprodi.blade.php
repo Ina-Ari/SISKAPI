@@ -31,8 +31,9 @@
 
                 <!-- SKPI Mahasiswa -->
                 <li class="nav-item">
-                    <a href="#"
-                       class="nav-link">
+                    <a href="{{ route('kaprodi.skpi.mahasiswa') }}"
+                       class="nav-link {{ Route::currentRouteName() == 'kaprodi.skpi.mahasiswa' ? 'active' : '' }}"
+                       style="{{ Route::currentRouteName() == 'kaprodi.skpi.mahasiswa' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
                         <p style="font-size: 18px;">SKPI  Mahasiswa</p>
                     </a>

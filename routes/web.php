@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthMhsController;
 use App\Http\Controllers\jenisKegiatanController;
+use App\Http\Controllers\SkpiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tingkatKegiatanController;
 use App\Http\Controllers\posisiController;
@@ -8,7 +10,9 @@ use App\Http\Controllers\poinController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\BaakController;
+use App\Http\Controllers\NotificationMhs;
 use App\Http\Controllers\UpapkkController;
+use Illuminate\Notifications\Notification;
 use Illuminate\Routing\Route as RoutingRoute;
 
 
@@ -44,6 +48,8 @@ Route::middleware('guest')->group(function() {
  * Daftar routing untuk pengguna yang sudah terautentikasi
  */
 Route::middleware('auth')->group(function() {
+    Route::redirect('/', '/login');
+
     // Logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -68,6 +74,9 @@ Route::middleware('auth')->group(function() {
             Route::delete('/mahasisw/{id}/hapusKegiatan', 'destroy')->name('destroyKegiatan');
             Route::get('/mahasiswa/profile', 'profile')->name('profile');
             Route::post('/mahasiswa/{id}/editProfile', 'updateProfile')->name('updateProfile');
+            // Notifikasi
+            Route::get('/notifikasiMhs', [AuthMhsController::class, 'notifikasiMhs'])->name('notifikasiMhs');
+            Route::get('/mahasiswa/notifikasi', [NotificationMhs::class, 'lihatMahasiswa'])->name('pagenotif');
         });
     });
 
@@ -78,6 +87,13 @@ Route::middleware('auth')->group(function() {
             Route::get('/kaprodi/form', 'formKaprodi')->name('form');
             Route::post('/kaprodi/tambahDataSkpi1', 'storeSkpi1')->name('storeSkpi1');
             Route::post('/kaprodi/tambahDataSkpi2', 'storeSkpi2')->name('storeSkpi2');
+
+        });
+
+        Route::controller(SkpiController::class)->name('skpi.')->group(function() {
+            Route::get('/kaprodi/skpi-mahasiswa', 'showSkpiMahasiswaKaprodiView')->name('mahasiswa');
+            Route::post('/kaprodi/skpi-mahasiswa/template', 'createTemplate')->name('create.template');
+            Route::post('/kaprodi/skpi-mahasiswa/create', 'create')->name('create');
         });
     });
 
@@ -85,6 +101,12 @@ Route::middleware('auth')->group(function() {
     Route::middleware('role:baak')->name('baak.')->group(function() {
         Route::controller(BaakController::class)->group(function() {
             Route::get('/baak/dashboard', 'index')->name('dashboard');
+        });
+
+        Route::controller(SkpiController::class)->name('skpi.')->group(function() {
+            Route::get('/baak/skpi-mahasiswa', 'showSkpiMahasiswaBaakView')->name('mahasiswa');
+            Route::put('/baak/skpi-mahasiswa/verification', 'verification')->name('verification');
+            Route::put('/baak/skpi-mahasiswa/revision', 'revision')->name('revision');
         });
     });
 
@@ -98,6 +120,7 @@ Route::middleware('auth')->group(function() {
             Route::get('/upapkk/unverifKegiatan', 'notVerified')->name('unverifKegiatan');
             Route::post('/upapkk/verifSelected', 'verifySelected')->name('verifSelected');
             Route::post('/upapkk/unverifSelected', 'cancelSelected')->name('unverifSelected');
+            Route::post('/upapkk/notifikasi/kirim', [NotificationMhs::class, 'sendComment'])->name('kirimnotif');
         });
         Route::controller(jenisKegiatanController::class)->group(function() {
             Route::get('/upapkk/jenisKegiatan', 'index')->name('jenisKegiatan');
@@ -125,4 +148,5 @@ Route::middleware('auth')->group(function() {
         });
     });
 });
+
 ?>
