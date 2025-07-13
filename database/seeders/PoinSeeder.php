@@ -352,7 +352,7 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "UKM",
-                        "jabatan" => "Anggota Divisi",
+                        "jabatan" => "Anggota",
                         "poin" => 3
                     ],
                     [

@@ -118,7 +118,7 @@ class UserApiService implements UserApiServiceInterface
         $user += match ($role) {
             Role::MAHASISWA => [
                 'nim' => $data['nim'] ?? null,
-                'tanggal_lahir' => Carbon::createFromFormat('m/d/Y h:i:s A', $data['tglLahir'])->translatedFormat('Y-m-d') ?? null,
+                'tanggal_lahir' => Carbon::createFromFormat('m/d/Y', $data['tglLahir'])->translatedFormat('Y-m-d') ?? null,
                 'tempat_lahir' => $data['tmpLahir'] ?? null,
                 'telepon' => $data['telepon'] ?? null,
                 'kode_prodi' => $data['kodeProdi'] ?? null,
