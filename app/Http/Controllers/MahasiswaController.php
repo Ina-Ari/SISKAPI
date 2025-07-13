@@ -229,7 +229,7 @@ class MahasiswaController extends Controller
         $mahasiswa = $user->mahasiswa;
 
         $request->validate([
-            'picture' => 'nullable|image|max:2048',
+            'picture' => 'nullable|image',
             'nama' => 'required|string|max:100',
             'telepon' => 'required|string|max:30',
             'email' => 'required|email',

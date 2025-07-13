@@ -8,7 +8,7 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           {{-- Pastikan variabel $user tersedia di view ini, lihat penjelasan sebelumnya --}}
-          <img class="img-circle" src="{{ $user->picture ? asset('storage/' . $user->picture) : asset('../../dist/img/user4-128x128.jpg') }}">
+          <img class="img-circle" src="{{  $user->picture ? '../storage/'. $user->picture : asset('../storage/fotoprofil/user.jpeg') }}">
         </div>
         <div class="info">
           {{-- Pastikan variabel $user tersedia di view ini, lihat penjelasan sebelumnya --}}

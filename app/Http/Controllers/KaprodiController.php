@@ -62,19 +62,27 @@ class KaprodiController
             ->groupBy('tanggal', 'status')
             ->orderBy('tanggal')
             ->get();
+        $grafikDataRaw = DB::table('skpi')
+            ->select(DB::raw('DATE(updated_at) as tanggal'), 'status', DB::raw('count(*) as jumlah'))
+            ->where('kepala_prodi_id', $kodeProdi)
+            ->groupBy('tanggal', 'status')
+            ->orderBy('tanggal')
+            ->get();
 
         // Format data jadi per tanggal dengan masing-masing status (1-5)
+        // Format data
         $dataByTanggal = [];
         foreach ($grafikDataRaw as $row) {
             $dataByTanggal[$row->tanggal][$row->status] = $row->jumlah;
         }
 
-        // Ambil semua tanggal yang unik
         $tanggalLabels = array_keys($dataByTanggal);
 
-        // Siapkan dataset status 1-5, isian default 0
+        // Status yang digunakan dalam grafik
+        $statusList = ['Diajukan', 'Menunggu', 'Selesai', 'Revisi'];
+
         $datasets = [];
-        for ($status = 1; $status <= 5; $status++) {
+        foreach ($statusList as $status) {
             $datasets[$status] = [];
             foreach ($tanggalLabels as $tanggal) {
                 $datasets[$status][] = $dataByTanggal[$tanggal][$status] ?? 0;

@@ -56,7 +56,7 @@
                                 <div class="modal-body">
                                     <div class="form-group mb-3">
                                         <label>Jenis Kegiatan</label>
-                                        <input type="text" name="jenis_kegiatan" class="form-control" value="{{ $item->jenis_kegiatan }}" required>
+                                        <input type="text" name="jenis_kegiatan" class="form-control" value="{{ $item->jenis_kegiatan }}" >
                                     </div>
                                     <div class="mb-3">
                                         <label for="kategori_skpi" class="form-label">Kategori SKPI</label>
@@ -100,7 +100,7 @@
                         <div class="modal-body">
                             <div class="form-group mb-3">
                                 <label>Jenis Kegiatan</label>
-                                <input type="text" name="jenis_kegiatan" class="form-control" required>
+                                <input type="text" name="jenis_kegiatan" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="kategori_skpi" class="form-label">Kategori SKPI</label>

@@ -55,7 +55,7 @@
                                         data-id-kegiatan="{{ $data->id }}"
                                         data-toggle="modal"
                                         data-target="#commentModal">
-                                        <i class="fas fa-comment"></i>
+                                        <i style="color: black" class="fas fa-comment"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -225,15 +225,22 @@ $(document).ready(function () {
     });
 
     function showToast(type, message) {
-        if (type === 'success') {
-            $('#successToastMessage').text(message);
-            const toastSuccess = new bootstrap.Toast(document.getElementById('successToast'));
-            toastSuccess.show();
-        } else if (type === 'error') {
-            $('#errorToastMessage').text(message);
-            const toastError = new bootstrap.Toast(document.getElementById('errorToast'));
-            toastError.show();
-        }
+    if (type === 'success') {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: message || 'Notifikasi berhasil dikirim.',
+            timer: 1500,
+            showConfirmButton: false
+        });
+    } else if (type === 'error') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: message || 'Terjadi kesalahan.',
+        });
     }
+}
+
 });
 </script>

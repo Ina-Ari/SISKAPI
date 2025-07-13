@@ -10,37 +10,34 @@ use Illuminate\Support\Facades\DB;
 
 class BaakController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         // Hitung statistik kotak
         $total_pengajuan = DB::table('skpi')
-            ->whereIn('status', [1, 3, 4])
+            ->whereIn('status', ['Diajukan', 'Revisi', 'Selesai'])
             ->count();
 
-        $belum_diverifikasi = DB::table('skpi')
-            ->where('status', 1)
+        $diajukan = DB::table('skpi')
+            ->where('status', 'Diajukan')
             ->count();
 
-        $telah_diverifikasi = DB::table('skpi')
-            ->where('status', 3)
+        $revisi = DB::table('skpi')
+            ->where('status', 'Revisi')
             ->count();
 
-        $pengajuan_ditolak = DB::table('skpi')
-            ->where('status', 4)
+        $selesai = DB::table('skpi')
+            ->where('status', 'Selesai')
             ->count();
 
         // Ambil data grafik per bulan
         $grafikRaw = DB::table('skpi')
             ->select(DB::raw('DATE_FORMAT(updated_at, "%Y-%m") as bulan'), 'status', DB::raw('COUNT(*) as total'))
-            ->whereIn('status', [1, 3, 4])
+            ->whereIn('status', ['Diajukan', 'Revisi', 'Selesai'])
             ->groupBy('bulan', 'status')
             ->orderBy('bulan')
             ->get();
 
-        // Buat list bulan dari Jan 2025 sampai Juli 2025 (atau sekarang)
+        // Buat list bulan dari Jan 2025 sampai bulan ini
         $start = Carbon::parse('2025-01-01');
         $end = Carbon::now()->startOfMonth();
         $period = CarbonPeriod::create($start, '1 month', $end);
@@ -48,18 +45,16 @@ class BaakController extends Controller
         $tanggalLabels = [];
         $dataByBulan = [];
 
-        // Inisialisasi semua bulan dengan 0
         foreach ($period as $date) {
             $label = $date->translatedFormat("M 'y");
             $tanggalLabels[] = $label;
             $dataByBulan[$label] = [
-                1 => 0,
-                3 => 0,
-                4 => 0,
+                'Diajukan' => 0,
+                'Revisi' => 0,
+                'Selesai' => 0,
             ];
         }
 
-        // Isi data berdasarkan hasil query
         foreach ($grafikRaw as $row) {
             $labelBulan = Carbon::parse($row->bulan)->translatedFormat("M 'y");
             if (isset($dataByBulan[$labelBulan])) {
@@ -67,59 +62,31 @@ class BaakController extends Controller
             }
         }
 
-        // Susun dataset untuk grafik
         $datasets = [
             'total_pengajuan' => [],
-            'belum_diverifikasi' => [],
-            'telah_diverifikasi' => [],
-            'pengajuan_ditolak' => [],
+            'diajukan' => [],
+            'revisi' => [],
+            'selesai' => [],
         ];
 
         foreach ($tanggalLabels as $label) {
             $datasets['total_pengajuan'][] =
-                $dataByBulan[$label][1] +
-                $dataByBulan[$label][3] +
-                $dataByBulan[$label][4];
+                $dataByBulan[$label]['Diajukan'] +
+                $dataByBulan[$label]['Revisi'] +
+                $dataByBulan[$label]['Selesai'];
 
-            $datasets['belum_diverifikasi'][] = $dataByBulan[$label][1];
-            $datasets['telah_diverifikasi'][] = $dataByBulan[$label][3];
-            $datasets['pengajuan_ditolak'][] = $dataByBulan[$label][4];
+            $datasets['diajukan'][] = $dataByBulan[$label]['Diajukan'];
+            $datasets['revisi'][] = $dataByBulan[$label]['Revisi'];
+            $datasets['selesai'][] = $dataByBulan[$label]['Selesai'];
         }
-
-        $baak = Auth::user();
-        // Hitung jumlah notifikasi belum dibaca
-        $jumlahNotif = $baak->unreadNotifications->count();
 
         return view('baak.dashboardBAAK', [
             'total_pengajuan' => $total_pengajuan,
-            'belum_diverifikasi' => $belum_diverifikasi,
-            'telah_diverifikasi' => $telah_diverifikasi,
-            'pengajuan_ditolak' => $pengajuan_ditolak,
+            'diajukan' => $diajukan,
+            'revisi' => $revisi,
+            'selesai' => $selesai,
             'tanggalLabels' => $tanggalLabels,
             'datasets' => $datasets,
-            'jumlahNotif' => $jumlahNotif,
         ]);
-    }
-
-    public function comments()
-    {
-        $baak = Auth::user();
-
-        if (!$baak) {
-            abort(403, 'Anda tidak terautentikasi');
-        }
-
-        // Hitung jumlah notifikasi belum dibaca
-        $jumlahNotif = $baak->unreadNotifications->count();
-
-        // Ambil notifikasi yang dikirim ke kaprodi oleh BAAK ini
-        $notifikasi = DB::table('notifications')
-            ->where('type', 'App\Notifications\NotifikasiKaprodi')
-            ->whereJsonContains('data->admin_id', $baak->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $baak->unreadNotifications->markAsRead();
-        return view('baak.notifikasiBaak', compact('notifikasi', 'jumlahNotif'));
     }
 }

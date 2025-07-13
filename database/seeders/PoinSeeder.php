@@ -352,7 +352,7 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "UKM",
-                        "jabatan" => "Anggota Divisi",
+                        "jabatan" => "Anggota",
                         "poin" => 3
                     ],
                     [
@@ -462,6 +462,21 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "Kabupaten",
+                        "jabatan" => "Wakil ketua",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Sekretaris",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Bendahara",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
                         "jabatan" => "BPH lainnya",
                         "poin" => 5
                     ],
@@ -474,6 +489,21 @@ class PoinSeeder extends Seeder
                         "tingkat" => "Provinsi",
                         "jabatan" => "Ketua",
                         "poin" => 7
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Wakil ketua",
+                        "poin" => 6
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Sekretaris",
+                        "poin" => 6
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Bendahara",
+                        "poin" => 6
                     ],
                     [
                         "tingkat" => "Provinsi",
@@ -492,6 +522,21 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "Nasional",
+                        "jabatan" => "Wakil ketua",
+                        "poin" => 7
+                    ],
+                    [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Sekretaris",
+                        "poin" => 7
+                    ],
+                    [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Bendahara",
+                        "poin" => 7
+                    ],
+                    [
+                        "tingkat" => "Nasional",
                         "jabatan" => "BPH lainnya",
                         "poin" => 7
                     ],
@@ -504,6 +549,21 @@ class PoinSeeder extends Seeder
                         "tingkat" => "Internasional",
                         "jabatan" => "Ketua",
                         "poin" => 10
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Wakil ketua",
+                        "poin" => 9
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Sekretaris",
+                        "poin" => 9
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Bendahara",
+                        "poin" => 9
                     ],
                     [
                         "tingkat" => "Internasional",
@@ -537,17 +597,17 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "UKM",
-                        "jabatan" => "Wakil Ketua Panitia",
+                        "jabatan" => "Wakil Ketua",
                         "poin" => 3
                     ],
                     [
                         "tingkat" => "UKM",
-                        "jabatan" => "Sekretaris Panitia",
+                        "jabatan" => "Sekretaris",
                         "poin" => 3
                     ],
                     [
                         "tingkat" => "UKM",
-                        "jabatan" => "Bendahara Panitia",
+                        "jabatan" => "Bendahara",
                         "poin" => 3
                     ],
                     [
@@ -562,7 +622,17 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "UKM",
-                        "jabatan" => "Wasit dan Anggota",
+                        "jabatan" => "BPH lainnya",
+                        "poin" => 3
+                    ],
+                    [
+                        "tingkat" => "UKM",
+                        "jabatan" => "Anggota",
+                        "poin" => 2
+                    ],
+                    [
+                        "tingkat" => "UKM",
+                        "jabatan" => "Wasit",
                         "poin" => 2
                     ],
                     [
@@ -587,17 +657,17 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "Jurusan",
-                        "jabatan" => "Wakil Ketua Panitia",
+                        "jabatan" => "Wakil Ketua",
                         "poin" => 3
                     ],
                     [
                         "tingkat" => "Jurusan",
-                        "jabatan" => "Sekretaris Panitia",
+                        "jabatan" => "Sekretaris",
                         "poin" => 3
                     ],
                     [
                         "tingkat" => "Jurusan",
-                        "jabatan" => "Bendahara Panitia",
+                        "jabatan" => "Bendahara",
                         "poin" => 3
                     ],
                     [
@@ -612,7 +682,12 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "Jurusan",
-                        "jabatan" => "Wasit dan Anggota",
+                        "jabatan" => "Wasit",
+                        "poin" => 2
+                    ],
+                    [
+                        "tingkat" => "Jurusan",
+                        "jabatan" => "Anggota",
                         "poin" => 2
                     ],
                     [
@@ -652,17 +727,17 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "BEM",
-                        "jabatan" => "Wakil Ketua Panitia",
+                        "jabatan" => "Wakil Ketua",
                         "poin" => 4
                     ],
                     [
                         "tingkat" => "BEM",
-                        "jabatan" => "Sekretaris Panitia",
+                        "jabatan" => "Sekretaris",
                         "poin" => 4
                     ],
                     [
                         "tingkat" => "BEM",
-                        "jabatan" => "Bendahara Panitia",
+                        "jabatan" => "Bendahara",
                         "poin" => 4
                     ],
                     [
@@ -692,17 +767,17 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "MPM",
-                        "jabatan" => "Wakil Ketua Panitia",
+                        "jabatan" => "Wakil Ketua",
                         "poin" => 4
                     ],
                     [
                         "tingkat" => "MPM",
-                        "jabatan" => "Sekretaris Panitia",
+                        "jabatan" => "Sekretaris",
                         "poin" => 4
                     ],
                     [
                         "tingkat" => "MPM",
-                        "jabatan" => "Bendahara Panitia",
+                        "jabatan" => "Bendahara",
                         "poin" => 4
                     ],
                     [
@@ -732,17 +807,17 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "Politeknik",
-                        "jabatan" => "Wakil Ketua Panitia",
+                        "jabatan" => "Wakil Ketua",
                         "poin" => 4
                     ],
                     [
                         "tingkat" => "Politeknik",
-                        "jabatan" => "Sekretaris Panitia",
+                        "jabatan" => "Sekretaris",
                         "poin" => 4
                     ],
                     [
                         "tingkat" => "Politeknik",
-                        "jabatan" => "Bendahara Panitia",
+                        "jabatan" => "Bendahara",
                         "poin" => 4
                     ],
                     [
@@ -757,17 +832,32 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "BEM",
-                        "jabatan" => "Wasit dan Anggota",
+                        "jabatan" => "Wasit",
+                        "poin" => 2
+                    ],
+                    [
+                        "tingkat" => "BEM",
+                        "jabatan" => "Anggota",
                         "poin" => 2
                     ],
                     [
                         "tingkat" => "MPM",
-                        "jabatan" => "Wasit dan Anggota",
+                        "jabatan" => "Wasit",
+                        "poin" => 2
+                    ],
+                    [
+                        "tingkat" => "MPM",
+                        "jabatan" => "Anggota",
                         "poin" => 2
                     ],
                     [
                         "tingkat" => "Politeknik",
-                        "jabatan" => "Wasit dan Anggota",
+                        "jabatan" => "Wasit",
+                        "poin" => 2
+                    ],
+                    [
+                        "tingkat" => "Politeknik",
+                        "jabatan" => "Anggota",
                         "poin" => 2
                     ],
                     [
@@ -789,6 +879,46 @@ class PoinSeeder extends Seeder
                         "tingkat" => "Kabupaten",
                         "jabatan" => "Ketua",
                         "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Peninjau",
+                        "poin" => 4
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Penanggung jawab",
+                        "poin" => 4
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Steering Commite",
+                        "poin" => 4
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Wakil Ketua",
+                        "poin" => 4
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Sekretaris",
+                        "poin" => 4
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Bendahara",
+                        "poin" => 4
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Koordinator Seksi",
+                        "poin" => 4
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Wakil Koordinator Seksi",
+                        "poin" => 4
                     ],
                     [
                         "tingkat" => "Kabupaten",
@@ -797,7 +927,12 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "Kabupaten",
-                        "jabatan" => "Wasit dan Anggota",
+                        "jabatan" => "Wasit",
+                        "poin" => 2
+                    ],
+                    [
+                        "tingkat" => "Kabupaten",
+                        "jabatan" => "Anggota",
                         "poin" => 2
                     ],
                     [
@@ -812,12 +947,57 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "Provinsi",
+                        "jabatan" => "Peninjau",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Penanggung jawab",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Steering Commite",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Wakil Ketua",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Sekretaris",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Bendahara",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Koordinator Seksi",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Wakil Koordinator Seksi",
+                        "poin" => 5
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
                         "jabatan" => "BPH lainnya",
                         "poin" => 5
                     ],
                     [
                         "tingkat" => "Provinsi",
-                        "jabatan" => "Wasit dan Anggota",
+                        "jabatan" => "Anggota",
+                        "poin" => 2
+                    ],
+                    [
+                        "tingkat" => "Provinsi",
+                        "jabatan" => "Wasit",
                         "poin" => 2
                     ],
                     [
@@ -830,6 +1010,46 @@ class PoinSeeder extends Seeder
                         "jabatan" => "Ketua",
                         "poin" => 7
                     ],
+                     [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Peninjau",
+                        "poin" => 6
+                    ],
+                    [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Penanggung jawab",
+                        "poin" => 6
+                    ],
+                    [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Steering Commite",
+                        "poin" => 6
+                    ],
+                    [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Wakil Ketua",
+                        "poin" => 6
+                    ],
+                    [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Sekretaris",
+                        "poin" => 6
+                    ],
+                    [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Bendahara",
+                        "poin" => 6
+                    ],
+                    [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Koordinator Seksi",
+                        "poin" => 6
+                    ],
+                    [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Wakil Koordinator Seksi",
+                        "poin" => 6
+                    ],
                     [
                         "tingkat" => "Nasional",
                         "jabatan" => "BPH lainnya",
@@ -837,7 +1057,12 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "Nasional",
-                        "jabatan" => "Wasit dan Anggota",
+                        "jabatan" => "Anggota",
+                        "poin" => 3
+                    ],
+                    [
+                        "tingkat" => "Nasional",
+                        "jabatan" => "Wasit",
                         "poin" => 3
                     ],
                     [
@@ -850,6 +1075,46 @@ class PoinSeeder extends Seeder
                         "jabatan" => "Ketua",
                         "poin" => 9
                     ],
+                     [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Peninjau",
+                        "poin" => 8
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Penanggung jawab",
+                        "poin" => 8
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Steering Commite",
+                        "poin" => 8
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Wakil Ketua",
+                        "poin" => 8
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Sekretaris",
+                        "poin" => 8
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Bendahara",
+                        "poin" => 8
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Koordinator Seksi",
+                        "poin" => 8
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Wakil Koordinator Seksi",
+                        "poin" => 8
+                    ],
                     [
                         "tingkat" => "Internasional",
                         "jabatan" => "BPH lainnya",
@@ -857,7 +1122,12 @@ class PoinSeeder extends Seeder
                     ],
                     [
                         "tingkat" => "Internasional",
-                        "jabatan" => "Wasit dan Anggota",
+                        "jabatan" => "Wasit",
+                        "poin" => 4
+                    ],
+                    [
+                        "tingkat" => "Internasional",
+                        "jabatan" => "Anggota",
                         "poin" => 4
                     ],
                     [
