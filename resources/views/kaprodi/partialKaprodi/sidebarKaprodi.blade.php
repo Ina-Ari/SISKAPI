@@ -41,15 +41,27 @@
 
                 <!-- Notifikasi -->
                 <li class="nav-item">
-                    <a href="#"
-                       class="nav-link">
-                        <i class="nav-icon fas fa-comment-dots"></i>
-                        <p style="font-size: 18px;">
-                            Notifikasi
-                            <span class="badge badge-info right" style="color: #4A505C">2</span>
-                        </p>
+                    <a href="{{ route('kaprodi.notifikasi') }}" class="nav-link {{ request()->routeIs('kaprodi.notifikasi') ? 'active' : '' }}" style="{{ Route::currentRouteName() == 'kaprodi.notifikasi' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
+                    <i class="nav-icon fas fa-bell"></i>
+                    <p>
+                        Notifikasi
+                        @if ($jumlahNotif > 0)
+                        <span class="badge badge-danger right">{{ $jumlahNotif }}</span>
+                        @endif
+                    </p>
                     </a>
-                </li>
+                </li>               
+                {{-- <li class="nav-item">
+                        <a href="{{ route('kaprodi.notifikasi') }}"
+                        class="nav-link {{ Route::currentRouteName() == 'kaprodi.notifikasi' ? 'active' : '' }}"
+                        style="{{ Route::currentRouteName() == 'kaprodi.notifikasi' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
+                            <i class="nav-icon fas fa-comment-dots"></i>
+                            <p style="font-size: 18px;">
+                                Notifikasi
+                                <span class="badge badge-info right" style="color: #4A505C">2</span>
+                            </p>
+                        </a>
+                    </li> --}}
 
             </ul>
         </nav>

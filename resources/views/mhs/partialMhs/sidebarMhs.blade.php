@@ -32,13 +32,24 @@
               <p>Profile</p>
             </a>
           </li>
-          {{-- Notifikasi --}}
+          {{-- Notifikasi
           <li class="nav-item">
             <a href="{{ route('mahasiswa.pagenotif') }}" class="nav-link {{ request()->routeIs('mahasiswa.pagenotif') ? 'active' : '' }}" style="{{ Route::currentRouteName() == 'mahasiswa.pagenotif' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
               <i class="nav-icon fas fa-bell"></i> {{-- Mengubah icon dari user-alt menjadi bell untuk notifikasi --}}
-              <p>Notifikasi</p>
+              
+          {{-- Notifikasi --}}
+          <li class="nav-item">
+            <a href="{{ route('mahasiswa.pagenotif') }}" class="nav-link {{ request()->routeIs('mahasiswa.pagenotif') ? 'active' : '' }}" style="{{ Route::currentRouteName() == 'mahasiswa.pagenotif' ? 'background-color: #E9F5FE; color: #5B91EF;' : '' }}">
+              <i class="nav-icon fas fa-bell"></i>
+              <p>
+                Notifikasi
+                @if ($jumlahNotif > 0)
+                  <span class="badge badge-danger right">{{ $jumlahNotif }}</span>
+                @endif
+              </p>
             </a>
           </li>
+
           {{-- Logout --}}
           <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link ">

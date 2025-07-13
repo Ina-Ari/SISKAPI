@@ -8,7 +8,9 @@ use App\Models\Kegiatan;
 use App\Models\Jurusan;
 use App\Models\Prodi;
 use App\Models\User;
+use App\Notifications\NotifikasiMhs;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UpapkkController extends Controller
 {
@@ -19,9 +21,12 @@ class UpapkkController extends Controller
         $terverifikasi = Kegiatan::where('status', 'true')->count();
         $belumterverifikasi = Kegiatan::where('status', 'false')->count();
         $jumlahMahasiswa = Mahasiswa::whereHas('kegiatan')->count();
+        $upapkk = Auth::user();
 
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $upapkk->unreadNotifications->count();
 
-        return view('dashboard', compact('jumlahKegiatan', 'terverifikasi', 'belumterverifikasi', 'jumlahMahasiswa'));
+        return view('dashboard', compact('jumlahKegiatan', 'terverifikasi', 'belumterverifikasi', 'jumlahMahasiswa', 'jumlahNotif'));
     }
 
     public function daftarMhs(Request $request)
@@ -60,7 +65,11 @@ class UpapkkController extends Controller
             ];
         }
 
-        return view('daftarmahasiswa', compact('data', 'status', 'jurusan'));
+        $upapkk = Auth::user();
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $upapkk->unreadNotifications->count();
+
+        return view('daftarmahasiswa', compact('data', 'status', 'jurusan', 'jumlahNotif'));
     }
 
     public function kegiatanMhs($id, Request $request)
@@ -79,8 +88,11 @@ class UpapkkController extends Controller
         ])->findOrFail($id);
 
         // dd($query);
+        $upapkk = Auth::user();
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $upapkk->unreadNotifications->count();
 
-        return view('kegiatanmahasiswa', compact('query'))->with('filter', $filter);
+        return view('kegiatanmahasiswa', compact('query', 'jumlahNotif'))->with('filter', $filter);
     }
 
     public function kegiatanVerif()
@@ -89,15 +101,25 @@ class UpapkkController extends Controller
             ->where('status', 'true')
             ->get();
         // dd($kegiatan);
-        return view('kegiatan', compact('kegiatan'));
+
+        $upapkk = Auth::user();
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $upapkk->unreadNotifications->count();
+
+        return view('kegiatan', compact('kegiatan', 'jumlahNotif'));
     }
 
     public function notVerified()
-    {
+    { 
         $kegiatan = Kegiatan::with(['poin.posisi', 'poin.tingkatKegiatan', 'poin.jenisKegiatan'])
             ->where('status', '!=', 'true')
             ->get();
-        return view('kegiatan_not_verified', compact('kegiatan'));
+
+        $upapkk = Auth::user();
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $upapkk->unreadNotifications->count();
+            
+        return view('kegiatan_not_verified', compact('kegiatan', 'jumlahNotif'));
     }
 
     public function verifySelected(Request $request)
@@ -115,4 +137,25 @@ class UpapkkController extends Controller
 
         return redirect()->route('upapkk.verifKegiatan')->with('success', 'Verfikasi kegiatan berhasil dibatalkan.');
     }
+
+    public function comments()
+    {
+        $upapkk = Auth::user();
+
+        if (!$upapkk) {
+            abort(403, 'Anda tidak terautentikasi');
+        }
+
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $upapkk->unreadNotifications->count();
+
+        $notifikasi = DB::table('notifications')
+            ->where('type', 'App\Notifications\NotifikasiMhs')
+            ->whereJsonContains('data->admin_id', $upapkk->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('notifikasiupapkk', compact('notifikasi', 'jumlahNotif'));
+    }
+
 }

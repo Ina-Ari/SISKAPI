@@ -97,6 +97,17 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('upapkk.notifikasi') }}" class="nav-link">
+                        <i class="nav-icon fas fa-comment-dots"></i>
+                        <p style="font-size: 18px;">
+                            Notifikasi
+                            @if ($jumlahNotif > 0)
+                                <span class="badge badge-info right" style="color: #4A505C">{{ $jumlahNotif }}</span>
+                            @endif
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link">
                         <i class="nav-icon fas fa-arrow-alt-circle-left"></i>
                         <p>

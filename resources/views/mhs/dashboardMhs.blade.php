@@ -9,9 +9,9 @@
         <div class="container-fluid">
             <div class="alert alert-info alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h5><i class="icon fas fa-info"></i> Selamat Datang di SIPRAJA!</h5>
-                SIPRAJA (Sistem Informasi Perekapan Aktivitas dan Jejak Mahasiswa) adalah platform yang membantu mahasiswa
-                merekap poin SKKM dengan mudah. <br>Jangan lewatkan kesempatan untuk terus aktif, karena poin yang kamu
+                <h5><i class="icon fas fa-info"></i> Selamat Datang di SISKAPI!</h5>
+                SISKAPI adalah platform yang membantu mahasiswa
+                merekap poin SKKM dan membuat SKPI dengan mudah. <br>Jangan lewatkan kesempatan untuk terus aktif, karena poin yang kamu
                 kumpulkan adalah cerminan dari usahamu dalam mengembangkan diri!
             </div>
 

@@ -1,11 +1,11 @@
-@extends('mhs.masterMhs')
+@extends('kaprodi.masterKaprodi')
 
-@section('title', 'Notifikasi Mahasiswa')
+@section('title', 'Notifikasi Kaprodi')
 
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 mb-2" style="margin: 20px;" >
+        <div class="col-sm-12 mb-2" style="margin: 20px;">
             <h2 class="m-0">Notifikasi</h2>
         </div>
         <div class="col-md-12" style="margin: 20px;">
@@ -38,13 +38,15 @@
                                     </span>
                                     <h3 class="timeline-header">
                                         <a href="#">{{ $notif->data['admin_name'] ?? 'Admin' }}</a> mengirimkan komentar
-                                        {{-- TAMBAHKAN INI UNTUK MENAMPILKAN NAMA KEGIATAN --}}
-                                        @if (isset($notif->data['nama_kegiatan']))
-                                            <br><small class="text-muted">Untuk Kegiatan: {{ $notif->data['nama_kegiatan'] }}</small>
-                                        @endif
+                                        <br>
+                                        <small class="text-muted">
+                                            Mahasiswa: {{ $notif->data['nama_mahasiswa'] ?? '-' }} <br>
+                                            NIM: {{ $notif->data['nim'] ?? '-' }} <br>
+                                            Judul: {{ $notif->data['title'] ?? '-' }}
+                                        </small>
                                     </h3>
                                     <div class="timeline-body">
-                                        {{ $notif->data['komentar'] ?? 'Tidak ada komentar.' }}
+                                        {{ $notif->data['message'] ?? 'Tidak ada komentar.' }}
                                     </div>
                                 </div>
                             </div>
@@ -55,6 +57,7 @@
                         <i class="fas fa-clock bg-gray"></i>
                     </div>
                 @endif
+
             </div>
         </div>
     </div>

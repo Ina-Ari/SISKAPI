@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Posisi;
+use Illuminate\Support\Facades\Auth;
+
 class posisiController extends Controller
 {
     /**
@@ -12,7 +14,11 @@ class posisiController extends Controller
     public function index()
     {
         $data = Posisi::all();
-        return view('posisi', compact('data'));
+        $upapkk = Auth::user();
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $upapkk->unreadNotifications->count();
+
+        return view('posisi', compact('data', 'jumlahNotif'));
     }
 
     /**

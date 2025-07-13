@@ -87,9 +87,9 @@ Route::middleware('auth')->group(function() {
             Route::get('/kaprodi/form', 'formKaprodi')->name('form');
             Route::post('/kaprodi/tambahDataSkpi1', 'storeSkpi1')->name('storeSkpi1');
             Route::post('/kaprodi/tambahDataSkpi2', 'storeSkpi2')->name('storeSkpi2');
-
+            Route::get('/kaprodi/notifikasi', 'notifKaprodi')->name('notifikasi');
         });
-
+ 
         Route::controller(SkpiController::class)->name('skpi.')->group(function() {
             Route::get('/kaprodi/skpi-mahasiswa', 'showSkpiMahasiswaKaprodiView')->name('mahasiswa');
             Route::post('/kaprodi/skpi-mahasiswa/template', 'createTemplate')->name('create.template');
@@ -101,6 +101,7 @@ Route::middleware('auth')->group(function() {
     Route::middleware('role:baak')->name('baak.')->group(function() {
         Route::controller(BaakController::class)->group(function() {
             Route::get('/baak/dashboard', 'index')->name('dashboard');
+            Route::get('/baak/notifikasi', 'comments')->name('notifikasi');
         });
 
         Route::controller(SkpiController::class)->name('skpi.')->group(function() {
@@ -114,13 +115,15 @@ Route::middleware('auth')->group(function() {
     Route::middleware('role:upapkk')->name('upapkk.')->group(function() {
         Route::controller(UpapkkController::class)->group(function() {
             Route::get('/upapkk/dashboard', 'index')->name('dashboard');
-            Route::get('/upapkk/daftarMahasiswa', 'daftarMhs')->name('daftarMhs');
+            Route::get('/upapkk/daftarMahasiswa', 'daftarMhs')->name('daftarMhs'); 
             Route::get('/upapkk/{id}/daftarKegiatan', 'kegiatanMhs')->name('daftarKegiatan');
             Route::get('/upapkk/verifKegiatan', 'kegiatanVerif')->name('verifKegiatan');
             Route::get('/upapkk/unverifKegiatan', 'notVerified')->name('unverifKegiatan');
             Route::post('/upapkk/verifSelected', 'verifySelected')->name('verifSelected');
             Route::post('/upapkk/unverifSelected', 'cancelSelected')->name('unverifSelected');
+            Route::post('/upapkk/unverif-selected', [UpapkkController::class, 'cancelSelected'])->name('upapkk.unverifSelected');
             Route::post('/upapkk/notifikasi/kirim', [NotificationMhs::class, 'sendComment'])->name('kirimnotif');
+            Route::get('/upapkk/notifikasi', 'comments')->name('notifikasi');
         });
         Route::controller(jenisKegiatanController::class)->group(function() {
             Route::get('/upapkk/jenisKegiatan', 'index')->name('jenisKegiatan');

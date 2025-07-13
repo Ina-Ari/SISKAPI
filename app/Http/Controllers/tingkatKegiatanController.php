@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TingkatKegiatan;
+use Illuminate\Support\Facades\Auth;
 
 class tingkatKegiatanController extends Controller
 {
@@ -13,7 +14,11 @@ class tingkatKegiatanController extends Controller
     public function index()
     {
         $data = TingkatKegiatan::all();
-        return view('tingkat_kegiatan', compact('data'));
+        $upapkk = Auth::user();
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $upapkk->unreadNotifications->count();
+        
+        return view('tingkat_kegiatan', compact('data', 'jumlahNotif'));
     }
 
     /**

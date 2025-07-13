@@ -7,6 +7,7 @@ use App\Models\JenisKegiatan;
 use App\Models\TingkatKegiatan;
 use App\Models\Posisi;
 use App\Models\Poin;
+use Illuminate\Support\Facades\Auth;
 
 class poinController extends Controller{
 
@@ -16,7 +17,11 @@ class poinController extends Controller{
         $posisi = Posisi::all();
         $tingkatKegiatan = TingkatKegiatan::all();
         $jenisKegiatan = JenisKegiatan::all();
-        return view('poin', compact('data', 'posisi', 'tingkatKegiatan', 'jenisKegiatan'));
+        $upapkk = Auth::user();
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $upapkk->unreadNotifications->count();
+
+        return view('poin', compact('data', 'posisi', 'tingkatKegiatan', 'jenisKegiatan', 'jumlahNotif'));
     }
 
     public function store(Request $request)

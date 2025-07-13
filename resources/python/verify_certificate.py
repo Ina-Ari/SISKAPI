@@ -6,7 +6,7 @@ import os
 def verify_certificate(target_path):
     # Menggunakan path relatif karena file logo berada di direktori yang sama dengan script Python
 
-    logo_img = cv2.imread('D:/laragon/www/siskkm/resources/python/logo pnb.png', 0)
+    logo_img = cv2.imread('C:/laragon/www/siskapi/resources/python/logo pnb.png', 0)
 
     # Cek apakah gambar logo berhasil dibaca
     # if logo_img is None:

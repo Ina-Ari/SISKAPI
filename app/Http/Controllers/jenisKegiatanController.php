@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\JenisKegiatan;
+use Illuminate\Support\Facades\Auth;
 
 class jenisKegiatanController extends Controller
 {
@@ -12,7 +13,11 @@ class jenisKegiatanController extends Controller
      */
     public function index(){
         $data = JenisKegiatan::all();
-        return view('jenis_kegiatan', compact('data'));
+        $upapkk = Auth::user();
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $upapkk->unreadNotifications->count();
+        
+        return view('jenis_kegiatan', compact('data', 'jumlahNotif'));
     }
 
     /**

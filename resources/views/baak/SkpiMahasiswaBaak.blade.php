@@ -230,13 +230,21 @@
                                 Revisi & Komentar</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
-                            </button>
+                            </button> 
                         </div>
                         <form action="{{ route('baak.skpi.revision') }}" method="POST">
                             <div class="modal-body">
                                 @method('PUT')
                                 @csrf
                                 <input type="hidden" name="nim" value="{{ $m->mahasiswa->nim }}">
+                                @if ($m->mahasiswa->skpi)
+                                    <input type="hidden" name="skpi_id" value="{{ $m->mahasiswa->skpi->id }}">
+                                @endif
+                                <input type="hidden" name="kepala_prodi_id" value="{{ $m->mahasiswa->skpi->kepala_prodi_id ?? '' }}">
+                                <div class="form-group">
+                                    <label>Isi Komentar</label>
+                                    <textarea class="form-control" name="komentar" id="inputKomentar" placeholder="Masukkan komentar..." required></textarea>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-danger text-white">

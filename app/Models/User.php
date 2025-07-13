@@ -80,7 +80,7 @@ class User extends Authenticatable implements CanResetPassword
     public function kepalaProdi(): HasOne
     {
         return $this->hasOne(KepalaProdi::class, 'user_id', 'id');
-    }
+    } 
 
     public function baak(): HasOne
     {

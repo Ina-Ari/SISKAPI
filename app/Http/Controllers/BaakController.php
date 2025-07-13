@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class BaakController extends Controller
@@ -85,6 +86,10 @@ class BaakController extends Controller
             $datasets['pengajuan_ditolak'][] = $dataByBulan[$label][4];
         }
 
+        $baak = Auth::user();
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $baak->unreadNotifications->count();
+
         return view('baak.dashboardBAAK', [
             'total_pengajuan' => $total_pengajuan,
             'belum_diverifikasi' => $belum_diverifikasi,
@@ -92,6 +97,29 @@ class BaakController extends Controller
             'pengajuan_ditolak' => $pengajuan_ditolak,
             'tanggalLabels' => $tanggalLabels,
             'datasets' => $datasets,
+            'jumlahNotif' => $jumlahNotif,
         ]);
+    }
+
+    public function comments()
+    {
+        $baak = Auth::user();
+
+        if (!$baak) {
+            abort(403, 'Anda tidak terautentikasi');
+        }
+
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $baak->unreadNotifications->count();
+
+        // Ambil notifikasi yang dikirim ke kaprodi oleh BAAK ini
+        $notifikasi = DB::table('notifications')
+            ->where('type', 'App\Notifications\NotifikasiKaprodi')
+            ->whereJsonContains('data->admin_id', $baak->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $baak->unreadNotifications->markAsRead();
+        return view('baak.notifikasiBaak', compact('notifikasi', 'jumlahNotif'));
     }
 }

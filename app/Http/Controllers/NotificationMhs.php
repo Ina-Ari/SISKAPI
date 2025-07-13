@@ -22,7 +22,7 @@ class NotificationMhs extends Controller
             'id_kegiatan'   => 'required|exists:kegiatan,id',
         ]);
 
-        $admin = Auth::User();
+        $admin = Auth::user(); // Gunakan huruf kecil `user()` sesuai standar Laravel
         if (!$admin) {
             return response()->json([
                 'status'  => 'error',
@@ -43,6 +43,19 @@ class NotificationMhs extends Controller
 
         $namaKegiatan = $kegiatan->nama_kegiatan;
 
+        // Ambil tanggal kegiatan — sesuaikan nama kolom jika berbeda
+        $tanggalKegiatan = $kegiatan->tanggal_kegiatan ?? $kegiatan->tanggal_pengajuan ?? null;
+
+        if (!$tanggalKegiatan) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Tanggal kegiatan tidak ditemukan.',
+            ], 422);
+        }
+
+        // Format tanggal menjadi string yang bisa dibaca
+        $tanggalFormatted = \Carbon\Carbon::parse($tanggalKegiatan)->format('d M Y');
+
         // Ambil mahasiswa berdasarkan user_id
         $mahasiswa = User::find($request->mahasiswa_id);
 
@@ -53,14 +66,22 @@ class NotificationMhs extends Controller
             ], 404);
         }
 
-        $mahasiswa->notify(new NotifikasiMhs($komentar, $admin, $namaKegiatan));
-        Log::info("Notification sent to User ID: {$mahasiswa->id} for activity '{$namaKegiatan}'.");
+        // Kirim notifikasi dengan tanggal kegiatan
+        $mahasiswa->notify(new NotifikasiMhs(
+            $komentar,
+            $admin,
+            $namaKegiatan,
+            $tanggalFormatted
+        ));
+
+        Log::info("Notification sent to User ID: {$mahasiswa->id} for activity '{$namaKegiatan}' on date '{$tanggalFormatted}'.");
 
         return response()->json([
             'status'  => 'success',
             'message' => 'Notifikasi berhasil dikirim ke mahasiswa (DB + Email).',
         ]);
     }
+
 
     public function lihatMahasiswa()
     {
@@ -70,11 +91,19 @@ class NotificationMhs extends Controller
         if (!$user || !$user->role || $user->role->nama !== 'Mahasiswa') {
             abort(403, 'Akses hanya untuk mahasiswa');
         }
-        // Ambil notifikasi untuk user
+
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $user->unreadNotifications->count();
+
+        // Ambil semua notifikasi
         $notifikasi = $user->notifications()->latest()->get();
 
-        // Pass both $notifikasi and $user to the view
-        return view('mhs.notifikasiMhs', compact('notifikasi', 'user'));
+        // Tandai semua sebagai sudah dibaca
+        $user->unreadNotifications->markAsRead();
+
+        // Kirim ke view
+        return view('mhs.notifikasiMhs', compact('notifikasi', 'user', 'jumlahNotif'));
     }
+
 
 }

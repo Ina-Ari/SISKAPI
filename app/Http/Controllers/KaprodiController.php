@@ -25,11 +25,43 @@ class KaprodiController
      */
     public function index()
     {
-        // Status count total untuk kotak status
-        $statusCounts = DB::table('skpi')->select('status', DB::raw('count(*) as total'))->groupBy('status')->pluck('total', 'status');
+        // Ambil ID kepala prodi dari user yang login
+        $user = Auth::user(); 
+
+        $kepalaProdiProfile = $user->kepalaProdi;
+
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $kepalaProdiProfile->unreadNotifications->count();
+
+        // $kodeProdi = auth()->user()->kepalaProdi->user_id;
+        $kodeProdi = $kepalaProdiProfile->user_id;
+
+        // Jika tidak ada kepala prodi terkait, kembalikan data kosong
+        if (!$kodeProdi) {
+            return view('kaprodi.dashboardKaprodi', [
+                'statusCounts' => [],
+                'tanggalLabels' => [],
+                'grafikDataset' => [],
+                'today' => Carbon::now('Asia/Jakarta')->translatedFormat('F Y'),
+                'dayName' => Carbon::now('Asia/Jakarta')->translatedFormat('l'),
+                'dayNumber' => Carbon::now('Asia/Jakarta')->translatedFormat('d')
+            ]);
+        }
+
+        // Status count total untuk kotak status (hanya untuk kepala_prodi_id yang sesuai)
+        $statusCounts = DB::table('skpi')
+            ->select('status', DB::raw('count(*) as total'))
+            ->where('kepala_prodi_id', $kodeProdi)
+            ->groupBy('status')
+            ->pluck('total', 'status');
 
         // Ambil data grafik: group by tanggal dan status
-        $grafikDataRaw = DB::table('skpi')->select(DB::raw('DATE(updated_at) as tanggal'), 'status', DB::raw('count(*) as jumlah'))->groupBy('tanggal', 'status')->orderBy('tanggal')->get();
+        $grafikDataRaw = DB::table('skpi')
+            ->select(DB::raw('DATE(updated_at) as tanggal'), 'status', DB::raw('count(*) as jumlah'))
+            ->where('kepala_prodi_id', $kodeProdi)
+            ->groupBy('tanggal', 'status')
+            ->orderBy('tanggal')
+            ->get();
 
         // Format data jadi per tanggal dengan masing-masing status (1-5)
         $dataByTanggal = [];
@@ -62,6 +94,7 @@ class KaprodiController
             'today' => $today,
             'dayName' => $dayName,
             'dayNumber' => $dayNumber,
+            'jumlahNotif' => $jumlahNotif,
         ]);
     }
 
@@ -70,7 +103,8 @@ class KaprodiController
      */
     public function formKaprodi()
     {
-        $user = auth()->user();
+        // $user = auth()->user();
+        $user = Auth::user(); 
 
         $kode_prodi = UserRelationResolver::getRelationData($user)->prodi->kode_prodi;
         $templateFilename = config('skpi.template.prefix') . $kode_prodi . config('skpi.template.preview.extension');
@@ -87,6 +121,9 @@ class KaprodiController
         $general_skills = optional($skpi)->general_skills ?? [];
         $keterampilan_khusus = optional($skpi)->keterampilan_khusus ?? [];
         $special_skills = optional($skpi)->special_skills ?? [];
+        
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $kaprodi->unreadNotifications->count();
 
         // $prodiList = Prodi::where('kode_prodi', $kaprodi->kode_prodi)->get();
 
@@ -94,7 +131,7 @@ class KaprodiController
 
         // dd($skpi);
         // dd($Prodi);
-        return view('kaprodi.formKaprodi', compact('templateFullPath', 'kaprodi', 'prodi', 'skpi', 'sikap', 'attitude', 'penguasaan_pengetahuan', 'knowledge', 'keterampilan_umum', 'general_skills', 'keterampilan_khusus', 'special_skills'));
+        return view('kaprodi.formKaprodi', compact('templateFullPath', 'kaprodi', 'prodi', 'skpi', 'sikap', 'attitude', 'penguasaan_pengetahuan', 'knowledge', 'keterampilan_umum', 'general_skills', 'keterampilan_khusus', 'special_skills', 'jumlahNotif'));
     }
 
     public function storeSkpi1(Request $request)
@@ -190,5 +227,28 @@ class KaprodiController
         return redirect()->route('kaprodi.form')->with('success', 'Data Berhasil Disimpan!');
     }
 
+    public function notifKaprodi(Request $request){
+        // Ambil user yang sedang login (ini adalah model App\Models\User)
+        $user = Auth::user();
+
+        if (!$user || !$user->role || $user->role->nama !== 'Kepala Prodi') {
+            abort(403, 'Akses hanya untuk Kepala Prodi');
+        }
+
+        $kepalaProdiProfile = $user->kepalaProdi;
+
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $kepalaProdiProfile->unreadNotifications->count();
+
+        if (!$kepalaProdiProfile) {
+            return redirect()->back()->with('error', 'Profil Kepala Prodi tidak ditemukan untuk pengguna ini.');
+        }
+        $kepalaProdiProfile->unreadNotifications->markAsRead();
+        $notifikasi = $kepalaProdiProfile->notifications()->latest()->get();
+
+        return view('kaprodi.notifikasiKaprodi', compact('notifikasi', 'user', 'jumlahNotif'));
+    }
+
+ 
 
 }

@@ -9,15 +9,20 @@ use App\Models\Prodi;
 use App\Models\Role;
 use App\Models\Skpi;
 use App\Models\User;
+use App\Notifications\NotifikasiKaprodi;
 use App\Services\Skpi\SkpiDocumentServiceInterface;
 use App\Support\Resolvers\UserRelationResolver;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\File;
+use NotificationKaprodi;
 
 class SkpiController extends Controller
 {
@@ -36,9 +41,16 @@ class SkpiController extends Controller
             'angkatan' => 'nullable|numeric|digits:5'
         ]);
 
+        $user = Auth::user();
         $status = $data['status'] ?? null;
         $angkatan = $data['angkatan'] ?? null;
 
+        $kepalaProdiProfile = $user->kepalaProdi; // <-- This uses the hasOne relationship you defined
+
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $kepalaProdiProfile->unreadNotifications->count();
+
+        
         $prodi = UserRelationResolver::getRelationData(Auth::user())->prodi;
         $kode_prodi = $prodi->kode_prodi;
         $templateFilename = config('skpi.template.prefix') . $kode_prodi . config('skpi.template.preview.extension');
@@ -79,7 +91,7 @@ class SkpiController extends Controller
             ->sort()
             ->values();
 
-        return view('kaprodi.SkpiMahasiswaKaprodi', compact('templateFullPath', 'mahasiswa', 'angkatanList', 'angkatanList', 'status', 'angkatan'));
+        return view('kaprodi.SkpiMahasiswaKaprodi', compact('templateFullPath', 'mahasiswa', 'angkatanList', 'angkatanList', 'status', 'angkatan', 'jumlahNotif'));
     }
 
     public function createTemplate(Request $request)
@@ -184,7 +196,7 @@ class SkpiController extends Controller
             $collection->map(fn($item) => htmlspecialchars($item->nama_kegiatan))
                 ->values()->all();
 
-        \Log::info(json_encode($formatKegiatanId($aktivitas)));
+        Log::info(json_encode($formatKegiatanId($aktivitas)));
 
         $formatKegiatanEn = fn($collection) =>
             $collection->map(fn($item) => htmlspecialchars($item->kegiatan_name))
@@ -250,6 +262,10 @@ class SkpiController extends Controller
         $status = $data['status'] ?? null;
         $angkatan = $data['angkatan'] ?? null;
         $prodi = $data['prodi'] ?? null;
+        
+        $baak = Auth::user();
+        // Hitung jumlah notifikasi belum dibaca
+        $jumlahNotif = $baak->unreadNotifications->count();
 
         $mahasiswa = User::with(['mahasiswa.kegiatan.poin'])
             ->where('role_id', Role::getId(Role::MAHASISWA))
@@ -289,7 +305,7 @@ class SkpiController extends Controller
             ->sort()
             ->values();
 
-        return view('baak.SkpiMahasiswaBaak', compact('mahasiswa', 'angkatanList', 'prodiList', 'angkatanList', 'status', 'angkatan', 'prodi'));
+        return view('baak.SkpiMahasiswaBaak', compact('mahasiswa', 'angkatanList', 'prodiList', 'angkatanList', 'status', 'angkatan', 'prodi', 'jumlahNotif'));
     }
 
     public function verification(Request $request)
@@ -348,10 +364,48 @@ class SkpiController extends Controller
 
     public function revision(Request $request)
     {
-        $data = $request->validate([
-            'comment' => '',
+        Log::info('Incoming SKPI revision request:', $request->all());
+
+        $request->validate([
+            'kepala_prodi_id' => 'required|exists:users,id', 
+            'skpi_id'         => 'required|exists:skpi,id',
+            'komentar'        => 'required|string',
         ]);
 
-        // Kirim Notifikasi & Rubah Status SKPI ke Revisi
+        $admin = Auth::user();
+        if (!$admin) {
+            return redirect()->back()->with('error', 'Anda tidak terautentikasi.');
+        }
+
+        $skpi = Skpi::with(['mahasiswa.user', 'mahasiswa.prodi', 'kepalaProdi'])->find($request->skpi_id);
+        if (!$skpi) {
+            return redirect()->back()->with('error', 'Data SKPI tidak ditemukan.');
+        }
+
+        $skpi->status = 'Revisi';
+        $skpi->save();
+
+        $kaprodiProfile = $skpi->kepalaProdi; 
+        $mahasiswaUser = $skpi->mahasiswa->user;
+
+        if (!$kaprodiProfile || !$mahasiswaUser) {
+            return redirect()->back()->with('error', 'Relasi Kaprodi atau Pengguna Mahasiswa tidak ditemukan.');
+        }
+        
+        $judul = 'Permintaan Revisi SKPI';
+        $komentar = $request->komentar;
+
+        $kodeProdiMahasiswa = $skpi->mahasiswa->prodi->kode_prodi ?? null; 
+        
+        if (is_null($kodeProdiMahasiswa)) {
+            Log::error('DEBUG: Kode Prodi Mahasiswa tidak ditemukan untuk SKPI ID: ' . $skpi->id);
+            return redirect()->back()->with('error', 'Kode Prodi Mahasiswa tidak ditemukan.');
+        }
+
+        // Kirim notifikasi dengan model lengkap dan kode_prodi mahasiswa
+        $kaprodiProfile->notify(new NotifikasiKaprodi($judul, $komentar, $admin, $mahasiswaUser, $kodeProdiMahasiswa)); // <-- Teruskan $kodeProdiMahasiswa
+
+        return redirect()->back()->with('success', 'Revisi berhasil dikirim dan notifikasi telah dikirim ke Kaprodi.');
     }
+
 }

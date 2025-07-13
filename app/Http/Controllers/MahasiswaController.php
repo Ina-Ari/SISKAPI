@@ -36,11 +36,13 @@ class MahasiswaController extends Controller
 
         $jenjang_pendidikan = $mahasiswa->prodi->jenjang;
 
+        $jumlahNotif = Auth::user()->unreadNotifications->count();
+
         $posisi = Posisi::all();
         $tingkatKegiatan = TingkatKegiatan::all();
         $jenisKegiatan = JenisKegiatan::all();
 
-        return view('mhs.dashboardMhs', compact('user', 'mahasiswa', 'kegiatan', 'jenjang_pendidikan', 'posisi', 'tingkatKegiatan', 'jenisKegiatan', 'jumlah_poin', 'jumlah_kegiatan', 'jumlah_kegiatan_acc', 'jumlah_kegiatan_nonacc'));
+        return view('mhs.dashboardMhs', compact('user', 'mahasiswa', 'kegiatan', 'jenjang_pendidikan', 'posisi', 'tingkatKegiatan', 'jenisKegiatan', 'jumlah_poin', 'jumlah_kegiatan', 'jumlah_kegiatan_acc', 'jumlah_kegiatan_nonacc', 'jumlahNotif'));
     }
 
     public function store(Request $request)
@@ -216,7 +218,9 @@ class MahasiswaController extends Controller
 
         $totalPoin = Kegiatan::where('nim', $mahasiswa->user_id)->where('status', 'true')->join('poin', 'kegiatan.id_poin', '=', 'poin.id_poin')->sum('poin.poin');
 
-        return view('mhs.profileMhs', compact('user', 'mahasiswa', 'totalPoin'));
+        $jumlahNotif = Auth::user()->unreadNotifications->count();
+
+        return view('mhs.profileMhs', compact('user', 'mahasiswa', 'totalPoin', 'jumlahNotif'));
     }
 
     public function updateProfile(Request $request, $nim)
